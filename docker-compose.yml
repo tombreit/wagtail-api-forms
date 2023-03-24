@@ -1,0 +1,27 @@
+# example docker-compose configuration file for using mkodockx/docker-clamav
+version: '3.7'
+
+services:
+  clamav:
+    #debian: image: mkodockx/docker-clamav
+    image: mkodockx/docker-clamav:alpine
+    container_name: clamav
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3310:3310"
+    tty: true
+    volumes:
+      - clamd_data:/var/lib/clamav
+  # web:
+  #   build: .
+  #   command: python manage.py runserver 0.0.0.0:8000
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - clamav
+
+volumes:
+  clamd_data:
+    driver: local

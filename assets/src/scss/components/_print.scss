@@ -1,0 +1,10 @@
+
+@if $enable-print-styles {
+    @media print {
+
+        .collapse {
+            display: block !important;
+        }
+
+    }
+}

@@ -1,0 +1,34 @@
+Django==4.1.7
+wagtail==4.2.1
+
+# wagtail-localize
+django_extensions
+django-crispy-forms
+crispy-bootstrap4
+django-auth-ldap
+django-simple-captcha
+
+# Explict mention of djangorestframework which is already a dependency
+# of wagtail
+djangorestframework
+
+django-ipware
+# django-sendfile2
+django-private-storage
+django-csp
+django-csp-reports
+django-select2
+
+environs[django]
+python-magic
+
+huey
+
+# https://xael.org/pages/python-module-pyclamd.html
+pyclamd
+
+# Documentation
+Sphinx
+sphinx-autobuild
+myst_parser
+django-sphinx-view

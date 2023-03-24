@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+
+{% load i18n wagtailcore_tags crispy_forms_tags %}
+
+
+{% block content %}
+
+
+<div class="mb-4">
+    <h1>
+        {{ page.title }}
+    </h1>
+    {{ page.intro|richtext }}
+</div>
+
+<form action="{% pageurl self %}{% if ctx_embed %}?embed={{ ctx_embed }}{% endif %}" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+    {% comment %}
+        {{ form|crispy }}
+        {% for field in form %}
+            {{ field.field.widget.attrs }}
+        {% endfor %}
+    {% endcomment %}
+
+
+{% for field in form %}
+    {% if field.field.widget.attrs.heading %}
+        <h2 class="h4 my-4">
+            {{ field.field.widget.attrs.heading }}
+        </h2>
+    {% endif %}
+    <div class="{{ field.field.widget.attrs.css_classes }}">
+        {{ field|as_crispy_field }}
+    </div>
+{% endfor %}
+
+    <hr>
+
+    <button class="btn btn-primary" type="submit">
+        {% translate "Submit" %}
+    </button>
+    <button class="btn btn-secondary" type="reset">
+        {% translate "Reset" %}
+    </button>
+
+    <p class="text-muted my-3">
+        * {% translate "Mandatory field" %}
+    </p>
+</form>
+
+{% endblock content %}

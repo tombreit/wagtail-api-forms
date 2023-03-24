@@ -1,0 +1,29 @@
+# user$ ~./config/systemd/user/wagtailapiforms-huey.service
+#
+# Prerequisites
+#
+# In ~/.bashrc (?)
+# export XDG_RUNTIME_DIR="/run/user/$UID"
+# export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+#
+# root$ loginctl enable-linger $username
+# user$ systemctl enable --user wagtailapiforms-huey.service
+# user$ systemctl start --user wagtailapiforms-huey.service
+# user$ systemd-analyze  --user security  wagtailapiforms-huey.service
+
+[Unit]
+Description=Huey Service for wagtail_api_forms
+After=network.target
+
+[Service]
+Restart=always
+RestartSec=30
+WorkingDirectory=/path/to/wagtail_api_forms
+ExecStart=/path/to/venv/bin/python3 \
+    /path/to/wagtail_api_forms/manage.py run_huey \
+    --logfile=/path/to/wagtailapiforms-huey.log
+ExecReload=/bin/kill -s SIGHUP $MAINPID
+ExecStop=/bin/kill -s SIGINT $MAINPID
+
+[Install]
+WantedBy=default.target

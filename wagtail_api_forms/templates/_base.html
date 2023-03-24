@@ -1,0 +1,71 @@
+{% load i18n static wagtailuserbar wagtailcore_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|lower }}">
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="{% static 'dist/css/app.css' %}">
+        <link rel="icon" href="{% get_media_prefix %}{{ favicon_url }}">
+
+        <style>
+            body .navbar-header {
+                background-image: url('{{ brand_logo_en_url }}');
+            }
+            body.lang_de .navbar-header {
+                background-image: url('{{ brand_logo_de_url }}');
+            }
+          </style>
+
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+    </head>
+
+    <body class="{% if ctx_embed %}p-2{% endif %} lang_{{ LANGUAGE_CODE|lower }} {% block body_class %}{% endblock %}">
+
+        {% if not ctx_embed %}
+            {% wagtailuserbar %}
+        {% endif %}
+
+        {% if not ctx_embed %}
+            {% include 'includes/_navbar.html' %}
+            <div class="container">
+        {% endif %}
+
+        {% block content %}
+            <div class="alert alert-warning">
+                <h2>
+                    {% translate "There is no form for this URL." %}
+                </h2>
+            </div>
+        {% endblock content %}
+
+        {% if not ctx_embed %}
+            </div>
+            {% include 'includes/_footer.html' %}
+        {% endif %}
+
+        <script type="text/javascript" src="{% static 'dist/js/app.js' %}"></script>
+
+        {% if ctx_embed %}
+        <script type="text/javascript" src="{% static 'dist/js/iframeresizer/iframeResizer.contentWindow.min.js' %}"></script> 
+        {% endif %}
+
+        {% block extra_js %}
+            {# Override this in templates to add extra javascript #}
+        {% endblock %}
+    </body>
+</html>

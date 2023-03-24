@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+node_modules/
+.venv/
+*.mo
+*.pot
+
+.env
+/_data/
+/staticfiles/
+/docs/_build/
+/wagtail_api_forms/static/dist

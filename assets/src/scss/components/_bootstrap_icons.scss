@@ -1,0 +1,26 @@
+/*!
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2019-2021 The Bootstrap Authors
+ */
+
+// Feature request: set font path as var
+// https://github.com/twbs/icons/issues/563
+
+$bootstrap-icons-font: "bootstrap-icons" !default;
+$bootstrap-icons-font-src: url("../fonts/bootstrap-icons/bootstrap-icons.woff2") format("woff2"),
+                           url("../fonts/bootstrap-icons/bootstrap-icons.woff") format("woff");
+
+
+@font-face {
+    font-family: $bootstrap-icons-font;
+    src: $bootstrap-icons-font-src;
+} // @font-face
+
+@import "bootstrap-icons/font/bootstrap-icons";
+
+// @font-face {
+//   font-family: "bootstrap-icons";
+//     src: url("../fonts/bootstrap-icons/bootstrap-icons.woff") format("woff"),
+//          url("../fonts/bootstrap-icons/bootstrap-icons.woff2") format("woff2");
+// } // // @font-face

@@ -1,0 +1,13 @@
+<fieldset>
+<div class="help-block help-info">
+        <svg class="icon icon-help icon" aria-hidden="true"><use href="#icon-help"></use></svg>
+        {% if self.heading %}
+            <p>
+                <strong>
+                    {{ self.heading }}
+                </strong>
+            </p>
+        {% endif %}
+        <div class="{{ self.classname }}">{{ self.content|safe }}</div>
+</div>
+</fieldset>

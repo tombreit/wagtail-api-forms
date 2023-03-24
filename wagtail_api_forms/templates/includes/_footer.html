@@ -1,0 +1,25 @@
+{% load i18n static %}
+
+
+<footer class="text-white small">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <img src="{% get_media_prefix %}{{ brand_figurative_mark }}" alt="">
+            </div>
+            <div class="col-6 col-md-4 text-md-center">
+                {% for footer_link in localized_footer_links %}
+                    <a 
+                        class="text-white {% if forloop.first %} mr-2 {% endif %}" 
+                        href="{{ footer_link.get_url }}"
+                    >
+                        {{ footer_link.title }}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="col-6 col-md-4 text-right">
+                &copy; {% now "Y" %} {{ settings.home.BrandingSettings.brand_abbr }}
+            </div>
+        </div>
+    </div>
+</footer>

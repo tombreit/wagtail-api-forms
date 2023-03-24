@@ -1,0 +1,32 @@
+/* Debug
+============================================= */
+
+/*
+  Inspired by
+  https://www.viget.com/articles/check-your-breakpoint-using-this-simple-css-snippet
+*/
+
+body.django-debug:after {
+
+  color: #000;
+  font-family: Helvetica;
+  font-size: 12px;
+  padding: 5px;
+  font-weight: bold;
+  right: 10px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  bottom: 10px;
+  width: 200px;
+  z-index: 9999;
+  background: lime;
+  border: solid 1px #000;
+
+  @each $name, $value in $grid-breakpoints {
+      @include media-breakpoint-up($name) {
+        content: '#{$name} - min-width: #{$value}';
+      }
+  }
+
+}

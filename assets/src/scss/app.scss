@@ -1,0 +1,43 @@
+@import "components/_typo";
+
+
+$waf-green: rgb(0,108,102);
+$waf-gray: rgb(102,102,102);
+$waf-bg-gray: rgb(238,238,238);
+
+
+$theme-colors: (
+  "primary": $waf-green,
+);
+
+$link-decoration: underline;
+$web-font-path: "";
+// $font-size-base: 0.875rem; // Approx be `14px`
+
+$font-family-sans-serif: "FontSourceRoboto", sans-serif;
+$font-family-serif:      "Merriweather", serif;
+$font-family-base:       $font-family-sans-serif;
+
+$font-weight-base: 300;
+
+$headings-font-family: "Merriweather", serif;
+
+
+// Bootstrap
+@import "components/_bootstrap_custom";
+
+// Bootstrap Icons
+// https://icons.getbootstrap.com/
+@import "components/_bootstrap_icons";
+
+// select2
+@import "select2/dist/css/select2.min";
+@import "@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min";
+
+// flatpickr for date and time inputs, as Firefox do not have a widget for time inputs
+// https://flatpickr.js.org/getting-started/
+@import "flatpickr/dist/flatpickr.min";
+
+// @import "components/debug";
+@import "components/_screen";
+@import "components/_print";

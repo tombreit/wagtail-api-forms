@@ -1,0 +1,136 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-24 10:45+0100\n"
+"PO-Revision-Date: 2023-03-24 10:49+0100\n"
+"Last-Translator: Thomas Breitner <t.breitner@mpicc.de>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: wagtail_api_forms/formpages/models.py:139
+msgid "help text"
+msgstr "Hilfetext"
+
+#: wagtail_api_forms/formpages/models.py:153
+msgid "Image file"
+msgstr "Bilddatei"
+
+#: wagtail_api_forms/formpages/models.py:154
+msgid "Document file"
+msgstr "Dokument Datei"
+
+#: wagtail_api_forms/formpages/models.py:155
+msgid "Multiple Choice (typeahead)"
+msgstr "Mehrfachauswahl (typeahead)"
+
+#: wagtail_api_forms/formpages/models.py:233
+msgid "IP"
+msgstr "IP"
+
+#: wagtail_api_forms/formpages/models.py:234
+msgid "Referrer"
+msgstr "Referrer"
+
+#: wagtail_api_forms/formpages/models.py:364
+msgid "Referrer URL"
+msgstr "Referrer URL"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page.html:42
+msgid "Submit"
+msgstr "Absenden"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page.html:45
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page.html:49
+msgid "Mandatory field"
+msgstr "Pflichtfeld"
+
+#: wagtail_api_forms/formpages/validators.py:27
+msgid "This field is required."
+msgstr "Dieses Feld ist erforderlich."
+
+#: wagtail_api_forms/formpages/validators.py:50
+msgid ""
+"Please keep file size under {filesizeformat(max_file_size)}. Current size is "
+"{filesizeformat(file.size)}."
+msgstr ""
+"Bitte die Dateigröße kleiner als  {filesizeformat(max_file_size)}. Die "
+"aktuelle Dateigröße ist {filesizeformat(file.size)}."
+
+#: wagtail_api_forms/home/models.py:63 wagtail_api_forms/home/models.py:70
+msgid "A Company that Makes Everything"
+msgstr "A Company that Makes Everything"
+
+#: wagtail_api_forms/home/models.py:64
+msgid "Company, institute, site name (english version)."
+msgstr "Unternehmens-/Institutsname (english version)"
+
+#: wagtail_api_forms/home/models.py:71
+msgid "Company, institute, site name (german version)."
+msgstr "Unternehmens-/Institutsname (deutsche Version)"
+
+#: wagtail_api_forms/home/models.py:78
+msgid "Company, institute, site abbreviation."
+msgstr "Unternehmens-/Instituts-Abkürzung"
+
+#: wagtail_api_forms/home/models.py:86
+msgid "Logo file (english version). Format: SVG."
+msgstr "Logo-Datei (english version). Format: SVG."
+
+#: wagtail_api_forms/home/models.py:94
+msgid "Logo file (german version). Format: SVG."
+msgstr "Logo-Datei (deutsche Version). Format: SVG."
+
+#: wagtail_api_forms/home/models.py:102
+msgid "Figurative mark. Format: SVG."
+msgstr "Wortbildmarke. Format: SVG."
+
+#: wagtail_api_forms/home/models.py:110
+msgid "Favicon file. Formats: ICO or PNG"
+msgstr "Favicon Datei. Formate: ICO oder PNG"
+
+#: wagtail_api_forms/home/models.py:173
+msgid "Choose external URL or Internal page, not both."
+msgstr "Wählen Sie eine externe URL oder eine interne Seite, nicht beides."
+
+#: wagtail_api_forms/home/models.py:175
+msgid "You must set either External URL or Internal page."
+msgstr ""
+"Es muss entweder eine externe URL oder eine interne Seite definiert sein."
+
+#: wagtail_api_forms/home/models.py:246
+msgid "file"
+msgstr "Datei"
+
+#: wagtail_api_forms/home/wagtail_hooks.py:22
+msgid "Snippets"
+msgstr "Snippets"
+
+#: wagtail_api_forms/home/wagtail_hooks.py:32
+msgid "There can only be one Footer Links object."
+msgstr "Es kann nur ein Footer Link-Objekt angelegt werden."
+
+#: wagtail_api_forms/settings/base.py:191
+msgid "English"
+msgstr "Englisch"
+
+#: wagtail_api_forms/settings/base.py:192
+msgid "German"
+msgstr "Deutsch"
+
+#: wagtail_api_forms/templates/_base.html:51
+msgid "There is no form for this URL."
+msgstr "Kein Formular für diese URL gefunden."

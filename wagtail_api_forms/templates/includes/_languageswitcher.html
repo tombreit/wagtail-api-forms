@@ -1,0 +1,17 @@
+{% load i18n wagtailcore_tags %}
+
+
+{% if page %}
+    {% for translation in page.get_translations.live %}
+        {% get_language_info for translation.locale.language_code as lang %}
+        <a 
+            class="languageswitcher btn btn-light"
+            href="{% pageurl translation %}"
+            rel="alternate"
+            hreflang="{{ language_code }}"
+        >
+            <i class="bi bi-translate"></i>
+            {{ lang.name_local }}
+        </a>
+    {% endfor %}
+{% endif %}
