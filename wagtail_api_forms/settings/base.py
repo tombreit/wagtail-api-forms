@@ -40,10 +40,12 @@ DEBUG = env.bool("DEBUG", default=False)
 # Application definition
 
 INSTALLED_APPS = [
+    # Local apps
     'wagtail_api_forms.users',
     'wagtail_api_forms.home',
     'wagtail_api_forms.formpages',
 
+    # Wagtail apps
     'wagtail.contrib.settings',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -67,13 +69,8 @@ INSTALLED_APPS = [
     # 'wagtail_localize',
     # 'wagtail_localize.locales',  # This replaces 'wagtail.locales'
 
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    # Third party apps
+    'whitenoise.runserver_nostatic',
     'private_storage',
     'cspreports',
     'rest_framework',
@@ -86,6 +83,14 @@ INSTALLED_APPS = [
     'huey.contrib.djhuey',
     'django_select2',
     'sphinx_view',
+
+    # Django apps
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -94,11 +99,15 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # We're setting X-Frame-Options in apache,
-    # äh no: we now use the csp middleware...
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+    # Using our customized WhiteNoiseMiddleware to serve additional
+    # static files (here: /docs/)
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'wagtail_api_forms.home.middleware.MoreWhiteNoiseMiddleware',
+
     'django.middleware.locale.LocaleMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
@@ -212,7 +221,11 @@ STATICFILES_DIRS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+# https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Disabled right know because of a bug in bootstrap-icons:
 # https://github.com/twbs/icons/issues/563
 #STATICFILES_STORAGE = 'wagtail_api_forms.home.storage.ManifestStaticFilesStorageNotStrict'
@@ -306,6 +319,7 @@ CSP_FRAME_ANCESTORS += tuple(env.list("CSP_FRAME_ANCESTORS"))
 CSP_EXCLUDE_URL_PREFIXES = (
     "/admin",
     "/django-admin",
+    "/docs",
 )
 # unsafe-inline needed for inline CSS, e.g. via <style>...</style> or style="":
 CSP_STYLE_SRC = (
@@ -373,6 +387,16 @@ HUEY = {
         'workers': 2,  # use 2 threads
     },
 }
+
+# WhiteNoise
+WHITENOISE_INDEX_FILE = True
+
+# Add extra output directories that WhiteNoise can serve as static files
+# *outside* of `staticfiles`.
+MORE_WHITENOISE = [
+    {"directory": BASE_DIR / "docs" / "_build" / "html", "prefix": "docs/"},
+]
+
 
 FORMBUILDER_MAX_UPLOAD_SIZE = 5000 * 1024
 FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES = [".pdf", ".txt"]  # ".docx"

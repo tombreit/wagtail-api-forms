@@ -1,6 +1,10 @@
 # CHANGLOG
 
-## 2023-03-23
+## 2023-04
+
+- Use whitenoise for static file serving and for /docs/
+
+## 2023-03
 
 - New form customizations: Headings, custom css classes etc.
 - Paginated API endpoint

@@ -35,6 +35,20 @@ To get this project up and running on your host:
    FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES...
    ```
 
+
+### Docs
+
+Documentation files are build with Sphinx and served via WhiteNoise from `/docs/`.
+
+Build the documentation with
+```bash
+make --directory docs/ html
+
+# or with live reload
+sphinx-autobuild docs docs/_build/html --port 0
+```
+
+
 ### Virus scanning
 
 Virus scanning is implemented in a ClamAV docker container and a django task queue (huey).
@@ -62,17 +76,22 @@ npm run prod
 
 ### Production environment
 
+```{admonition} Apache+mod_wsgi
 * If using apache2 and mod_wsgi, do not store huey database in global ``/tmp/`` as
 apache2 is running with ``PrivateTmp`` and the mod_wsgi process could not put
 its tasks on the queue (https://stackoverflow.com/questions/68185057/huey-db-task-successfully-registered-by-consumer-but-does-not-receive-execut).
 * Apache/mod_wsgi: ``WSGIPassAuthorization On`` (https://www.django-rest-framework.org/api-guide/authentication/#apache-mod_wsgi-specific-configuration)
-* Example apache config file: see ``misc/apache.conf``
-* Example systemd service unit: see ``misc/wagtailapiforms-huey.service``
-* Deployment steps: see below
+```
+
 
 ### Configuration examples
 
-> :warning: Do **not** allow the webserver to serve ``_data/attachments/`` files - these files are served by Django to check for various criteria (is authenticated, from whitelisted remote ip, virus checked etc.).
+```{admonition} Webserver and media /attachments directory
+:class: danger
+
+Do **not** allow the webserver to serve ``_data/attachments/`` files - these files are served by Django to check for various criteria (is authenticated, from whitelisted remote ip, virus checked etc.).
+```
+
 
 #### Webserver (Apache)
 
@@ -145,5 +164,3 @@ For translated forms (e.g. two formpages if EN+DE), the api user must be set for
 * https://github.com/jsonform/jsonform
 * https://github.com/BuGlessRB/outperform
 * https://brainfoolong.github.io/form-data-json/example/playground.html
-
-</details>
