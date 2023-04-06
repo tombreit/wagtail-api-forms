@@ -1,4 +1,4 @@
-# Wagtail API Form builder documentation
+# Form Builder Documentation
 
 ```{include} snippets/wiphint.md
 ```

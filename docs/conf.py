@@ -18,7 +18,7 @@ import datetime
 
 # -- Project information -----------------------------------------------------
 
-project = 'Wagtail API form builder'
+project = 'Form Builder'
 author = 'Thomas Breitner'
 _today = datetime.date.today()
 copyright = f"{_today.year}, {author}"
@@ -59,12 +59,18 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 html_theme = "furo"  # "alabaster"
 
-html_title = "Wagtail API form builder"
+html_title = "Form Builder"
+
+html_logo = "_static/logo.svg"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+html_theme_options = {
+    "sidebar_hide_name": True,
+}
 
 
 myst_enable_extensions = [
