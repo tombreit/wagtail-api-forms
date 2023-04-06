@@ -30,10 +30,6 @@ DB_DIR = DATA_DIR / "db"
 # Make sure directory structure exists
 Path(DB_DIR).mkdir(parents=True, exist_ok=True)
 
-# print(f"{PROJECT_DIR=}")
-# print(f"{BASE_DIR=}")
-# print(f"{DATA_DIR=}")
-
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG", default=False)
 
@@ -170,19 +166,18 @@ SELECT2_CACHE_BACKEND = "select2"
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+
 
 
 # Internationalization
@@ -221,14 +216,10 @@ STATICFILES_DIRS = [
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # JavaScript / CSS assets being served from cache (e.g. after a Wagtail upgrade).
 # See https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# Check bootstrap-icons bug: https://github.com/twbs/icons/issues/563
 
 # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# Disabled right know because of a bug in bootstrap-icons:
-# https://github.com/twbs/icons/issues/563
-#STATICFILES_STORAGE = 'wagtail_api_forms.home.storage.ManifestStaticFilesStorageNotStrict'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
@@ -236,12 +227,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = DATA_DIR / 'media'
 MEDIA_URL = '/media/'
 
-
-AUTH_USER_MODEL = 'users.CustomUser'
-
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-]
 
 SITE_ID = 1
 
@@ -293,11 +278,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.IsAdminUser',
     ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     # 'rest_framework.authentication.BasicAuthentication',
-    #     # 'rest_framework.authentication.SessionAuthentication',
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ]
 }
 
 
@@ -331,10 +311,6 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
 )
-# CSP_DEFAULT_SRC = (
-#     "'self'",
-#     "'unsafe-inline'",
-# )
 
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
