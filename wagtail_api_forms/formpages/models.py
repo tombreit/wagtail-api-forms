@@ -191,7 +191,7 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         FormSubmissionsPanel(),
         FieldPanel('intro', classname="full"),
         HelpPanel(
-            content='Some more information in our <a href="/docs/fields/">docs</a>.',
+            content='Some more information in our <a href="/docs/">docs</a>.',
         ),
         InlinePanel('form_fields', label="Form fields"),
         FieldPanel('thank_you_text', classname="full"),
