@@ -22,66 +22,18 @@ def hide_explorer_menu_items_images_and_docs(request, menu_items):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-    return mark_safe(
-        """
-<script>
-    // const styleElem = document.createElement("style");
-    // styleElem.textContent = `
-    //     #id_form_fields-FORMS summary {
-    //         list-style: none;
-    //         font-size: larger;
-    //         padding-left: 1em;
-    //     }
-    //     #id_form_fields-FORMS summary::-webkit-details-marker {
-    //         display: none;
-    //     }
-    //     #id_form_fields-FORMS summary::before {
-    //         position: absolute;
-    //         top: 0.75em;
-    //         left: 3px;
-    //         height: 1.75em;
-    //         width: 1.75em;
-    //         box-sizing: border-box;
-    //         overflow: hidden;
-    //         cursor: pointer;
-    //         font-family: wagtail;
-    //         content: "▾";
-    //         text-align: center;
-    //         background-color: var(--color-primary);
-    //         border: 1px solid var(--color-primary);
-    //         border-radius: 3px;
-    //         color: #fff;
-    //     }
-    //     #id_form_fields-FORMS details[open] summary::before {
-    //         content:"▴";
-    //     }
-    // `;
-    // document.head.appendChild(styleElem);
-    // function wrap(el, label) {
-    //     let wrapper = document.createElement('details'),
-    //         summaryElem = document.createElement('summary'),
-    //         summaryCont = document.createTextNode(label);
-    //     el.parentNode.insertBefore(wrapper, el);
-    //     summaryElem.appendChild(summaryCont);
-    //     // summaryElem.setAttribute("style", "font-size: larger");
-    //     wrapper.appendChild(el);
-    //     wrapper.insertAdjacentElement('afterbegin', summaryElem);
-    // }
-    // if (node.nodeName === "LI") {
-    // for (fieldset of node.getElementsByTagName("fieldset")) {}
-    // target_label_elem = fieldset.querySelector('[data-contentpath="label"] input');
-    // target_label = target_label_elem.value;
-    // wrap(fieldset, target_label);
-
+    return mark_safe("""
+    <script>
     window.addEventListener('DOMContentLoaded', (event) => {
         // console.log("Accordionize fields list...")
 
+        /* Display field name/label in wagtail admin interface as field heading */
         const sequenceContainer = document.getElementById('id_form_fields-FORMS');
         const child_nodes = sequenceContainer.childNodes;
 
         for (node of child_nodes){
-            let idNr;
             if (node.nodeType == Node.ELEMENT_NODE && node.hasAttribute("data-inline-panel-child")) {
+                let idNr;
                 idNr = node.id.replace("inline_child_form_fields-", "");
                 const inputId = "id_form_fields-" + idNr + "-label";
                 // Get input elem with "d_form_fields-0-label" value
@@ -90,18 +42,19 @@ def editor_js():
                 const heading_elem = node.querySelector('[data-panel-heading-text]');
                 const appendFieldName = ": " + fieldName
                 heading_elem.insertAdjacentText('beforeend', appendFieldName);
-
-                // Initially collapse all fields
-                // TODO: needs two clicks to uncollapse
-                const toggleSectionId = "inline_child_form_fields-" + idNr + "-panel-content"
-                const toggleSection = document.getElementById(toggleSectionId)
-                toggleSection.setAttribute('hidden', '');
             }
         }
+
+        /* Collapse all form fields on page load */
+        const formFieldTogglers = document.querySelectorAll("#id_form_fields-FORMS .w-panel__toggle");
+
+        for (formFieldToggle of formFieldTogglers){
+            console.log(formFieldToggle);
+            formFieldToggle.click();
+        }
     });
-</script>
-"""
-    )
+    </script>
+    """)
 
 
 class AttachmentAdmin(ModelAdmin):
@@ -128,16 +81,6 @@ class TokenFormAdmin(ModelAdmin):
     list_filter = ('form', 'api_user')
     search_fields = ('form', 'api_user')
 
-
-# class FormGroup(ModelAdminGroup):
-#     menu_label = 'Form Management'
-#     menu_icon = 'folder-open-inverse'  # change as required
-#     menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
-#     items = (
-#         AttachmentAdmin,
-#         TokenFormAdmin,
-#     )
-# modeladmin_register(FormGroup)
 
 modeladmin_register(TokenFormAdmin)
 modeladmin_register(AttachmentAdmin)
