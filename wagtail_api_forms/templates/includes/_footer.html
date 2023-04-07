@@ -18,6 +18,11 @@
                 {% endfor %}
             </div>
             <div class="col-6 col-md-4 text-right">
+                {% if request.user.is_authenticated %}
+                    <a class="mr-3 text-white" href="/docs/">
+                        <i class="bi bi-life-preserver"></i> Docs
+                    </a>
+                {% endif %}
                 &copy; {% now "Y" %} {{ settings.home.BrandingSettings.brand_abbr }}
             </div>
         </div>
