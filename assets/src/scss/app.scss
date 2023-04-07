@@ -1,14 +1,20 @@
 @import "components/_typo";
 
+// Branding css variables could be set via
+// Wagtail admin > Settings > Branding settings.
+// :root {
+//   --primary_accent_color: rgb(4, 55, 242);
+//   --primary_accent_gray: rgb(216, 216, 216);
+// }
 
-$waf-green: rgb(0,108,102);
-$waf-gray: rgb(102,102,102);
-$waf-bg-gray: rgb(238,238,238);
+$waf-primary-accent-color: var(--primary_accent_color);
+$waf-bg-gray: var(--primary_accent_gray);
 
 
-$theme-colors: (
-  "primary": $waf-green,
-);
+
+// $theme-colors: (
+//   "primary": $waf-primary-accent-color,
+// );
 
 $link-decoration: underline;
 $web-font-path: "";
@@ -18,9 +24,8 @@ $font-family-sans-serif: "FontSourceRoboto", sans-serif;
 $font-family-serif:      "Merriweather", serif;
 $font-family-base:       $font-family-sans-serif;
 
+$headings-font-family: $font-family-serif;
 $font-weight-base: 300;
-
-$headings-font-family: "Merriweather", serif;
 
 
 // Bootstrap

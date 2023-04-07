@@ -382,3 +382,8 @@ USE_ANTIVIR_SERVICE = env.bool("USE_ANTIVIR_SERVICE", default=True)
 
 FORMBUILDER_EMAIL_DATE_FORMAT = "l d.m.Y"
 FORMBUILDER_EMAIL_DATETIME_FORMAT = "l d.m.Y H:i"
+
+FORMBUILDER_DEFAULT_CSS_VARIABLES = {
+    "primary_accent_color": "rgb(4, 55, 242)",
+    "primary_accent_gray": "rgb(216, 216, 216)",
+}

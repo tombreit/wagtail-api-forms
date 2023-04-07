@@ -3,7 +3,7 @@ h2, .h2,
 h3, .h3,
 h4, .h4,
 h5, .h5 {
-    color: $waf-green;
+    color: $waf-primary-accent-color;
     font-weight: 400;
 }
 
@@ -65,13 +65,12 @@ header {
 .navbar-brand {
     text-transform: uppercase;
     text-decoration: none;
-    color: $waf-gray;
 }
 
 footer {
     margin-top: 2em;
     padding: 2em 0;
-    background-color: $waf-green;
+    background-color: $waf-primary-accent-color;
     line-height: 4em;
 
     img {

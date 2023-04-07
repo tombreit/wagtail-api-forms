@@ -2,6 +2,7 @@ import os.path
 from pathlib import Path
 from uuid import uuid4
 
+from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
@@ -110,6 +111,19 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
         help_text=_('Favicon file. Formats: ICO or PNG'),
     )
 
+    def branding_css_variables_default_json():
+        return settings.FORMBUILDER_DEFAULT_CSS_VARIABLES
+
+    branding_css_variables = models.JSONField(
+        default=branding_css_variables_default_json,
+        verbose_name=_("CSS Variables"),
+        help_text="""
+            CSS variables to tweak the styling. Expects a dictionary 
+            (JSON formatted) with at least values for the keys
+            `primary_accent_color` and `primary_accent_gray`.
+        """
+    )
+
     panels = [
         FieldPanel('brand_abbr'),
         FieldPanel('brand_name_en'),
@@ -118,6 +132,7 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
         FieldPanel('brand_logo_de'),
         FieldPanel('brand_figurative_mark'),
         FieldPanel('favicon'),
+        FieldPanel('branding_css_variables'),
     ]
 
 

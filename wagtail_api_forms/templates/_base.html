@@ -21,12 +21,15 @@
         <link rel="icon" href="{% get_media_prefix %}{{ favicon_url }}">
 
         <style>
+            {{ css_variables }}
+
             body .navbar-header {
                 background-image: url('{{ brand_logo_en_url }}');
             }
             body.lang_de .navbar-header {
                 background-image: url('{{ brand_logo_de_url }}');
             }
+            
           </style>
 
         {% block extra_css %}
