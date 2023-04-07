@@ -11,7 +11,7 @@ User friendly html form builder. A customized Django Wagtail app.
   * Typeahead-Multiselect field ("select2")
   * Datetime and time fields with time picker for Firefox
 * Embed page content - without header, footer etc. - via ``url?embed=true``. Useful for embedding only the form on third party sites.
-  * iFrame autoresizing via https://github.com/davidjbradshaw/iframe-resizer
+  * iFrame autoresizing
   * Handles Content Security Policy (CSP). See `.env`.
 * Multilingual
 * Captcha (optional, configurable per form)
@@ -42,8 +42,7 @@ User friendly html form builder. A customized Django Wagtail app.
 </script>
 ```
 
-*Snippet from https://github.com/davidjbradshaw/iframe-resizer#typical-setup*
-
+*Snippet from https://github.com/davidjbradshaw/iframe-resizer#typical-setup. Thanks to [davidjbradshaw](https://github.com/davidjbradshaw/iframe-resizer)*
 
 ## Usage
 
