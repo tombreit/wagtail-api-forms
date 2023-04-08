@@ -2,6 +2,8 @@
 
 User friendly html form builder. A customized Django Wagtail app.
 
+Wagtail as a standalone builder for form pages or simply forms.
+
 ## Features
 
 * Expose API endpoint for forms, authentification via token (optional, configurable per form)
@@ -54,4 +56,4 @@ See `docs/setup.md`
 
 * Docs are served at the URL `fqdn/docs/`.
 * Attachment file objects could only be fetched with an authenticated request (from whitelisted ip address or basic auth)
-* Attachment file objects could only be fetched if its status is ``av_passed=True`` for which the huey task queue must be running (or when virus checking facility is disabled via `USE_ANTIVIR_SERVICE=false` in `.env`)
+* Attachment file objects could only be fetched if its status is ``av_passed=True`` for which the huey task queue must be running (or when virus checking facility is disabled via `FORMBUILDER_USE_ANTIVIR_SERVICE=false` in `.env`)

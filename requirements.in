@@ -1,5 +1,5 @@
-Django==4.1.7
-wagtail==4.2.1
+Django==4.1.8
+wagtail==4.2.2
 
 # wagtail-localize
 django_extensions
@@ -18,7 +18,7 @@ django-select2
 # of wagtail but also used for our own, simple API view.
 djangorestframework
 
-environs[django]
+django-environ
 python-magic
 whitenoise
 huey

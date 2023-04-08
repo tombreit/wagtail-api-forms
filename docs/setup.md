@@ -13,26 +13,21 @@ To get this project up and running on your host:
 
 ### Django and Wagtail
 
-1. **pip and npm**
+1. **Bundle static assets**
 
    ```bash
-   source path/to/your/venv
-   (venv) pip install --upgrade pip setuptools wheel
-   (venv) pip install -r requirements.txt
    npm install && npm run prod
    ```
 
-1. **.env**: 
+1. **Set environment via .env file**: 
 
-   Copy ``env.template`` to ``.env`` and set your environment variables there. 
+   Copy ``env.template`` to ``.env`` and set your environment variables. 
 
-1. **django.settings**:
+1. **Start wagtail-api-forms**:
 
-   ```python
-   # settings/base.py
-   FORMBUILDER_MAX_UPLOAD_SIZE...
-   FORMBUILDER_ALLOWED_IMAGE_FILE_TYPES...
-   FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES...
+   ```bash
+   source path/to/your/venv
+   (venv) pip install -r requirements.txt
    ```
 
 
@@ -45,7 +40,7 @@ Build the documentation with
 make --directory docs/ html
 
 # or with live reload
-sphinx-autobuild docs docs/_build/html --port 0
+sphinx-autobuild -a --port 0 docs docs/_build/html
 ```
 
 
@@ -58,7 +53,7 @@ docker-compose up
 manage.py run_huey
 ```
 
-**Note:** Virus scanning could be disabled via ``.env`` setting ``USE_ANTIVIR_SERVICE=false``.
+**Note:** Virus scanning could be disabled via ``.env`` setting ``FORMBUILDER_USE_ANTIVIR_SERVICE=false``.
 
 ### Localization - App
 
