@@ -1,7 +1,5 @@
 {
   "name": "wagtail_api_forms",
-  "version": "1.0.0",
-  "main": "index.js",
   "config": {
     "srcdir": "assets/src",
     "distdir": "wagtail_api_forms/static/dist",
@@ -11,10 +9,7 @@
   "scripts": {
     "preprod": "mkdir -p $npm_package_config_distdir",
     "prod": "npm-run-all scss:prod scss:autoprefixer js:prod font:copy-all img:copy hotfix:underscore",
-    "dev": "npm-run-all scss:dev js:bundle font:copy-all favicon:copy img:copy",
-    "scss:dev": "sass --load-path=node_modules --stop-on-error --style expanded $npm_package_config_srcdir/scss:$npm_package_config_distdir/css",
     "scss:prod": "sass --load-path=node_modules --stop-on-error --style compressed $npm_package_config_srcdir/scss:$npm_package_config_distdir/css",
-    "scss:watch": "sass --load-path=node_modules --watch $npm_package_config_srcdir/scss:$npm_package_config_distdir/css",
     "scss:autoprefixer": "postcss --use=autoprefixer --map=false -r $npm_package_config_distdir/css/*.css",
     "js:prod": "npm-run-all js:bundle js:copy-iframeresizer js:copy-jquery js:copy-popper-map js:copy-bootstrap-map",
     "js:bundle": "bundle-js $npm_package_config_srcdir/js/app.js --disable-beautify --out $npm_package_config_distdir/js/app.js",
@@ -31,14 +26,13 @@
     "hotfix:underscore": "curl --silent --show-error $npm_package_config_underscore_map_src --output $npm_package_config_underscore_map_dest"
   },
   "author": "Thomas Breitner",
-  "license": "ISC",
   "devDependencies": {
     "@fontsource/merriweather": "^4.5.14",
     "@fontsource/roboto": "^4.5.8",
     "@ttskch/select2-bootstrap4-theme": "^1.3.4",
     "autoprefixer": "^10.4.14",
     "bootstrap": "^4.6.2",
-    "bootstrap-icons": "^1.10.3",
+    "bootstrap-icons": "^1.10.4",
     "bundle-js": "^1.0.3",
     "flatpickr": "^4.6.13",
     "iframe-resizer": "^4.3.6",
@@ -47,9 +41,8 @@
     "popper.js": "^1.16.1",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
-    "sass": "^1.59.3",
+    "sass": "^1.61.0",
     "select2": "^4.0.13",
-    "uglify": "^0.1.5",
-    "watch": "^1.0.2"
+    "uglify": "^0.1.5"
   }
 }
