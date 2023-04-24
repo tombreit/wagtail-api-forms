@@ -3,8 +3,8 @@
 ```{include} snippets/wiphint.md
 ```
 
-```{admonition} Mehrsprachigkeit
-   Das Backend ist in vielen Sprachen verfügbar. Für diese Dokumentation werden die englischen Bezeichner verwendet.
+```{admonition} Multilanguage
+   The backend is available in many languages and can be set via the account settings (bottom left).  For this documentation the English identifiers are used.
 ```
 
 <details>
@@ -32,7 +32,7 @@ werden (Button "Publish" unten auf der Seite).
 Für eine existierende Seite kann eine Übersetzung angelegt werden: Via
 "Translate" im Seiten-Actions-Menü. Hierbei wird im entsprechenden Seitenbaum
 der anderen Sprache eine Kopie dieser Seite mit den ursprünglichen Inhalten
-angelegt. Diese Inhalte auf der neuen Seite sind dann manuell zu übersetzen. 
+angelegt. Diese Inhalte auf der neuen Seite sind dann manuell zu übersetzen/überschreiben.
 
 </details>
 
@@ -41,7 +41,7 @@ angelegt. Diese Inhalte auf der neuen Seite sind dann manuell zu übersetzen.
 
 Formulardaten werden standardmäßig im System gespeichert. Über den
 Navigationspunkt "Forms" können die submissions der einzelnen Formulare
-eingesehen werden und auch exportiert werden. 
+eingesehen werden und auch exportiert (Excel, CSV) werden. 
 
 Weiter bietet jedes Formular eine Einstellung, dass submissions an eine
 definierte Email-Adresse ("To adress") versendet werden. Diese - und weitere zugehörige
@@ -70,7 +70,7 @@ die Credentials ab.
 <details>
 <summary>Warum kann ich mich nicht am Backend anmelden?</summary>
 
-Aktuell muss eine bestimmte Gruppenmitgliedschaft (`form-editors`) erfüllt
+Aktuell muss eine bestimmte Gruppenmitgliedschaft (siehe `env.template`) erfüllt
 sein, damit ein Login möglich ist. 
 
 </details>
@@ -85,7 +85,7 @@ Jeder User "sieht" z.B. nur die Seiten/Formulare, für die sie oder er
 berechtigt ist. 
 
 Weiter sind die Formulare über "Container-Seiten" zusammengefasst, damit über
-diese "Container-Seiten" Berechtigungen zugewiesen werden können.
+diese "Container-Seiten" Gruppen-Berechtigungen zugewiesen werden können.
 
 </details>
 

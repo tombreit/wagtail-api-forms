@@ -12,7 +12,7 @@ Wagtail as a standalone builder for form pages or simply forms.
   * Image file field
   * Typeahead-Multiselect field ("select2")
   * Datetime and time fields with time picker for Firefox
-* Embed page content - without header, footer etc. - via ``url?embed=true``. Useful for embedding only the form on third party sites.
+* Embed page content - without header, footer etc. - via `url?embed=true`. Useful for embedding only the form on third party sites.
   * iFrame autoresizing
   * Handles Content Security Policy (CSP). See `.env`.
 * Multilingual

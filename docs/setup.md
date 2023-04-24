@@ -153,9 +153,3 @@ Token.objects.create(user=user)
 
 ...and set this user in wagtail admin for the desired form page in page settings.
 For translated forms (e.g. two formpages if EN+DE), the api user must be set for both form pages.
-
-## External form rendering
-
-* https://github.com/jsonform/jsonform
-* https://github.com/BuGlessRB/outperform
-* https://brainfoolong.github.io/form-data-json/example/playground.html
