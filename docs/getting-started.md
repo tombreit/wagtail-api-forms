@@ -10,11 +10,11 @@
 
 ## Overview
 
-This form builder allows you to create web forms. No HTML or programming knowledge is required for this. The Form Builder works on a web page basis, therefore a form corresponds to a page, hereafter called "form page". These form pages are created in a hierarchical page structure, with only three levels: 
+This form builder allows to create web forms. No HTML or programming knowledge is required for this. The Form Builder works on a web page basis, therefore a form corresponds to a page, hereafter called "form page". These form pages are created in a hierarchical page structure, with only three levels: 
 
 1. root level to distinguish the language versions.
-1. container level for grouping form pages, e.g. for assigning authorizations
-1. form pages
+1. container level for grouping form pages, e.g. for assigning permissions
+1. page level to setup form pages
 
 Form pages contain a page title, the form or the fields of a form, some mail settings and an (optional) captcha. The individual form fields, field types, field names, etc. are compiled by the user. 
 

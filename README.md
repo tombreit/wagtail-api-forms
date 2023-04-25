@@ -6,6 +6,8 @@ Wagtail as a standalone builder for form pages or simply forms.
 
 ## Features
 
+*Building upon the feature set of [Wagtail form builder](https://docs.wagtail.org/en/latest/reference/contrib/forms/) and customized to provide the following additional features.*
+
 * Expose API endpoint for forms, authentification via token (optional, configurable per form)
 * Custom form fields:
   * Document file field
