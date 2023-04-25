@@ -1,7 +1,7 @@
 from django.urls import path, re_path, include
 
 from .views import AttachmentDownloadView
-from .api import FormSubmissionList, FormSubmissionApi
+from .api import FormSubmissionApi
 
 
 urlpatterns_captcha = [
@@ -9,7 +9,6 @@ urlpatterns_captcha = [
 ]
 
 urlpatterns_api = [
-    path('v1/', FormSubmissionList.as_view()),
     path('v2/', FormSubmissionApi.as_view()),  # paginated
     # path('formsubmissions/<uuid:id>/', FormSubmissionDetail.as_view()),
 ]

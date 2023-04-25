@@ -44,7 +44,6 @@ source path/to/your/venv/bin/activate
 
 #### Endpoints
 
-* ~~http://fqdn/api/formsubmission/v1/~~ (deprecated)
 * http://fqdn/api/formsubmission/v2/ (paginated)
 
 #### Add API users
