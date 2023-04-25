@@ -2,13 +2,11 @@
   "name": "wagtail_api_forms",
   "config": {
     "srcdir": "assets/src",
-    "distdir": "wagtail_api_forms/static/dist",
-    "underscore_map_src": "https://raw.githubusercontent.com/jashkenas/underscore/master/underscore-umd.js.map",
-    "underscore_map_dest": "docs/_build/json/_static/underscore-umd.js.map"
+    "distdir": "wagtail_api_forms/static/dist"
   },
   "scripts": {
     "preprod": "mkdir -p $npm_package_config_distdir",
-    "prod": "npm-run-all scss:prod scss:autoprefixer js:prod font:copy-all img:copy hotfix:underscore",
+    "prod": "npm-run-all scss:prod scss:autoprefixer js:prod font:copy-all img:copy",
     "scss:prod": "sass --load-path=node_modules --stop-on-error --style compressed $npm_package_config_srcdir/scss:$npm_package_config_distdir/css",
     "scss:autoprefixer": "postcss --use=autoprefixer --map=false -r $npm_package_config_distdir/css/*.css",
     "js:prod": "npm-run-all js:bundle js:copy-iframeresizer js:copy-jquery js:copy-popper-map js:copy-bootstrap-map",
@@ -22,8 +20,7 @@
     "font:copy-bootstrap-icons": "mkdir -p $npm_package_config_distdir/fonts/bootstrap-icons && cp node_modules/bootstrap-icons/font/fonts/* $npm_package_config_distdir/fonts/bootstrap-icons/",
     "font:copy-merriweather": "mkdir -p $npm_package_config_distdir/fonts/merriweather && cp node_modules/@fontsource/merriweather/files/* $npm_package_config_distdir/fonts/merriweather/",
     "font:copy-roboto": "mkdir -p $npm_package_config_distdir/fonts/roboto && cp node_modules/@fontsource/roboto/files/* $npm_package_config_distdir/fonts/roboto/",
-    "img:copy": "cp -r $npm_package_config_srcdir/img $npm_package_config_distdir/",
-    "hotfix:underscore": "curl --silent --show-error $npm_package_config_underscore_map_src --output $npm_package_config_underscore_map_dest"
+    "img:copy": "cp -r $npm_package_config_srcdir/img $npm_package_config_distdir/"
   },
   "author": "Thomas Breitner",
   "devDependencies": {
