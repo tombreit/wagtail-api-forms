@@ -290,10 +290,10 @@ CORS_URLS_REGEX = r"^/api/formsubmission/.*$"
 # https://wolfgang.reutz.at/2018/10/12/django-and-content-security-policy/
 CSP_REPORT_ONLY = False
 
-FORMBUILDER_CSP_FRAME_ANCESTORS = (
+CSP_FRAME_ANCESTORS = (
     "'self'",
 )
-FORMBUILDER_CSP_FRAME_ANCESTORS += tuple(env.list("FORMBUILDER_CSP_FRAME_ANCESTORS"))
+CSP_FRAME_ANCESTORS += tuple(env.list("FORMBUILDER_CSP_FRAME_ANCESTORS"))
 
 CSP_EXCLUDE_URL_PREFIXES = (
     "/admin",
@@ -412,6 +412,9 @@ if DEBUG:
     print(f"{FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES=}")
     print(f"{FORMBUILDER_ALLOWED_IMAGE_FILE_TYPES=}")
     print(f"{FORMBUILDER_USE_ANTIVIR_SERVICE=}")
+    print(f"{FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST=}")
+    print(f"{CSP_FRAME_ANCESTORS=}")
+    print(f"{ALLOWED_HOSTS=}")
 
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
