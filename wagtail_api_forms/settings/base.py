@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'captcha',
     'huey.contrib.djhuey',
     'django_select2',
-    'sphinx_view',
+    # 'sphinx_view',
 
     # Django apps
     'django.contrib.admin',
