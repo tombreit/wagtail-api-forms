@@ -96,3 +96,12 @@ Ja. Auf der Backendseite eines Formulars in den Reiter "Settings" wechseln und
 "Use captcha" aktivieren und die Seite publizieren.
 
 </details>
+
+<details>
+<summary>Erhalten User automatisch eine Bestätigungsmail?</summary>
+
+Nein. Das Formulartool kann keine automatischen Bestätigungsemails an User versenden,
+da es den User "nicht kennt". Auch wenn in einem Formular ein Feld "Email"
+zusammengestellt wurde, weiß das Formulartool nicht, was dieses Feld inhaltlich ausdrückt.
+
+</details>
