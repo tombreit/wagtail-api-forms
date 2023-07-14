@@ -74,6 +74,7 @@ class FormSubmissionList(generics.ListAPIView):
     ]
     permission_classes = [
         permissions.IsAuthenticated,
+        # permissions.IsAdminUser,
         # IsSuperuserPermission,
         # IsOwnerOrReadOnly,
     ]
@@ -125,3 +126,4 @@ class StandardResultsSetPagination(pagination.PageNumberPagination):
 
 class FormSubmissionApi(FormSubmissionList):
     pagination_class = StandardResultsSetPagination
+    permission_classes = [permissions.IsAuthenticated]
