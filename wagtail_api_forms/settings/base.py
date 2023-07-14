@@ -275,6 +275,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated',
+        # Admin API returning no pages in Wagtail 2.6 #5585
+        # https://github.com/wagtail/wagtail/issues/5585
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.permissions.IsAdminUser',
     ],
 }
