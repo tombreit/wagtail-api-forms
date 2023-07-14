@@ -8,7 +8,7 @@ alabaster==0.7.13
     # via sphinx
 anyascii==0.3.2
     # via wagtail
-asgiref==3.7.1
+asgiref==3.7.2
     # via django
 babel==2.12.1
     # via sphinx
@@ -18,13 +18,15 @@ beautifulsoup4==4.11.2
     #   wagtail
 certifi==2023.5.7
     # via requests
-charset-normalizer==3.1.0
+charset-normalizer==3.2.0
     # via requests
 colorama==0.4.6
     # via sphinx-autobuild
 crispy-bootstrap4==2022.1
     # via -r requirements.in
-django==4.1.9
+defusedxml==0.7.1
+    # via willow
+django==4.2.3
     # via
     #   -r requirements.in
     #   crispy-bootstrap4
@@ -58,7 +60,7 @@ django-csp-reports==1.8.1
     # via -r requirements.in
 django-environ==0.10.0
     # via -r requirements.in
-django-extensions==3.2.1
+django-extensions==3.2.3
     # via -r requirements.in
 django-filter==22.1
     # via wagtail
@@ -74,7 +76,7 @@ django-ranged-response==0.2.0
     # via django-simple-captcha
 django-select2==8.1.2
     # via -r requirements.in
-django-simple-captcha==0.5.17
+django-simple-captcha==0.5.18
     # via -r requirements.in
 django-taggit==3.1.0
     # via wagtail
@@ -84,7 +86,7 @@ djangorestframework==3.14.0
     # via
     #   -r requirements.in
     #   wagtail
-docutils==0.19
+docutils==0.20.1
     # via
     #   myst-parser
     #   sphinx
@@ -92,6 +94,8 @@ draftjs-exporter==2.1.7
     # via wagtail
 et-xmlfile==1.1.0
     # via openpyxl
+filetype==1.2.0
+    # via willow
 furo==2023.5.20
     # via -r requirements.in
 html5lib==1.1
@@ -112,17 +116,17 @@ linkify-it-py==2.0.2
     # via -r requirements.in
 livereload==2.6.3
     # via sphinx-autobuild
-markdown-it-py==2.2.0
+markdown-it-py==3.0.0
     # via
     #   mdit-py-plugins
     #   myst-parser
-markupsafe==2.1.2
+markupsafe==2.1.3
     # via jinja2
-mdit-py-plugins==0.3.5
+mdit-py-plugins==0.4.0
     # via myst-parser
 mdurl==0.1.2
     # via markdown-it-py
-myst-parser==1.0.0
+myst-parser==2.0.0
     # via -r requirements.in
 openpyxl==3.1.2
     # via wagtail
@@ -168,7 +172,7 @@ snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.4.1
     # via beautifulsoup4
-sphinx==6.2.1
+sphinx==7.0.1
     # via
     #   -r requirements.in
     #   furo
@@ -177,7 +181,7 @@ sphinx==6.2.1
     #   sphinx-basic-ng
 sphinx-autobuild==2021.3.14
     # via -r requirements.in
-sphinx-basic-ng==1.0.0b1
+sphinx-basic-ng==1.0.0b2
     # via furo
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
@@ -193,19 +197,19 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 sqlparse==0.4.4
     # via django
-telepath==0.3
+telepath==0.3.1
     # via wagtail
 tornado==6.3.2
     # via livereload
 uc-micro-py==1.0.2
     # via linkify-it-py
-urllib3==2.0.2
+urllib3==2.0.3
     # via requests
-wagtail==4.2.4
+wagtail==5.0.2
     # via -r requirements.in
 webencodings==0.5.1
     # via html5lib
-whitenoise==6.4.0
+whitenoise==6.5.0
     # via -r requirements.in
-willow==1.4.1
+willow==1.5.1
     # via wagtail
