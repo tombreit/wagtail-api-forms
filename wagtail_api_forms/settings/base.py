@@ -386,6 +386,7 @@ FORMBUILDER_EMAIL_DATETIME_FORMAT = "l d.m.Y H:i"
 
 FORMBUILDER_DEFAULT_CSS_VARIABLES = {
     "primary_accent_color": "rgb(4, 55, 242)",
+    "primary_accent_color_darken": "rgb(3, 36, 156)",
     "primary_accent_gray": "rgb(216, 216, 216)",
 }
 

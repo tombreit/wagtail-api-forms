@@ -27,11 +27,13 @@ def branding(request):
     # Get:
     # FORMBUILDER_DEFAULT_CSS_VARIABLES = {
     #     "primary_accent_color": value,
+    #     "primary_accent_color_darken": value,
     #     "primary_accent_gray": value,
     # }
     # Return:
     # :root {
     #   --primary_accent_color: value;
+    #   --primary_accent_color_darken: value;
     #   --primary_accent_color: value;
     # }
 

@@ -120,7 +120,7 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
         help_text="""
             CSS variables to tweak the styling. Expects a dictionary 
             (JSON formatted) with at least values for the keys
-            `primary_accent_color` and `primary_accent_gray`.
+            `primary_accent_color` `primary_accent_color_darken` and `primary_accent_gray`.
         """
     )
 
