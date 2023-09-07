@@ -165,14 +165,16 @@ class UserFormField(AbstractFormField):
 
     page = ParentalKey('FormPage', on_delete=models.CASCADE, related_name='form_fields')
 
-    def save(self, *args, **kwargs):
-        """
-        Set clean_name on each save to the corresponding clean_name of the label field.
-        Upstream only sets clean_name once, when the first instance is created. 
-        """
-        clean_name = get_field_clean_name(self.label)
-        self.clean_name = clean_name
-        super().save(*args, **kwargs)
+    # This customization invalidated old field names after renameing a
+    # field. Using the standard save method prevents this.c
+    # def save(self, *args, **kwargs):
+    #     """
+    #     Set clean_name on each save to the corresponding clean_name of the label field.
+    #     Upstream only sets clean_name once, when the first instance is created. 
+    #     """
+    #     clean_name = get_field_clean_name(self.label)
+    #     self.clean_name = clean_name
+    #     super().save(*args, **kwargs)
 
 
 class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailForm):
