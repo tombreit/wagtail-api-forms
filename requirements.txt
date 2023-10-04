@@ -10,7 +10,7 @@ anyascii==0.3.2
     # via wagtail
 asgiref==3.7.2
     # via django
-babel==2.12.1
+babel==2.13.0
     # via sphinx
 beautifulsoup4==4.11.2
     # via
@@ -18,7 +18,7 @@ beautifulsoup4==4.11.2
     #   wagtail
 certifi==2023.7.22
     # via requests
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via requests
 colorama==0.4.6
     # via sphinx-autobuild
@@ -62,9 +62,9 @@ django-environ==0.11.2
     # via -r requirements.in
 django-extensions==3.2.3
     # via -r requirements.in
-django-filter==23.2
+django-filter==23.3
     # via wagtail
-django-ipware==5.0.0
+django-ipware==5.0.1
     # via -r requirements.in
 django-modelcluster==6.0
     # via wagtail
@@ -76,7 +76,7 @@ django-ranged-response==0.2.0
     # via django-simple-captcha
 django-select2==8.1.2
     # via -r requirements.in
-django-simple-captcha==0.5.18
+django-simple-captcha==0.5.20
     # via -r requirements.in
 django-taggit==4.0.0
     # via wagtail
@@ -96,11 +96,11 @@ et-xmlfile==1.1.0
     # via openpyxl
 filetype==1.2.0
     # via willow
-furo==2023.8.19
+furo==2023.9.10
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
-huey==2.4.5
+huey==2.5.0
     # via -r requirements.in
 idna==3.4
     # via requests
@@ -130,9 +130,9 @@ myst-parser==2.0.0
     # via -r requirements.in
 openpyxl==3.1.2
     # via wagtail
-packaging==23.1
+packaging==23.2
     # via sphinx
-pillow==10.0.0
+pillow==10.0.1
     # via
     #   django-simple-captcha
     #   pillow-heif
@@ -175,7 +175,7 @@ snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.5
     # via beautifulsoup4
-sphinx==7.2.5
+sphinx==7.2.6
     # via
     #   -r requirements.in
     #   furo
@@ -211,9 +211,9 @@ tornado==6.3.3
     # via livereload
 uc-micro-py==1.0.2
     # via linkify-it-py
-urllib3==2.0.4
+urllib3==2.0.6
     # via requests
-wagtail==5.1.1
+wagtail==5.1.2
     # via -r requirements.in
 webencodings==0.5.1
     # via html5lib
