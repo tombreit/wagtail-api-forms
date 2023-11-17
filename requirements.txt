@@ -10,7 +10,7 @@ anyascii==0.3.2
     # via wagtail
 asgiref==3.7.2
     # via django
-babel==2.13.0
+babel==2.13.1
     # via sphinx
 beautifulsoup4==4.11.2
     # via
@@ -18,15 +18,15 @@ beautifulsoup4==4.11.2
     #   wagtail
 certifi==2023.7.22
     # via requests
-charset-normalizer==3.3.0
+charset-normalizer==3.3.2
     # via requests
 colorama==0.4.6
     # via sphinx-autobuild
-crispy-bootstrap4==2022.1
+crispy-bootstrap4==2023.1
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
-django==4.2.5
+django==4.2.7
     # via
     #   -r requirements.in
     #   crispy-bootstrap4
@@ -48,9 +48,9 @@ django==4.2.5
     #   wagtail
 django-appconf==1.0.5
     # via django-select2
-django-auth-ldap==4.5.0
+django-auth-ldap==4.6.0
     # via -r requirements.in
-django-crispy-forms==2.0
+django-crispy-forms==2.1
     # via
     #   -r requirements.in
     #   crispy-bootstrap4
@@ -64,13 +64,13 @@ django-extensions==3.2.3
     # via -r requirements.in
 django-filter==23.3
     # via wagtail
-django-ipware==5.0.1
+django-ipware==5.0.2
     # via -r requirements.in
-django-modelcluster==6.0
+django-modelcluster==6.1
     # via wagtail
 django-permissionedforms==0.1
     # via wagtail
-django-private-storage==3.1
+django-private-storage==3.1.1
     # via -r requirements.in
 django-ranged-response==0.2.0
     # via django-simple-captcha
@@ -132,12 +132,12 @@ openpyxl==3.1.2
     # via wagtail
 packaging==23.2
     # via sphinx
-pillow==10.0.1
+pillow==10.1.0
     # via
     #   django-simple-captcha
     #   pillow-heif
     #   wagtail
-pillow-heif==0.13.0
+pillow-heif==0.13.1
     # via willow
 pyasn1==0.5.0
     # via
@@ -211,13 +211,19 @@ tornado==6.3.3
     # via livereload
 uc-micro-py==1.0.2
     # via linkify-it-py
-urllib3==2.0.6
+urllib3==2.1.0
     # via requests
-wagtail==5.1.2
+wagtail==5.2.1
+    # via
+    #   -r requirements.in
+    #   wagtail-modeladmin
+wagtail-modeladmin==1.0.0
     # via -r requirements.in
 webencodings==0.5.1
     # via html5lib
-whitenoise==6.5.0
+whitenoise==6.6.0
     # via -r requirements.in
 willow[heif]==1.6.2
-    # via wagtail
+    # via
+    #   wagtail
+    #   willow

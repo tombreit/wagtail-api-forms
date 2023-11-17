@@ -1,6 +1,7 @@
 from django.utils.safestring import mark_safe
 from wagtail import hooks
-from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register  # ModelAdminGroup
+# from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register  # ModelAdminGroup
+from wagtail_modeladmin.options import ModelAdmin, modeladmin_register
 
 from .models import Attachment, TokenForm
 

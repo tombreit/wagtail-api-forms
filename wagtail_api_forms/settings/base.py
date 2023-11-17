@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'wagtail.contrib.settings',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
-    'wagtail.contrib.modeladmin',
+    # 'wagtail.contrib.modeladmin',
     'wagtail.contrib.routable_page',
     'wagtail.embeds',
     'wagtail.sites',
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     # 'wagtail_localize.locales',  # This replaces 'wagtail.locales'
 
     # Third party apps
+    'wagtail_modeladmin',
     'whitenoise.runserver_nostatic',
     'private_storage',
     'cspreports',
