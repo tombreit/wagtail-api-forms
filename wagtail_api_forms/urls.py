@@ -22,7 +22,7 @@ urlpatterns = [
     path('api/formsubmission/', include(formpages_urls.urlpatterns_api)),
     path('captcha/', include(formpages_urls.urlpatterns_captcha)),
     path('select2/', include('django_select2.urls')),
-    path('cspreports/', include('cspreports.urls')),
+    # path('cspreports/', include('cspreports.urls')),
 
     # django_sphinx_view
     # path('docs/searchindex.js', sphinx_searchindex_view, name='sphinx_searchindex_view'),

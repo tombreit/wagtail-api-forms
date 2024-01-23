@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     'wagtail_modeladmin',
     'whitenoise.runserver_nostatic',
     'private_storage',
-    'cspreports',
+    # 'cspreports',
     'rest_framework',
     'rest_framework.authtoken',
     'modelcluster',
@@ -320,11 +320,11 @@ CSP_SCRIPT_SRC = (
 
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
-CSP_REPORT_URI = reverse_lazy('report_csp')
-CSP_REPORTS_EMAIL_ADMINS = False
-CSP_REPORTS_LOG = True
-CSP_REPORTS_SAVE = True
-CSP_REPORTS_LOG_LEVEL = 'debug'
+# CSP_REPORT_URI = reverse_lazy('report_csp')
+# CSP_REPORTS_EMAIL_ADMINS = False
+# CSP_REPORTS_LOG = True
+# CSP_REPORTS_SAVE = True
+# CSP_REPORTS_LOG_LEVEL = 'debug'
 
 # https://github.com/mbi/django-simple-captcha
 # https://starcross.dev/blog/6/customising-django-simple-captcha/
