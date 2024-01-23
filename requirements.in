@@ -1,5 +1,5 @@
-Django==4.2.7
-wagtail==5.2.1
+Django==5.0.1
+wagtail==5.2.2
 
 wagtail-modeladmin
 # wagtail-localize
@@ -12,7 +12,7 @@ django-ipware
 # django-sendfile2
 django-private-storage
 django-csp
-django-csp-reports
+# django-csp-reports
 django-select2
 
 # Explict mention of djangorestframework which is already a dependency
