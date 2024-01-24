@@ -207,7 +207,7 @@ uc-micro-py==1.0.2
     # via linkify-it-py
 urllib3==2.1.0
     # via requests
-wagtail==5.2.2
+wagtail==5.2.3
     # via
     #   -r requirements.in
     #   wagtail-modeladmin
