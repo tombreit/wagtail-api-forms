@@ -1,28 +1,53 @@
+echo "==================================================="
 echo "Ensure docker-compse is up"
+echo "==================================================="
+
 docker-compose down
 docker-compose up --build --force-recreate --no-deps --detach
 
-pip install -r requirements.txt
+echo "==================================================="
+echo "Deploy django backend"
+echo "==================================================="
 
-mkdir -p /path/to/wagtail_api_forms/media
-mkdir -p /path/to/wagtail_api_forms/staticfiles
-
-python3 manage.py migrate --noinput
-
-echo "Build documentation..."
-make --directory=docs/ json
-
-echo "Run collectstatic (first run for having files handy for being included by npm scripts)..."
-python3 manage.py collectstatic --noinput
-
-python3 manage.py compilemessages --ignore=assets/* --ignore=node_modules/* --ignore=staticfiles/*
-
+echo "[npm] Installing npm requirements..."
 npm install --quiet
+
+echo "[npm] Building static assets, first step..."
 npm run --silent prod
 
-echo "Run collectstatic (second, final run)..."
+echo "Activate virtual environment..."
+source /path/to/venv/bin/activate
+
+echo "[python] Ensure pip and wheel are uptodate..."
+pip install --upgrade pip wheel setuptools
+
+echo "[python] Install pip requirements..."
+pip install -r requirements.txt
+
+echo "[docs] Build documentation..."
+make --directory docs html
+
+echo "[django] Will migrate now..."
+python3 manage.py migrate --noinput
+
+echo "[django] Run compilemessages..."
+python3 manage.py compilemessages --ignore=assets/* --ignore=node_modules/* --ignore=staticfiles/*
+
+echo "[django] Run collectstatic (second, final run)..."
 python3 manage.py collectstatic --noinput
 
+echo "==================================================="
+echo "Restart huey"
+echo "==================================================="
+
+### needed for systemctl --user restart <wagtail-api-forms>.service
+export XDG_RUNTIME_DIR="/run/user/$UID"
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
 systemctl --user restart wagtail_api_forms_huey.service
-touch /path/to/wagtail_api_forms/wsgi.py
+echo "Huey restarted!"
+
+echo "Reload app..."
+touch /path/to/wagtail-api-forms/wagtail_api_forms/wsgi.py
+
+echo "Run check --deploy..."
 python3 manage.py check --deploy

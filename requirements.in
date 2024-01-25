@@ -13,7 +13,6 @@ django-ipware
 django-private-storage
 django-csp
 # django-csp-reports
-django-select2
 
 # Explict mention of djangorestframework which is already a dependency
 # of wagtail but also used for our own, simple API view.

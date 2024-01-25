@@ -1,12 +1,11 @@
-// require ../../../node_modules/jquery/dist/jquery.min.js
-// require ../../../node_modules/popper.js/dist/umd/popper.min.js
-// require ../../../node_modules/bootstrap/dist/js/bootstrap.min.js
-// require ../../../node_modules/select2/dist/js/select2.min.js
-// require ../../../node_modules/flatpickr/dist/flatpickr.min.js
-// require ../../../staticfiles/django_select2/django_select2.js
+import jquery from "jquery";
+import popper from "popper.js";
+import * as bootstrap from 'bootstrap';
+import flatpickr from "flatpickr";
+import TomSelect from 'tom-select';
+
 
 document.addEventListener("DOMContentLoaded", function(event) {
-
   const isFirefox = typeof InstallTrigger !== 'undefined';
 
   if (isFirefox) {
@@ -25,4 +24,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // flatpickr(dateInputs, flatpickrConfig);
     flatpickr("input[type=datetime-local]", flatpickrConfig);
   }
+
+  document.querySelectorAll('.is-tom-select').forEach((el)=>{
+    let tomSelectconfig = {
+        plugins: ['remove_button'],
+        create: false,
+    };
+    new TomSelect(el, tomSelectconfig);
+  });
+
 });

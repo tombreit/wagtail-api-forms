@@ -1,5 +1,9 @@
 # CHANGLOG
 
+## 2024-01
+
+- Static assets processing now via `parcel`
+
 ## 2023-04
 
 - Use whitenoise for static file serving and for /docs/

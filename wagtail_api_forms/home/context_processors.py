@@ -17,7 +17,7 @@ def branding(request):
 
     # Brand logo defaults to ACME:
     localized_brand_name = getattr(branding_settings, localized_brand_name_attr)
-    brand_logo_fallback_url = static('dist/img/logo_acme.svg')
+    brand_logo_fallback_url = static('img/logo_acme.svg')
     brand_logo_en_url = branding_settings.brand_logo_en
     brand_logo_de_url = branding_settings.brand_logo_de
     brand_figurative_mark = branding_settings.brand_figurative_mark

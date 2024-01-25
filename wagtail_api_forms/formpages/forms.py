@@ -2,10 +2,10 @@ from django.conf import settings
 from django.forms import DateField, DateTimeField, MultipleChoiceField, widgets
 from wagtail.contrib.forms.forms import FormBuilder
 from captcha.fields import CaptchaField
-from django_select2.forms import Select2MultipleWidget
 
 from .fields import FormBuilderBaseFileField
 from .constants import FileArtChoices
+
 
 class CustomFormBuilder(FormBuilder):
 
@@ -44,15 +44,13 @@ class CustomFormBuilder(FormBuilder):
         return field
 
     def create_multiplechoicetypeahead_field(self, field, options):
-
         options['choices'] = map(
             lambda x: (x.strip(), x.strip()),
             field.choices.split(',')
         )
         return MultipleChoiceField(
-            widget=Select2MultipleWidget(
-                # choices=options['choices'],
-                attrs={'data-placeholder': field.placeholder},
+            widget=widgets.SelectMultiple(
+                attrs={'class': 'is-tom-select',}
             ),
             **options,
         )

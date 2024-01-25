@@ -17,7 +17,7 @@
             {% endblock %}
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" type="text/css" href="{% static 'dist/css/app.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/app.css' %}">
         <link rel="icon" href="{% get_media_prefix %}{{ favicon_url }}">
 
         <style>
@@ -60,10 +60,10 @@
             {% include 'includes/_footer.html' %}
         {% endif %}
 
-        <script type="text/javascript" src="{% static 'dist/js/app.js' %}"></script>
+        <script src="{% static 'frontend/app.js' %}"></script>
 
         {% if ctx_embed %}
-        <script type="text/javascript" src="{% static 'dist/js/iframeresizer/iframeResizer.contentWindow.min.js' %}"></script> 
+        <script src="{% static 'iframeresizer/iframeResizer.contentWindow.js' %}"></script> 
         {% endif %}
 
         {% block extra_js %}

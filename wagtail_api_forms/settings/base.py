@@ -2,14 +2,13 @@
 Django settings for wagtail-api-forms project.
 
 See end of file for development specific settings, triggered by
-`DEBUG = False`.
+`DEBUG = True`.
 """
 
 from pathlib import Path
 import environ
 
 from django.utils.translation import gettext_lazy as _
-from django.urls import reverse_lazy
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,6 +16,8 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = PROJECT_DIR.parent
 DATA_DIR = BASE_DIR / "_data"
 DB_DIR = DATA_DIR / "db"
+ASSETS_DIR = BASE_DIR / '_run' / 'assets'
+
 
 # https://django-environ.readthedocs.io/en/latest/quickstart.html
 env = environ.Env(
@@ -28,12 +29,12 @@ environ.Env.read_env(BASE_DIR / '.env')
 
 # Make sure directory structure exists
 Path(DB_DIR).mkdir(parents=True, exist_ok=True)
+Path(ASSETS_DIR).mkdir(parents=True, exist_ok=True)
 
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
 
 # Application definition
-
 INSTALLED_APPS = [
     # Local apps
     'wagtail_api_forms.users',
@@ -77,7 +78,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'captcha',
     'huey.contrib.djhuey',
-    'django_select2',
     # 'sphinx_view',
 
     # Django apps
@@ -146,20 +146,13 @@ DATABASES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# Cache (for django-select2)
+# Cache
 # https://docs.djangoproject.com/en/4.0/topics/cache/#database-caching
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     },
-    'select2': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'formpages_select2',
-    }
 }
-
-# Tell select2 which cache configuration to use:
-SELECT2_CACHE_BACKEND = "select2"
 
 
 # Password validation
@@ -177,7 +170,6 @@ AUTH_USER_MODEL = 'users.CustomUser'
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
-
 
 
 # Internationalization
@@ -210,6 +202,7 @@ STATICFILES_FINDERS = [
 ]
 
 STATICFILES_DIRS = [
+    ASSETS_DIR,
     PROJECT_DIR / 'static',
 ]
 
@@ -221,7 +214,7 @@ STATICFILES_DIRS = [
 # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / '_run' / 'staticfiles'
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = DATA_DIR / 'media'

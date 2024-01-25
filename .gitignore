@@ -4,9 +4,8 @@ node_modules/
 .venv/
 *.mo
 *.pot
+.parcel-cache/
 
 .env
 /_data/
-/staticfiles/
-/docs/_build/
-/wagtail_api_forms/static/dist
+/_run/

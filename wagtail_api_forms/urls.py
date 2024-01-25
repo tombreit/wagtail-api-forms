@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path
@@ -21,7 +19,6 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
     path('api/formsubmission/', include(formpages_urls.urlpatterns_api)),
     path('captcha/', include(formpages_urls.urlpatterns_captcha)),
-    path('select2/', include('django_select2.urls')),
     # path('cspreports/', include('cspreports.urls')),
 
     # django_sphinx_view

@@ -30,7 +30,6 @@ django==5.0.1
     # via
     #   -r requirements.in
     #   crispy-bootstrap4
-    #   django-appconf
     #   django-auth-ldap
     #   django-crispy-forms
     #   django-csp
@@ -39,14 +38,11 @@ django==5.0.1
     #   django-modelcluster
     #   django-permissionedforms
     #   django-ranged-response
-    #   django-select2
     #   django-simple-captcha
     #   django-taggit
     #   django-treebeard
     #   djangorestframework
     #   wagtail
-django-appconf==1.0.6
-    # via django-select2
 django-auth-ldap==4.6.0
     # via -r requirements.in
 django-crispy-forms==2.1
@@ -71,8 +67,6 @@ django-private-storage==3.1.1
     # via -r requirements.in
 django-ranged-response==0.2.0
     # via django-simple-captcha
-django-select2==8.1.2
-    # via -r requirements.in
 django-simple-captcha==0.6.0
     # via -r requirements.in
 django-taggit==4.0.0
