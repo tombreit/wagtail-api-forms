@@ -5,7 +5,7 @@ wagtail-modeladmin
 # wagtail-localize
 django_extensions
 django-crispy-forms
-crispy-bootstrap4
+crispy-bootstrap5
 django-auth-ldap
 django-simple-captcha
 django-ipware

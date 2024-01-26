@@ -1,5 +1,3 @@
-import jquery from "jquery";
-import popper from "popper.js";
 import * as bootstrap from 'bootstrap';
 import flatpickr from "flatpickr";
 import TomSelect from 'tom-select';

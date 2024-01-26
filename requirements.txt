@@ -22,14 +22,14 @@ charset-normalizer==3.3.2
     # via requests
 colorama==0.4.6
     # via sphinx-autobuild
-crispy-bootstrap4==2023.1
+crispy-bootstrap5==2023.10
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
 django==5.0.1
     # via
     #   -r requirements.in
-    #   crispy-bootstrap4
+    #   crispy-bootstrap5
     #   django-auth-ldap
     #   django-crispy-forms
     #   django-csp
@@ -48,7 +48,7 @@ django-auth-ldap==4.6.0
 django-crispy-forms==2.1
     # via
     #   -r requirements.in
-    #   crispy-bootstrap4
+    #   crispy-bootstrap5
 django-csp==3.7
     # via -r requirements.in
 django-environ==0.11.2

@@ -7,7 +7,7 @@
     "iframeresdir": "_run/assets/iframeresizer"
   },
   "scripts": {
-    "scss:frontend": "parcel build $npm_package_config_srcdir/scss/*.scss --dist-dir $npm_package_config_distdir/",
+    "scss:frontend": "parcel build $npm_package_config_srcdir/scss/app.scss --dist-dir $npm_package_config_distdir/",
     "js:copy-iframeresizer": "mkdir -p $npm_package_config_iframeresdir && cp node_modules/iframe-resizer/js/* $npm_package_config_iframeresdir/",
     "js:frontend": "parcel build $npm_package_config_srcdir/js/app.js --dist-dir $npm_package_config_distdir/",
     "prod": "npm-run-all scss:* js:*"
@@ -16,15 +16,14 @@
     "@fontsource/merriweather": "^5.0.8",
     "@fontsource/roboto": "^5.0.8",
     "@parcel/transformer-sass": "^2.10.3",
-    "bootstrap": "4.6.2",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
     "flatpickr": "^4.6.13",
     "iframe-resizer": "^4.3.9",
-    "jquery": "^3.7.1",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.10.3",
-    "popper.js": "^1.16.1",
-    "sass": "1.64.1",
+    "sass": "1.70.0",
     "tom-select": "^2.3.1"
   }
 }

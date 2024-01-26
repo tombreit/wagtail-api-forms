@@ -1,11 +1,10 @@
 from django.urls import reverse
 
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from wagtail import hooks
 from wagtail.admin import messages
-from wagtail.admin.menu import MenuItem
+from wagtail.admin.menu import DismissibleMenuItem
 from wagtail.snippets.wagtail_hooks import SnippetsMenuItem
 
 from .models import FooterLinks
@@ -31,3 +30,15 @@ def block_snippet_creation(request, instance):
     if hasattr(instance, "footer_links") and FooterLinks.objects.exists():
         messages.error(request, _('There can only be one Footer Links object.'))
         return redirect('wagtailsnippets:index')
+
+
+@hooks.register('register_help_menu_item')
+def register_custom_help_item():
+    return DismissibleMenuItem(
+        _("Formbuilder Help"),
+        "/docs/",
+        icon_name="help",
+        order=9999,
+        attrs={"target": "_blank", "rel": "noreferrer"},
+        name="formbuilder-help",
+    )

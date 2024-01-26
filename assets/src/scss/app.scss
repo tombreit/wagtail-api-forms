@@ -3,6 +3,22 @@
 @import "npm:@fontsource/roboto/700.css";
 @import "npm:bootstrap-icons/font/bootstrap-icons.css";
 
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+// @import "npm:bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+$waf-primary-accent-color:  var(--primary_accent_color);
+$waf-bg-gray:               var(--primary_accent_gray);
+$link-decoration:           underline;
+// $font-size-base:         0.875rem; // Approx be `14px`
+$font-family-sans-serif:    "FontSourceRoboto", sans-serif;
+$font-family-serif:         "Merriweather", serif;
+$font-family-base:          $font-family-sans-serif;
+$headings-font-family:      $font-family-serif;
+$font-weight-base:          300;
+
+// $web-font-path:          "";
+
 // Branding css variables could be set via
 // Wagtail admin > Settings > Branding settings.
 // :root {
@@ -10,40 +26,27 @@
 //   --primary_accent_gray: rgb(216, 216, 216);
 // }
 
-$waf-primary-accent-color: var(--primary_accent_color);
-$waf-bg-gray: var(--primary_accent_gray);
+@import "npm:bootstrap/scss/bootstrap";
 
-// $theme-colors: (
-//   "primary": $waf-primary-accent-color,
-// );
+// // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+// @import "npm:bootstrap/scss/variables";
+// @import "npm:bootstrap/scss/variables-dark";
+// // 4. Include any default map overrides here
+// @import "_bootstrap_custom";
 
-$link-decoration: underline;
-$web-font-path: "";
-// $font-size-base: 0.875rem; // Approx be `14px`
-
-$font-family-sans-serif: "FontSourceRoboto", sans-serif;
-$font-family-serif:      "Merriweather", serif;
-$font-family-base:       $font-family-sans-serif;
-
-$headings-font-family: $font-family-serif;
-$font-weight-base: 300;
-
-
-// Bootstrap
-@import "components/_bootstrap_custom";
-
-// select2
-// @import "npm:select2/dist/css/select2.min.css";
-// @import "npm:@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css";
-@import "npm:tom-select/dist/css/tom-select.bootstrap4.min.css";
+// More 3rd party packages
+@import "npm:tom-select/dist/css/tom-select.bootstrap5.min.css";
 
 // flatpickr for date and time inputs, as Firefox do not have a widget for time inputs
 // https://flatpickr.js.org/getting-started/
 @import "npm:flatpickr/dist/flatpickr.min.css";
 
-// @import "components/debug";
-@import "components/_screen";
-@import "components/_print";
+
+@media print {
+    .collapse {
+        display: block !important;
+    }
+}
 
 
 .btn-custom-primary {
@@ -52,5 +55,86 @@ $font-weight-base: 300;
 
     &:hover {
         background-color: var(--primary_accent_color_darken);
+    }
+}
+
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5 {
+    color: $waf-primary-accent-color;
+    font-weight: 400;
+}
+
+
+// .select2.select2-container {
+//     width: auto !important;
+//     max-width: 100%;
+// }
+
+// .select2-container--default .select2-search--inline .select2-search__field {
+//     font-weight: 300;
+// }
+
+
+.form-group {
+    margin-bottom: 1em;
+
+    & > label {
+    font-weight: 400;
+    }
+}
+
+textarea.form-control {
+    height: 5em;
+}
+
+
+header {
+    padding-top: 15px;
+    margin-bottom: 2em;
+    background-color: $waf-bg-gray;
+
+    .languageswitcher {
+        text-transform: uppercase;
+    }
+}
+
+.navbar-header {
+    display: block;
+    height: 60px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: contain;
+
+    /*
+    Setting the brand logo is handled via a context_processor
+    body.lang_en & {
+        background-image: url("/static/dist/img/logo_en.svg");
+    }
+    body.lang_de & {
+        background-image: url("/static/dist/img/logo_de.svg");
+    }
+    */
+
+    strong { display: none; }
+}
+
+.navbar-brand {
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+footer {
+    margin-top: 2em;
+    padding: 2em 0;
+    background-color: $waf-primary-accent-color;
+    line-height: 4em;
+
+    img {
+        height: 4em;
     }
 }

@@ -10,16 +10,16 @@
             <div class="col-6 col-md-4 text-md-center">
                 {% for footer_link in localized_footer_links %}
                     <a 
-                        class="text-white {% if forloop.first %} mr-2 {% endif %}" 
+                        class="link-light {% if forloop.first %} me-2 {% endif %}" 
                         href="{{ footer_link.get_url }}"
                     >
                         {{ footer_link.title }}
                     </a>
                 {% endfor %}
             </div>
-            <div class="col-6 col-md-4 text-right">
+            <div class="col-6 col-md-4 text-end text-white">
                 {% if request.user.is_authenticated %}
-                    <a class="mr-3 text-white" href="/docs/">
+                    <a class="me-3 link-light" href="/docs/">
                         <i class="bi bi-life-preserver"></i> Docs
                     </a>
                 {% endif %}
