@@ -22,7 +22,7 @@ Wagtail as a standalone builder for form pages or simply forms.
 * Protect uploaded files (images and documents) via
   * filenames prefixed with an UUID
   * files could only be fetched from an authenticated request, and/or a whitelisted IP address
-* Validates incoming files for: 
+* Validates incoming files for:
   * maximum file size
   * file extension
   * file mime type
