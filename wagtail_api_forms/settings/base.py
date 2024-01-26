@@ -78,7 +78,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'captcha',
     'huey.contrib.djhuey',
-    # 'sphinx_view',
 
     # Django apps
     'django.contrib.admin',
@@ -371,7 +370,7 @@ WHITENOISE_INDEX_FILE = True
 # Add extra output directories that WhiteNoise can serve as static files
 # *outside* of `staticfiles`.
 MORE_WHITENOISE = [
-    {"directory": BASE_DIR / "docs" / "_build" / "html", "prefix": "docs/"},
+    {"directory": BASE_DIR / "_run" / "docs" / "html", "prefix": "docs/"},
 ]
 
 # Local settings

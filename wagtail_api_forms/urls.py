@@ -8,8 +8,6 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from wagtail_api_forms.formpages import urls as formpages_urls
-# from sphinx_view import DocumentationView
-# from wagtail_api_forms.home.views import sphinx_searchindex_view
 
 
 urlpatterns = [
@@ -20,17 +18,6 @@ urlpatterns = [
     path('api/formsubmission/', include(formpages_urls.urlpatterns_api)),
     path('captcha/', include(formpages_urls.urlpatterns_captcha)),
     # path('cspreports/', include('cspreports.urls')),
-
-    # django_sphinx_view
-    # path('docs/searchindex.js', sphinx_searchindex_view, name='sphinx_searchindex_view'),
-    # path(
-    #     "docs<path:path>",
-    #     DocumentationView.as_view(
-    #         json_build_dir=Path('docs/_build/json/'),
-    #         base_template_name="sphinx_view/base.html",
-    #     ),
-    #     name="documentation",
-    # ),
 ]
 
 # Translatable URLs

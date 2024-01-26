@@ -31,5 +31,4 @@ Sphinx
 sphinx-autobuild
 myst_parser
 linkify-it-py
-# django-sphinx-view
 furo
