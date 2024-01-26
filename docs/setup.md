@@ -1,9 +1,6 @@
 # Setup
 
-
-## Setup
-
-### Requirements
+## Requirements
 
 * Assuming Debian GNU/Linux 11+
 * ``python 3.9+,``
@@ -11,17 +8,17 @@
 * ``npm``
 * Docker (for clamav)
 
-### Bundle static assets
+## Bundle static assets
 
 ```bash
 npm install && npm run prod
 ```
 
-### Set environment via .env file
+## Set environment via .env file
 
 Copy ``env.template`` to ``.env`` and set your environment variables. 
 
-### Start wagtail-api-forms
+## Start wagtail-api-forms
 
 ```bash
 source path/to/your/venv/bin/activate
@@ -30,13 +27,12 @@ source path/to/your/venv/bin/activate
 (venv) ./manage.py runserver
 ```
 
-### Site & Branding
+## Site & Branding
 
 * Set site config via: http://fqdn/admin/sites/
 * (In case of multilingualism) Setup root pages for every language version: http://fqdn/admin/pages/
 * Set brand name, logo etc via: http://fqdn/admin/settings/home/brandingsettings/1/
 * Set footer links (Privacy policy etc.) via: http://fqdn/admin/snippets/home/footerlinks/
-
 
 ## Misc
 
@@ -69,24 +65,23 @@ Token.objects.create(user=user)
 ...and set this user in wagtail admin for the desired form page in page settings.
 For translated forms (e.g. two formpages if EN+DE), the api user must be set for both form pages.
 
-
 ### Documentation
 
 Documentation files are build with Sphinx and served via WhiteNoise from `/docs/`.
 
 Build the documentation with
+
 ```bash
 make --directory docs/ html
 
 # or with live reload
-sphinx-autobuild -a --port 0 docs docs/_build/html
+sphinx-autobuild -a --port 0 docs _run/docs
 ```
 
 ### Backup
 
 * ``.env`` - your configured environment
 * ``_data/[media|attachments|db]`` - your sqlite database and uploaded files
-
 
 ### Virus scanning
 
@@ -116,7 +111,6 @@ apache2 is running with ``PrivateTmp`` and the mod_wsgi process could not put
 its tasks on the queue (https://stackoverflow.com/questions/68185057/huey-db-task-successfully-registered-by-consumer-but-does-not-receive-execut).
 * Apache/mod_wsgi: ``WSGIPassAuthorization On`` (https://www.django-rest-framework.org/api-guide/authentication/#apache-mod_wsgi-specific-configuration)
 ```
-
 
 ### Configuration examples
 
