@@ -75,7 +75,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'crispy_forms',
-    'crispy_bootstrap4',
+    'crispy_bootstrap5',
     'captcha',
     'huey.contrib.djhuey',
 
@@ -261,8 +261,8 @@ WAGTAILDOCS_DOCUMENT_MODEL = 'home.CustomDocument'
 WAGTAILADMIN_BASE_URL = env.str("WAGTAILADMIN_BASE_URL")
 
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
-CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # REST_FRAMEWORK = {
@@ -345,8 +345,6 @@ PRIVATE_STORAGE_ROOT = DATA_DIR / 'attachments/'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
-FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST = env.list("FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST")
-
 # Task queue huey
 # https://huey.readthedocs.io/en/latest/
 _HUEY_FILENAME = "wagtailapiforms_huey"
@@ -382,6 +380,8 @@ FORMBUILDER_DEFAULT_CSS_VARIABLES = {
     "primary_accent_color_darken": "rgb(3, 36, 156)",
     "primary_accent_gray": "rgb(216, 216, 216)",
 }
+
+FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST = env.list("FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST")
 
 # Local settings populated by .env
 FORMBUILDER_USE_ANTIVIR_SERVICE = env.bool("FORMBUILDER_USE_ANTIVIR_SERVICE", default=True)

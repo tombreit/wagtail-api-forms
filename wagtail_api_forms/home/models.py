@@ -14,9 +14,7 @@ from wagtail.coreutils import string_to_ascii
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.documents.models import Document, AbstractDocument
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
-from wagtail.admin.panels import (
-    FieldPanel, InlinePanel, PageChooserPanel
-)
+from wagtail.admin.panels import FieldPanel, InlinePanel, PageChooserPanel
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey
@@ -45,7 +43,7 @@ def validate_favicon_file_extension(value):
 
 
 def branding_logo_path(instance, filename):
-    return '{uuid}__{basename}{suffix}'.format(
+    return "{uuid}__{basename}{suffix}".format(
         uuid=uuid4(),
         basename=slugify(Path(filename).stem),
         suffix=Path(filename).suffix,  # the dot is included in the suffix
@@ -78,34 +76,34 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
     brand_logo_en = models.FileField(
         null=True,
         blank=True,
-        upload_to='branding/',
+        upload_to="branding/",
         validators=[validate_logo_image_file_extension],
         verbose_name="Logo file (EN)",
-        help_text=_('Logo file (english version). Format: SVG.'),
+        help_text=_("Logo file (english version). Format: SVG."),
     )
     brand_logo_de = models.FileField(
         null=True,
         blank=True,
-        upload_to='branding/',
+        upload_to="branding/",
         validators=[validate_logo_image_file_extension],
         verbose_name="Logo file (DE)",
-        help_text=_('Logo file (german version). Format: SVG.'),
+        help_text=_("Logo file (german version). Format: SVG."),
     )
     brand_figurative_mark = models.FileField(
         null=True,
         blank=True,
-        upload_to='branding/',
+        upload_to="branding/",
         validators=[validate_logo_image_file_extension],
         verbose_name="Figurative mark ('Bildmarke')",
-        help_text=_('Figurative mark. Format: SVG.'),
+        help_text=_("Figurative mark. Format: SVG."),
     )
     favicon = models.FileField(
         null=True,
         blank=True,
-        upload_to='branding/',
+        upload_to="branding/",
         validators=[validate_favicon_file_extension],
         verbose_name="Favicon file",
-        help_text=_('Favicon file. Formats: ICO or PNG'),
+        help_text=_("Favicon file. Formats: ICO or PNG"),
     )
 
     def branding_css_variables_default_json():
@@ -118,36 +116,46 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
             CSS variables to tweak the styling. Expects a dictionary 
             (JSON formatted) with at least values for the keys
             `primary_accent_color` `primary_accent_color_darken` and `primary_accent_gray`.
-        """
+        """,
+    )
+
+    # This is not a security thing. Just to keep public pages tidy
+    show_admin_link_for_ips = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Show admin link for IPs"),
+        help_text=_(
+            "Display admin link in footer for given IP addresses. Separate multiple IPs with commas. Subnets allowed."
+        ),
     )
 
     panels = [
-        FieldPanel('brand_abbr'),
-        FieldPanel('brand_name_en'),
-        FieldPanel('brand_logo_en'),
-        FieldPanel('brand_name_de'),
-        FieldPanel('brand_logo_de'),
-        FieldPanel('brand_figurative_mark'),
-        FieldPanel('favicon'),
-        FieldPanel('branding_css_variables'),
+        FieldPanel("brand_abbr"),
+        FieldPanel("brand_name_en"),
+        FieldPanel("brand_logo_en"),
+        FieldPanel("brand_name_de"),
+        FieldPanel("brand_logo_de"),
+        FieldPanel("brand_figurative_mark"),
+        FieldPanel("favicon"),
+        FieldPanel("branding_css_variables"),
+        FieldPanel("show_admin_link_for_ips"),
     ]
 
 
 @register_snippet
 class FooterLinks(TranslatableMixin, ClusterableModel, models.Model):
-
     panels = [
-        InlinePanel('footer_links', label="Footer links"),
+        InlinePanel("footer_links", label="Footer links"),
     ]
 
     def __str__(self):
-        links = self.footer_links.values_list('title', flat=True)
+        links = self.footer_links.values_list("title", flat=True)
         return f"{', '.join(links)}"
 
     class Meta:
         verbose_name = "Footer links"
         verbose_name_plural = "Footer links"
-        unique_together = ('translation_key', 'locale')
+        unique_together = ("translation_key", "locale")
 
 
 class FooterLink(models.Model):
@@ -157,11 +165,11 @@ class FooterLink(models.Model):
         blank=True,
     )
     internal_page = models.ForeignKey(
-        'wagtailcore.Page',
+        "wagtailcore.Page",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name="+",
     )
 
     @property
@@ -171,20 +179,22 @@ class FooterLink(models.Model):
             url = self.external_url
         elif self.internal_page:
             url = self.internal_page.url
-        
+
         return url
 
     panels = [
-        FieldPanel('title'),
-        FieldPanel('external_url'),
-        PageChooserPanel('internal_page'),
+        FieldPanel("title"),
+        FieldPanel("external_url"),
+        PageChooserPanel("internal_page"),
     ]
 
     def clean(self):
         if all([self.external_url, self.internal_page]):
-            raise ValidationError(_('Choose external URL or Internal page, not both.'))
+            raise ValidationError(_("Choose external URL or Internal page, not both."))
         if not any([self.external_url, self.internal_page]):
-            raise ValidationError(_('You must set either External URL or Internal page.'))
+            raise ValidationError(
+                _("You must set either External URL or Internal page.")
+            )
 
     def __str__(self):
         return f"{self.title} → {self.get_url}"
@@ -194,16 +204,18 @@ class FooterLink(models.Model):
 
 
 class FooterLinksFooterLink(Orderable, FooterLink):
-    page = ParentalKey('home.FooterLinks', on_delete=models.CASCADE, related_name='footer_links')
+    page = ParentalKey(
+        "home.FooterLinks", on_delete=models.CASCADE, related_name="footer_links"
+    )
 
 
 class HomePage(Page):
-    subpage_types = ['home.ContainerPage']
+    subpage_types = ["home.ContainerPage"]
 
 
 class ContainerPage(Page):
-    parent_page_types = ['home.HomePage']
-    subpage_types = ['formpages.FormPage']
+    parent_page_types = ["home.HomePage"]
+    subpage_types = ["formpages.FormPage"]
 
 
 class CustomImage(AbstractImage):
@@ -219,13 +231,17 @@ class CustomImage(AbstractImage):
         https://github.com/wagtail/wagtail/blob/main/wagtail/images/models.py#L129
         Extended to prefix all files with an uuid4 string.
         """
-        folder_name = 'original_images'
+        folder_name = "original_images"
         # filename = f"{str(uuid4())}_{self.file.field.storage.get_valid_name(filename)}"
-        filename = add_uuid_prefix(instance=None, filename=self.file.field.storage.get_valid_name(filename))
+        filename = add_uuid_prefix(
+            instance=None, filename=self.file.field.storage.get_valid_name(filename)
+        )
 
         # do a unidecode in the filename and then
         # replace non-ascii characters in filename with _ , to sidestep issues with filesystem encoding
-        filename = "".join((i if ord(i) < 128 else '_') for i in string_to_ascii(filename))
+        filename = "".join(
+            (i if ord(i) < 128 else "_") for i in string_to_ascii(filename)
+        )
 
         # Truncate filename so it fits in the 100 character limit
         # https://code.djangoproject.com/ticket/9893
@@ -243,22 +259,20 @@ class CustomRendition(AbstractRendition):
     image = models.ForeignKey(
         CustomImage,
         on_delete=models.CASCADE,
-        related_name='renditions',
+        related_name="renditions",
     )
 
     class Meta:
-        unique_together = (
-            ('image', 'filter_spec', 'focal_point_key'),
-        )
+        unique_together = (("image", "filter_spec", "focal_point_key"),)
 
 
 class CustomDocument(AbstractDocument):
     file = models.FileField(
         upload_to=add_uuid_prefix,
-        verbose_name=_('file'),
+        verbose_name=_("file"),
     )
 
     admin_form_fields = Document.admin_form_fields + (
         # Add all custom fields names to make them appear in the form:
-        'file',
+        "file",
     )

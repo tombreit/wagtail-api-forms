@@ -83,7 +83,7 @@ Kurzer Hinweistext der im Eingabefeld dargestellt wird und verschwindet, sobald 
 <code>CSS class names</code> (optional)
 </summary>
 
-Eigene CSS-Klassen können hier, mit Leerzeichen getrennt, angegeben werden. Die meisten CSS-Klassen des verwendeten User-Interface-Frameworks [Bootstrap4](https://getbootstrap.com/docs/4.6/getting-started/introduction/) sollten unterstützt sein. Die CSS-Klasse(n) werden auf ein Container-Element des jeweiligen Feldes angewandt. 
+Eigene CSS-Klassen können hier, mit Leerzeichen getrennt, angegeben werden. Die meisten CSS-Klassen des verwendeten User-Interface-Frameworks [Bootstrap5](https://getbootstrap.com/docs/5.3/getting-started/introduction/) sollten unterstützt sein. Die CSS-Klasse(n) werden auf ein Container-Element des jeweiligen Feldes angewandt. 
 
 Verwendungsmöglichkeiten (Auszug):
 

@@ -4,6 +4,20 @@ from wagtail.models import Locale
 from .models import BrandingSettings, FooterLinks
 
 
+def get_show_admin_link(allowed_ips, request):
+    show_admin_link = False
+    remote_ip = request.META.get('REMOTE_ADDR')
+
+    if allowed_ips and remote_ip:
+        allowed_ips_list = allowed_ips.split(",")
+        allowed_ips_list = [ip.strip() for ip in allowed_ips_list]
+
+        if any(remote_ip.startswith(ip) for ip in allowed_ips_list):
+            show_admin_link = True
+
+    return show_admin_link
+
+
 def branding(request):
     branding_settings = BrandingSettings.load(request_or_site=request)
 
@@ -61,6 +75,8 @@ def branding(request):
     except:
         pass
 
+    show_admin_link = get_show_admin_link(branding_settings.show_admin_link_for_ips, request)
+
     return {
         "localized_brand_name": localized_brand_name,
         "brand_logo_en_url": brand_logo_en_url.url if brand_logo_en_url else brand_logo_fallback_url,
@@ -69,4 +85,5 @@ def branding(request):
         "brand_figurative_mark": brand_figurative_mark if brand_figurative_mark else '',
         "favicon_url": favicon_url if favicon_url else '',
         "css_variables": css_variables,
+        "show_admin_link": show_admin_link,
     }

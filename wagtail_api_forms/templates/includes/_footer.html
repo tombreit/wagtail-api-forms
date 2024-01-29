@@ -18,6 +18,19 @@
                 {% endfor %}
             </div>
             <div class="col-6 col-md-4 text-end text-white">
+                {% if show_admin_link %}
+                    {% if request.user.is_authenticated %}
+                    <a class="me-3 link-light" href="{% url 'wagtailadmin_logout' %}">
+                        <i class="bi bi-box-arrow-in-left"></i>
+                        Logout
+                    </a>
+                    {% else %}
+                    <a class="me-3 link-light" href="{% url 'wagtailadmin_login' %}">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Login
+                    </a>
+                    {% endif %}
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <a class="me-3 link-light" href="/docs/">
                         <i class="bi bi-life-preserver"></i> Docs
