@@ -19,11 +19,8 @@ from wagtail.admin.panels import (
 )
 from wagtail.snippets.models import register_snippet
 
-
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-
-from wagtail.models import Page
 
 
 def add_uuid_prefix(instance, filename):

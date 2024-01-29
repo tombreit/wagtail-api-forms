@@ -38,7 +38,8 @@ class FormSubmissionSerializer(serializers.HyperlinkedModelSerializer):
             ]
 
             unwanted = set(dictionary) - set(valid_keys)
-            for unwanted_key in unwanted: del dictionary[unwanted_key]
+            for unwanted_key in unwanted:
+                del dictionary[unwanted_key]
 
             if "type" in dictionary:
                 dictionary["field_type"] = dictionary.pop("type")
