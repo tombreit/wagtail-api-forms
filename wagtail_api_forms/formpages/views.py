@@ -1,11 +1,9 @@
 from django.conf import settings
-from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from wagtail.contrib.forms.views import SubmissionsListView
 from private_storage.views import PrivateStorageDetailView
 
-from wagtail_api_forms.settings.base import FORMBUILDER_USE_ANTIVIR_SERVICE
 
 from .validators import validate_ip_whitelisted
 from .models import Attachment

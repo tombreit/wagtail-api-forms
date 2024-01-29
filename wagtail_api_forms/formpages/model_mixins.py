@@ -1,7 +1,6 @@
 import json
 
 from django.core.serializers.json import DjangoJSONEncoder
-from django.utils.translation import gettext_lazy as _
 from django import forms
 
 from wagtail.models import Site

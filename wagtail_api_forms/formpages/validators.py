@@ -1,8 +1,6 @@
 import os
 import magic
 import mimetypes
-from pathlib import Path
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django import forms
 from django.template.defaultfilters import filesizeformat

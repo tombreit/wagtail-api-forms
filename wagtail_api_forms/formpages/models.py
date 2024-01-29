@@ -10,7 +10,6 @@ Added:
 
 import uuid
 import datetime
-from urllib.parse import urlparse, parse_qs
 from pathlib import Path
 
 from django.conf import settings
@@ -33,7 +32,6 @@ from wagtail.fields import RichTextField
 
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField, AbstractForm, AbstractFormSubmission, FORM_FIELD_CHOICES
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
-from wagtail.contrib.forms.utils import get_field_clean_name
 
 from .constants import FileArtChoices
 from .forms import CustomFormBuilder

@@ -13,7 +13,7 @@ def branding(request):
     # Brand name defaults to english:
     localized_brand_name_attr = "brand_name_en"
     if current_locale.language_code == "de":
-        localized_brand_name_attr = f"brand_name_de"
+        localized_brand_name_attr = "brand_name_de"
 
     # Brand logo defaults to ACME:
     localized_brand_name = getattr(branding_settings, localized_brand_name_attr)
