@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-24 10:45+0100\n"
-"PO-Revision-Date: 2023-03-24 10:49+0100\n"
+"PO-Revision-Date: 2024-01-29 10:01+0100\n"
 "Last-Translator: Thomas Breitner <t.breitner@mpicc.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: wagtail_api_forms/formpages/models.py:139
 msgid "help text"
@@ -84,7 +84,7 @@ msgstr "Unternehmens-/Institutsname (deutsche Version)"
 
 #: wagtail_api_forms/home/models.py:78
 msgid "Company, institute, site abbreviation."
-msgstr "Unternehmens-/Instituts-Abkürzung"
+msgstr "Unternehmens-/Instituts-Abkürzung."
 
 #: wagtail_api_forms/home/models.py:86
 msgid "Logo file (english version). Format: SVG."
