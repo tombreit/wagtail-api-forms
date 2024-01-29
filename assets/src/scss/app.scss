@@ -90,12 +90,24 @@ h5, .h5 {
 }
 
 
-.form-check-inline {
+.to-form-check-inline {
     &.widget-class-radio-select,
     &.widget-class-checkbox-select-multiple {
         div.form-check {
             @extend .form-check-inline;
         }
+    }
+}
+
+.field-secondary {
+    @extend .text-muted;
+
+    .form-control {
+        @extend .form-control-sm;
+    }
+
+    .form-text {
+        @extend .text-muted;
     }
 }
 

@@ -92,6 +92,10 @@ Verwendungsmöglichkeiten (Auszug):
 
 **Inline selects**
 
-Sollen Radio-Buttons oder Checkboxen "inline" (in einer Zeile statt untereinander) dargestellt werden, kann die Klasse `form-check-inline` genutzt werden.
+Sollen Radio-Buttons oder Checkboxen "inline" (in einer Zeile statt untereinander) dargestellt werden, kann die Klasse `to-form-check-inline` genutzt werden.
+
+**Sekundäre Felder**
+
+Über die CSS-Klasse `field-secondary` können Felder weniger prominent dargestellt werden (etwas kleiner Input-Bereich, Schriftfarbe zurückgenommen).
 
 </details>
