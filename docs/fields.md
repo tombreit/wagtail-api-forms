@@ -90,4 +90,8 @@ Verwendungsmöglichkeiten (Auszug):
 * Trennlinie vor dem Feld: `border-top pt-2 mt-2`
 * Hervorheben des gesamten Feldes inkl. aller Attribute (Hilfetext etc.): `alert alert-info`
 
+**Inline selects**
+
+Sollen Radio-Buttons oder Checkboxen "inline" (in einer Zeile statt untereinander) dargestellt werden, kann die Klasse `form-check-inline` genutzt werden.
+
 </details>

@@ -12,26 +12,19 @@
 </div>
 
 <form action="{% pageurl self %}{% if ctx_embed %}?embed={{ ctx_embed }}{% endif %}" method="POST" enctype="multipart/form-data" novalidate>
-{% csrf_token %}
+    {% csrf_token %}
 
-{% comment %}
-    {{ form|crispy }}
     {% for field in form %}
-        {{ field.field.widget.attrs }}
+        {% if field.field.widget.attrs.heading %}
+            <h2 class="h4 my-4">
+                {{ field.field.widget.attrs.heading }}
+            </h2>
+        {% endif %}
+
+        <div class="mb-4 {{ field.field.widget.attrs.css_classes }}">
+            {{ field|as_crispy_field }}
+        </div>
     {% endfor %}
-{% endcomment %}
-
-
-{% for field in form %}
-    {% if field.field.widget.attrs.heading %}
-        <h2 class="h4 my-4">
-            {{ field.field.widget.attrs.heading }}
-        </h2>
-    {% endif %}
-    <div class="{{ field.field.widget.attrs.css_classes }}">
-        {{ field|as_crispy_field }}
-    </div>
-{% endfor %}
 
     <hr>
 

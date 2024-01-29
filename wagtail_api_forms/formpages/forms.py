@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.forms import DateField, DateTimeField, MultipleChoiceField, widgets
+from django.utils.text import camel_case_to_spaces, slugify
+
 from wagtail.contrib.forms.forms import FormBuilder
 from captcha.fields import CaptchaField
 
@@ -55,15 +57,13 @@ class CustomFormBuilder(FormBuilder):
             **options,
         )
 
-    def get_field_options(self, field):
-        """
-        Extend field options to include custom css classes.
-        Fixme: do not know how to update option['widget']['attrs'] for all fields.
-        """
-        options = super().get_field_options(field)
-        # print(f"get_field_options options: {options}")
-        # options['widget']['attrs'] = {'class': 'special'}
-        return options
+    # def get_field_options(self, field):
+    #     """
+    #     Extend field options to include custom css classes.
+    #     Fixme: do not know how to update option['widget']['attrs'] for all fields.
+    #     """
+    #     options = super().get_field_options(field)
+    #     return options
 
     def get_create_field_function(self, type):
         """
@@ -77,12 +77,16 @@ class CustomFormBuilder(FormBuilder):
 
         def wrapped_create_field_function(field, options):
             created_field = create_field_function(field, options)
-            created_field.widget.attrs.update({
-                    "css_classes": field.css_classes,
-                    "placeholder": field.placeholder,
-                    "heading": field.heading,
-            })
 
+            widget_classname = created_field.widget.__class__.__name__
+            widget_classname = slugify(camel_case_to_spaces(widget_classname))
+            widget_classname = f"widget-class-{widget_classname}"
+
+            created_field.widget.attrs.update({
+                "css_classes": f"{field.css_classes} {widget_classname}",
+                "placeholder": field.placeholder,
+                "heading": field.heading,
+            })
             return created_field
 
         return wrapped_create_field_function
