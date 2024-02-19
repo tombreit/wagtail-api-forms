@@ -16,7 +16,7 @@ beautifulsoup4==4.11.2
     # via
     #   furo
     #   wagtail
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
@@ -26,7 +26,7 @@ crispy-bootstrap5==2023.10
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
-django==5.0.1
+django==5.0.2
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -57,7 +57,7 @@ django-extensions==3.2.3
     # via -r requirements.in
 django-filter==23.5
     # via wagtail
-django-ipware==6.0.3
+django-ipware==6.0.4
     # via -r requirements.in
 django-modelcluster==6.2.1
     # via wagtail
@@ -71,7 +71,7 @@ django-simple-captcha==0.6.0
     # via -r requirements.in
 django-taggit==4.0.0
     # via wagtail
-django-treebeard==4.7
+django-treebeard==4.7.1
     # via wagtail
 djangorestframework==3.14.0
     # via
@@ -87,7 +87,7 @@ et-xmlfile==1.1.0
     # via openpyxl
 filetype==1.2.0
     # via willow
-furo==2023.9.10
+furo==2024.1.29
     # via -r requirements.in
 html5lib==1.1
     # via wagtail
@@ -103,7 +103,7 @@ jinja2==3.1.3
     #   sphinx
 l18n==2021.3
     # via wagtail
-linkify-it-py==2.0.2
+linkify-it-py==2.0.3
     # via -r requirements.in
 livereload==2.6.3
     # via sphinx-autobuild
@@ -111,7 +111,7 @@ markdown-it-py==3.0.0
     # via
     #   mdit-py-plugins
     #   myst-parser
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via jinja2
 mdit-py-plugins==0.4.0
     # via myst-parser
@@ -128,7 +128,7 @@ pillow==10.2.0
     #   django-simple-captcha
     #   pillow-heif
     #   wagtail
-pillow-heif==0.14.0
+pillow-heif==0.15.0
     # via willow
 pyasn1==0.5.1
     # via
@@ -148,7 +148,7 @@ python-ldap==3.4.4
     # via django-auth-ldap
 python-magic==0.4.27
     # via -r requirements.in
-pytz==2023.3.post1
+pytz==2024.1
     # via
     #   django-modelcluster
     #   djangorestframework
@@ -175,7 +175,7 @@ sphinx==7.2.6
     #   myst-parser
     #   sphinx-autobuild
     #   sphinx-basic-ng
-sphinx-autobuild==2021.3.14
+sphinx-autobuild==2024.2.4
     # via -r requirements.in
 sphinx-basic-ng==1.0.0b2
     # via furo
@@ -197,15 +197,15 @@ telepath==0.3.1
     # via wagtail
 tornado==6.4
     # via livereload
-uc-micro-py==1.0.2
+uc-micro-py==1.0.3
     # via linkify-it-py
-urllib3==2.1.0
+urllib3==2.2.1
     # via requests
 wagtail==5.2.3
     # via
     #   -r requirements.in
     #   wagtail-modeladmin
-wagtail-modeladmin==1.0.0
+wagtail-modeladmin==2.0.0
     # via -r requirements.in
 webencodings==0.5.1
     # via html5lib
