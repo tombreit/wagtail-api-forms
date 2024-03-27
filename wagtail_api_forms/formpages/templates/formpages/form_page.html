@@ -11,6 +11,7 @@
     {{ page.intro|richtext }}
 </div>
 
+{% if form.fields %}
 <form action="{% pageurl self %}{% if ctx_embed %}?embed={{ ctx_embed }}{% endif %}" method="POST" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
 
@@ -39,4 +40,6 @@
         * {% translate "Mandatory field" %}
     </p>
 </form>
+{% endif %}
+
 {% endblock content %}
