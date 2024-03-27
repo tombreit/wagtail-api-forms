@@ -8,7 +8,7 @@ alabaster==0.7.16
     # via sphinx
 anyascii==0.3.2
     # via wagtail
-asgiref==3.7.2
+asgiref==3.8.1
     # via django
 babel==2.14.0
     # via sphinx
@@ -22,11 +22,11 @@ charset-normalizer==3.3.2
     # via requests
 colorama==0.4.6
     # via sphinx-autobuild
-crispy-bootstrap5==2023.10
+crispy-bootstrap5==2024.2
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
-django==5.0.2
+django==5.0.3
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -43,13 +43,13 @@ django==5.0.2
     #   django-treebeard
     #   djangorestframework
     #   wagtail
-django-auth-ldap==4.6.0
+django-auth-ldap==4.7.0
     # via -r requirements.in
 django-crispy-forms==2.1
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
-django-csp==3.7
+django-csp==3.8
     # via -r requirements.in
 django-environ==0.11.2
     # via -r requirements.in
@@ -59,7 +59,7 @@ django-filter==23.5
     # via wagtail
 django-ipware==6.0.4
     # via -r requirements.in
-django-modelcluster==6.2.1
+django-modelcluster==6.3
     # via wagtail
 django-permissionedforms==0.1
     # via wagtail
@@ -73,7 +73,7 @@ django-taggit==4.0.0
     # via wagtail
 django-treebeard==4.7.1
     # via wagtail
-djangorestframework==3.14.0
+djangorestframework==3.15.1
     # via
     #   -r requirements.in
     #   wagtail
@@ -121,7 +121,7 @@ myst-parser==2.0.0
     # via -r requirements.in
 openpyxl==3.1.2
     # via wagtail
-packaging==23.2
+packaging==24.0
     # via sphinx
 pillow==10.2.0
     # via
@@ -130,11 +130,11 @@ pillow==10.2.0
     #   wagtail
 pillow-heif==0.15.0
     # via willow
-pyasn1==0.5.1
+pyasn1==0.6.0
     # via
     #   pyasn1-modules
     #   python-ldap
-pyasn1-modules==0.3.0
+pyasn1-modules==0.4.0
     # via python-ldap
 pyclamd==0.4.0
     # via -r requirements.in
@@ -142,7 +142,7 @@ pygments==2.17.2
     # via
     #   furo
     #   sphinx
-python-ipware==2.0.1
+python-ipware==2.0.2
     # via django-ipware
 python-ldap==3.4.4
     # via django-auth-ldap
@@ -151,7 +151,6 @@ python-magic==0.4.27
 pytz==2024.1
     # via
     #   django-modelcluster
-    #   djangorestframework
     #   l18n
 pyyaml==6.0.1
     # via myst-parser
