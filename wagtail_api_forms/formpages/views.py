@@ -30,7 +30,7 @@ class AttachmentDownloadView(PrivateStorageDetailView):
         if any([condition_whitelisted_ip, condition_authenticated_request]):
             can_access_file = True
         else:
-            raise PermissionDenied("Not authenticated or whitelisted request. Access denied.")
+            raise PermissionDenied("Permission denied.")
 
         return can_access_file
 
