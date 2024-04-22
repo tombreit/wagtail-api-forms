@@ -1,5 +1,11 @@
 # FAQ
 
+<style>
+details {
+  margin-bottom: 1em;
+}
+</style>
+
 ```{include} snippets/wiphint.md
 ```
 
@@ -41,7 +47,7 @@ angelegt. Diese Inhalte auf der neuen Seite sind dann manuell zu übersetzen/üb
 
 Formulardaten werden standardmäßig im System gespeichert. Über den
 Navigationspunkt "Forms" können die submissions der einzelnen Formulare
-eingesehen werden und auch exportiert (Excel, CSV) werden. 
+eingesehen werden und auch exportiert (Excel, CSV) werden.
 
 Weiter bietet jedes Formular eine Einstellung, dass submissions an eine
 definierte Email-Adresse ("To adress") versendet werden. Diese - und weitere zugehörige
@@ -49,13 +55,12 @@ Einstellungen wie z.B. "Subject" - sind auf der Formularseite am Ende zu finden.
 
 </details>
 
-
 <details>
 <summary>Warum kann ich die Attachments in den Emails nicht abrufen?</summary>
 
 Der Abruf von hochgeladenen Dateien (Dokumente oder Bilder) ist nur über einen
 authentifizierten Request möglich. Die Authentifizierung erfolgt entweder über
-einen freigegebenen IP-Bereich/-Adresse oder über einen Login im Backend. 
+einen freigegebenen IP-Bereich/-Adresse oder über einen Login im Backend.
 
 </details>
 
@@ -63,7 +68,7 @@ einen freigegebenen IP-Bereich/-Adresse oder über einen Login im Backend.
 <summary>Wie melde ich mich am Backend an?</summary>
 
 Eine beliebige Seite unterhalb von "/admin/" aufrufen und die Login-Seite fragt
-die Credentials ab. 
+die Credentials ab.
 
 </details>
 
@@ -71,7 +76,7 @@ die Credentials ab.
 <summary>Warum kann ich mich nicht am Backend anmelden?</summary>
 
 Aktuell muss eine bestimmte Gruppenmitgliedschaft (siehe `env.template`) erfüllt
-sein, damit ein Login möglich ist. 
+sein, damit ein Login möglich ist.
 
 </details>
 
@@ -79,10 +84,10 @@ sein, damit ein Login möglich ist.
 <summary>Warum sehe ich im Backend keine oder nicht alle Formulare?</summary>
 
 Die Seiten und Funktionen im Backend sind über Permissions eingeschränkt. Diese
-Permissions hängen an der Gruppenmitgliedschaft von Usern. 
+Permissions hängen an der Gruppenmitgliedschaft von Usern.
 
 Jeder User "sieht" z.B. nur die Seiten/Formulare, für die sie oder er
-berechtigt ist. 
+berechtigt ist.
 
 Weiter sind die Formulare über "Container-Seiten" zusammengefasst, damit über
 diese "Container-Seiten" Gruppen-Berechtigungen zugewiesen werden können.
@@ -94,6 +99,25 @@ diese "Container-Seiten" Gruppen-Berechtigungen zugewiesen werden können.
 
 Ja. Auf der Backendseite eines Formulars in den Reiter "Settings" wechseln und
 "Use captcha" aktivieren und die Seite publizieren.
+
+</details>
+
+<details>
+<summary>Wie erhalte ich eine Nachricht wenn ein Formular abgesendet wird?</summary>
+
+Grundsätzlich werden alle Formular-Einsendungen im System gespeichert (siehe nächster FAQ-Punkt).
+
+Zusätzlich kann eine Email mit den Formulardaten bei jeder Einsendung versendet werden. Hierzu
+tragen Sie im Formular-Backend im Feld "An-Adresse" die von Ihnen gewünschte Empfänger-Emailadresse sowie einen einen Betreff im Feld "Betreff" ein. Der Betreff ist für für alle Einsendungen dieses Formulars identisch und kann z.B. für eine Emailpostfach-Eingangsregel genutzt werden.
+
+</details>
+
+<details>
+<summary>Wo kann ich alle Einsendungen eines Formulars sehen?</summary>
+
+Auf der Formular-Backend-Seite sind die "Form page submissions" direkt unter dem Formulartitel mit der Anzahl der gesamten Einsendungen sowie dem Datum der letzten Einsendung verlinkt.
+
+Auf der verlinkten Seite der Formular-Einsendungen besteht die Möglichkeit die Einsendungen in einer tabellarischen Darstellung zu prüfen, nach Datum zu filtern oder sie im Excel-Format zu exportieren.
 
 </details>
 
