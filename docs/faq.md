@@ -39,6 +39,15 @@ werden (Button "Publish" unten auf der Seite).
 </details>
 
 <details>
+<summary>Formular bearbeiten</summary>
+
+Über das "Seiten"/"Pages"-Menü zum Formular navigieren und im Menü das
+Bleistift/Pencil-Icon nutzen. Die Bearbeiten-Funktionalität steht wird noch an
+weiteren Stellen im System - oftmals über ein *Drei-Punkte-Menü* - angeboten.
+
+</details>
+
+<details>
 <summary>Wie kann ich ein Formular testen?</summary>
 
 So lange Sie niemanden den "Link" des veröffentlichten Formulars mitteilen, können Sie - und jede*r andere die/der diesen Link kennt - das Formular testen.
