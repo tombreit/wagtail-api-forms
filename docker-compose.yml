@@ -3,15 +3,18 @@ version: '3.7'
 
 services:
   clamav:
-    #debian: image: mkodockx/docker-clamav
-    image: mkodockx/docker-clamav:alpine
+    # image: mkodockx/docker-clamav:alpine
+    image: docker.io/mkodockx/docker-clamav:alpine
     container_name: clamav
     restart: unless-stopped
     ports:
       - "127.0.0.1:3310:3310"
     tty: true
+    environment:
+      - CLAMD_CONF_FILE=/mnt/clamd.conf
     volumes:
       - clamd_data:/var/lib/clamav
+      - ${PWD}/clamd.conf:/mnt/clamd.conf
   # web:
   #   build: .
   #   command: python manage.py runserver 0.0.0.0:8000
