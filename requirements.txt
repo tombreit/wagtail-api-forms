@@ -8,7 +8,7 @@ alabaster==0.7.16
     # via sphinx
 anyascii==0.3.2
     # via wagtail
-anyio==4.3.0
+anyio==4.4.0
     # via
     #   starlette
     #   watchfiles
@@ -20,7 +20,7 @@ beautifulsoup4==4.12.3
     # via
     #   furo
     #   wagtail
-certifi==2024.2.2
+certifi==2024.6.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
@@ -130,7 +130,7 @@ mdurl==0.1.2
     # via markdown-it-py
 myst-parser==3.0.1
     # via -r requirements.in
-openpyxl==3.1.2
+openpyxl==3.1.3
     # via wagtail
 packaging==24.0
     # via sphinx
@@ -165,7 +165,7 @@ pytz==2024.1
     #   l18n
 pyyaml==6.0.1
     # via myst-parser
-requests==2.31.0
+requests==2.32.3
     # via
     #   sphinx
     #   wagtail
@@ -212,15 +212,15 @@ uc-micro-py==1.0.3
     # via linkify-it-py
 urllib3==2.2.1
     # via requests
-uvicorn==0.29.0
+uvicorn==0.30.1
     # via sphinx-autobuild
-wagtail==6.0.3
+wagtail==6.0.5
     # via
     #   -r requirements.in
     #   wagtail-modeladmin
 wagtail-modeladmin==2.0.0
     # via -r requirements.in
-watchfiles==0.21.0
+watchfiles==0.22.0
     # via sphinx-autobuild
 webencodings==0.5.1
     # via html5lib
