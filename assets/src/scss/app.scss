@@ -28,6 +28,20 @@ $body-color:                black;
 //   --primary_accent_gray: rgb(216, 216, 216);
 // }
 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+);
+
+
 @import "npm:bootstrap/scss/bootstrap";
 
 // // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
