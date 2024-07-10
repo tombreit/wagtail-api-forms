@@ -20,10 +20,13 @@
             <div class="col-6 col-md-4 text-end text-white">
                 {% if show_admin_link %}
                     {% if request.user.is_authenticated %}
-                    <a class="me-3 link-light" href="{% url 'wagtailadmin_logout' %}">
-                        <i class="bi bi-box-arrow-in-left"></i>
-                        Logout
-                    </a>
+                    <form class="logout-form-link me-3 link-light" method="post" action="{% url 'wagtailadmin_logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">
+                          <i class="bi bi-box-arrow-in-left"></i>
+                          Logout
+                        </button>
+                    </form>
                     {% else %}
                     <a class="me-3 link-light" href="{% url 'wagtailadmin_login' %}">
                         <i class="bi bi-box-arrow-in-right"></i>
