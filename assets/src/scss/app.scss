@@ -126,6 +126,35 @@ textarea.form-control {
     }
 }
 
+.richtext-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.richtext-image.full-width {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.richtext-image.left {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.richtext-image.right {
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+/* Clear float for elements after the image */
+.intro::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 
 header {
     padding-top: 15px;
