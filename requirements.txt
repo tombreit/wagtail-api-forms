@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements.in
 #
-alabaster==0.7.16
+alabaster==1.0.0
     # via sphinx
 anyascii==0.3.2
     # via wagtail
@@ -14,7 +14,7 @@ anyio==4.4.0
     #   watchfiles
 asgiref==3.8.1
     # via django
-babel==2.15.0
+babel==2.16.0
     # via sphinx
 beautifulsoup4==4.12.3
     # via
@@ -32,7 +32,7 @@ crispy-bootstrap5==2024.2
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
-django==5.0.7
+django==5.0.8
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -52,7 +52,7 @@ django==5.0.7
     #   wagtail
 django-auth-ldap==4.8.0
     # via -r requirements.in
-django-crispy-forms==2.2
+django-crispy-forms==2.3
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -62,7 +62,7 @@ django-environ==0.11.2
     # via -r requirements.in
 django-extensions==3.2.3
     # via -r requirements.in
-django-filter==24.2
+django-filter==24.3
     # via wagtail
 django-ipware==7.0.1
     # via -r requirements.in
@@ -94,7 +94,7 @@ et-xmlfile==1.1.0
     # via openpyxl
 filetype==1.2.0
     # via willow
-furo==2024.5.6
+furo==2024.8.6
     # via -r requirements.in
 h11==0.14.0
     # via uvicorn
@@ -126,7 +126,7 @@ mdit-py-plugins==0.4.1
     # via myst-parser
 mdurl==0.1.2
     # via markdown-it-py
-myst-parser==3.0.1
+myst-parser==4.0.0
     # via -r requirements.in
 openpyxl==3.1.5
     # via wagtail
@@ -137,7 +137,7 @@ pillow==10.4.0
     #   django-simple-captcha
     #   pillow-heif
     #   wagtail
-pillow-heif==0.17.0
+pillow-heif==0.18.0
     # via willow
 pyasn1==0.6.0
     # via
@@ -161,7 +161,7 @@ pytz==2024.1
     # via
     #   django-modelcluster
     #   l18n
-pyyaml==6.0.1
+pyyaml==6.0.2
     # via myst-parser
 requests==2.32.3
     # via
@@ -175,7 +175,7 @@ snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.5
     # via beautifulsoup4
-sphinx==7.3.7
+sphinx==8.0.2
     # via
     #   -r requirements.in
     #   furo
@@ -186,21 +186,21 @@ sphinx-autobuild==2024.4.16
     # via -r requirements.in
 sphinx-basic-ng==1.0.0b2
     # via furo
-sphinxcontrib-applehelp==1.0.8
+sphinxcontrib-applehelp==2.0.0
     # via sphinx
-sphinxcontrib-devhelp==1.0.6
+sphinxcontrib-devhelp==2.0.0
     # via sphinx
-sphinxcontrib-htmlhelp==2.0.5
+sphinxcontrib-htmlhelp==2.1.0
     # via sphinx
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
-sphinxcontrib-qthelp==1.0.7
+sphinxcontrib-qthelp==2.0.0
     # via sphinx
-sphinxcontrib-serializinghtml==1.1.10
+sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
-sqlparse==0.5.0
+sqlparse==0.5.1
     # via django
-starlette==0.37.2
+starlette==0.38.2
     # via sphinx-autobuild
 telepath==0.3.1
     # via wagtail
@@ -208,15 +208,15 @@ uc-micro-py==1.0.3
     # via linkify-it-py
 urllib3==2.2.2
     # via requests
-uvicorn==0.30.1
+uvicorn==0.30.5
     # via sphinx-autobuild
-wagtail==6.1.2
+wagtail==6.1.3
     # via
     #   -r requirements.in
     #   wagtail-modeladmin
 wagtail-modeladmin==2.0.0
     # via -r requirements.in
-watchfiles==0.22.0
+watchfiles==0.23.0
     # via sphinx-autobuild
 websockets==12.0
     # via sphinx-autobuild
