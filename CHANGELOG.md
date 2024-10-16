@@ -1,4 +1,4 @@
-# CHANGLOG
+# CHANGELOG
 
 ## 2024-01
 
