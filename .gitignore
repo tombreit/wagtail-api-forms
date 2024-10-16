@@ -6,6 +6,6 @@ node_modules/
 *.pot
 .parcel-cache/
 
-.env
+.env*
 /_data/
 /_run/
