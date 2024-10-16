@@ -73,9 +73,6 @@ Build the documentation with
 
 ```bash
 make --directory docs/ html
-
-# or with live reload
-sphinx-autobuild -a --port 0 docs _run/docs
 ```
 
 ### Backup

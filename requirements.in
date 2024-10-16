@@ -28,7 +28,6 @@ pyclamd
 
 # Documentation
 Sphinx
-sphinx-autobuild
 myst_parser
 linkify-it-py
 furo
