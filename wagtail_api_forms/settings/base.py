@@ -293,22 +293,22 @@ CSP_REPORT_ONLY = False
 CSP_FRAME_ANCESTORS = ("'self'",)
 CSP_FRAME_ANCESTORS += tuple(env.list("FORMBUILDER_CSP_FRAME_ANCESTORS"))
 
-# CSP_EXCLUDE_URL_PREFIXES = (
-#     "/admin",
-#     "/django-admin",
-#     "/docs",
-# )
+CSP_EXCLUDE_URL_PREFIXES = (
+    "/admin",
+    "/django-admin",
+    "/docs",
+)
 # unsafe-inline needed for inline CSS, e.g. via <style>...</style> or style="":
-# CSP_STYLE_SRC = (
-#     "'self'",
-#     "'unsafe-inline'",
-# )
-# CSP_SCRIPT_SRC = (
-#     "'self'",
-#     "'unsafe-inline'",
-#     "'unsafe-eval'",
-#     "'strict-dynamic'",
-# )
+CSP_STYLE_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+)
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    "'strict-dynamic'",
+)
 
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
