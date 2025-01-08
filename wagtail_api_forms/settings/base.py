@@ -302,14 +302,15 @@ CSP_EXCLUDE_URL_PREFIXES = (
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
+    "data:",
 )
 CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     "'unsafe-eval'",
-    "'strict-dynamic'",
+    "data:",
 )
-
+CSP_CONNECT_SRC = ("'self'",)
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
 # CSP_REPORT_URI = reverse_lazy('report_csp')
