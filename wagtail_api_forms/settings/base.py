@@ -309,8 +309,13 @@ CSP_SCRIPT_SRC = (
     "'unsafe-inline'",
     "'unsafe-eval'",
     "data:",
+    "'nonce-wagtail-config'",
 )
-CSP_CONNECT_SRC = ("'self'",)
+CSP_CONNECT_SRC = (
+    "'self'",
+    "ws:",
+    "wss:",
+)
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
 # CSP_REPORT_URI = reverse_lazy('report_csp')
