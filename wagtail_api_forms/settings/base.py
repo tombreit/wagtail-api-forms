@@ -316,6 +316,9 @@ CSP_CONNECT_SRC = (
     "ws:",
     "wss:",
 )
+CSP_OBJECT_SRC = ("'unsafe-eval'",)
+CSP_CONNECT_SRC = ("'self'",)
+
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
 # CSP_REPORT_URI = reverse_lazy('report_csp')
