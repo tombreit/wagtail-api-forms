@@ -302,22 +302,15 @@ CSP_EXCLUDE_URL_PREFIXES = (
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
-    "data:",
 )
 CSP_SCRIPT_SRC = (
     "'self'",
     "'unsafe-inline'",
     "'unsafe-eval'",
-    "data:",
-    "'nonce-wagtail-config'",
 )
-CSP_CONNECT_SRC = (
-    "'self'",
-    "ws:",
-    "wss:",
-)
-CSP_OBJECT_SRC = ("'unsafe-eval'",)
-CSP_CONNECT_SRC = ("'self'",)
+CSP_CONNECT_SRC = ["'self'", "releases.wagtail.org"]
+CSP_IMG_SRC = ["'self'", "blob:"]
+CSP_OBJECT_SRC = ["'none'"]
 
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
