@@ -22,52 +22,52 @@ def hide_explorer_menu_items_images_and_docs(request, menu_items):
     ]
 
 
-@hooks.register("insert_editor_js")
-def editor_js():
-    return mark_safe("""
-    <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // Wrap in try-catch to prevent script failures
-        try {
-            const sequenceContainer = document.getElementById('id_form_fields-FORMS');
-            if (!sequenceContainer) {
-                console.warn('Form fields container not found');
-                return;
-            }
+# @hooks.register("insert_editor_js")
+# def editor_js():
+#     return mark_safe("""
+#     <script>
+#     window.addEventListener('DOMContentLoaded', (event) => {
+#         // Wrap in try-catch to prevent script failures
+#         try {
+#             const sequenceContainer = document.getElementById('id_form_fields-FORMS');
+#             if (!sequenceContainer) {
+#                 console.warn('Form fields container not found');
+#                 return;
+#             }
 
-            const child_nodes = sequenceContainer.childNodes;
+#             const child_nodes = sequenceContainer.childNodes;
 
-            for (const node of child_nodes) {
-                if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute("data-inline-panel-child")) {
-                    const idNr = node.id.replace("inline_child_form_fields-", "");
-                    const inputId = "id_form_fields-" + idNr + "-label";
-                    const labelElement = document.getElementById(inputId);
+#             for (const node of child_nodes) {
+#                 if (node.nodeType === Node.ELEMENT_NODE && node.hasAttribute("data-inline-panel-child")) {
+#                     const idNr = node.id.replace("inline_child_form_fields-", "");
+#                     const inputId = "id_form_fields-" + idNr + "-label";
+#                     const labelElement = document.getElementById(inputId);
 
-                    if (!labelElement) {
-                        console.warn(`Label element not found for id: ${inputId}`);
-                        continue;
-                    }
+#                     if (!labelElement) {
+#                         console.warn(`Label element not found for id: ${inputId}`);
+#                         continue;
+#                     }
 
-                    const fieldName = labelElement.value;
-                    const heading_elem = node.querySelector('[data-panel-heading-text]');
+#                     const fieldName = labelElement.value;
+#                     const heading_elem = node.querySelector('[data-panel-heading-text]');
 
-                    if (heading_elem) {
-                        heading_elem.insertAdjacentText('beforeend', ": " + fieldName);
-                    }
-                }
-            }
+#                     if (heading_elem) {
+#                         heading_elem.insertAdjacentText('beforeend', ": " + fieldName);
+#                     }
+#                 }
+#             }
 
-            // Collapse all form fields
-            const formFieldTogglers = document.querySelectorAll("#id_form_fields-FORMS .w-panel__toggle");
-            for (const formFieldToggle of formFieldTogglers) {
-                formFieldToggle.click();
-            }
-        } catch (error) {
-            console.error('Error in form fields initialization:', error);
-        }
-    });
-    </script>
-    """)
+#             // Collapse all form fields
+#             const formFieldTogglers = document.querySelectorAll("#id_form_fields-FORMS .w-panel__toggle");
+#             for (const formFieldToggle of formFieldTogglers) {
+#                 formFieldToggle.click();
+#             }
+#         } catch (error) {
+#             console.error('Error in form fields initialization:', error);
+#         }
+#     });
+#     </script>
+#     """)
 
 
 class AttachmentAdmin(ModelAdmin):
