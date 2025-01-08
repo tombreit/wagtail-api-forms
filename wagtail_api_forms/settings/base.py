@@ -256,6 +256,7 @@ WAGTAILIMAGES_MAX_UPLOAD_SIZE = 5 * 1024 * 1024  # i.e. 5MB
 WAGTAILIMAGES_IMAGE_MODEL = "home.CustomImage"
 WAGTAILDOCS_DOCUMENT_MODEL = "home.CustomDocument"
 WAGTAIL_WORKFLOW_ENABLED = False
+WAGTAIL_GRAVATAR_PROVIDER_URL = None
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
