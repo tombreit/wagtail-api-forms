@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const isFirefox = typeof InstallTrigger !== 'undefined';
 
   if (isFirefox) {
-    // console.log("isFirefox:", isFirefox)
-
     flatpickrConfig = {
       allowInput: false,
       enableTime: true,
