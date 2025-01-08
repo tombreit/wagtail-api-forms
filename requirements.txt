@@ -68,7 +68,7 @@ django-ranged-response==0.2.0
     # via django-simple-captcha
 django-simple-captcha==0.6.0
     # via -r requirements.in
-django-taggit==6.1.0
+django-taggit==5.0.1
     # via wagtail
 django-treebeard==4.7.1
     # via wagtail
@@ -120,7 +120,7 @@ openpyxl==3.1.5
     # via wagtail
 packaging==24.2
     # via sphinx
-pillow==11.1.0
+pillow==10.4.0
     # via
     #   django-simple-captcha
     #   pillow-heif
@@ -187,7 +187,7 @@ uc-micro-py==1.0.3
     # via linkify-it-py
 urllib3==2.3.0
     # via requests
-wagtail==6.3.2
+wagtail==6.2.3
     # via
     #   -r requirements.in
     #   wagtail-modeladmin
