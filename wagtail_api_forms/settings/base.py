@@ -288,7 +288,7 @@ CORS_URLS_REGEX = r"^/api/formsubmission/.*$"
 # https://django-csp.readthedocs.io/en/latest/index.html
 # https://www.laac.dev/blog/content-security-policy-using-django/
 # https://wolfgang.reutz.at/2018/10/12/django-and-content-security-policy/
-CSP_REPORT_ONLY = False
+CSP_REPORT_ONLY = True
 
 CSP_FRAME_ANCESTORS = ("'self'",)
 CSP_FRAME_ANCESTORS += tuple(env.list("FORMBUILDER_CSP_FRAME_ANCESTORS"))
@@ -310,7 +310,8 @@ CSP_SCRIPT_SRC = (
 )
 CSP_CONNECT_SRC = ["'self'", "releases.wagtail.org"]
 CSP_IMG_SRC = ["'self'", "blob:"]
-CSP_OBJECT_SRC = ["'none'"]
+CSP_OBJECT_SRC = ["'self'"]
+CSP_DEFAULT_SRC = "'self'"
 
 
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
