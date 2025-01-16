@@ -29,4 +29,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     new TomSelect(el, tomSelectconfig);
   });
 
+  document.querySelectorAll('a[href^="http"], a[href^="/documents/"]').forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'nofollow noopener');
+  });
+
 });
