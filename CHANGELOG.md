@@ -10,6 +10,7 @@
 - Static assets processing now via `parcel`
 - Stop false positives for PUA.Pdf.Trojan.EmbeddedJavaScript-1
 - Docs FAQ: Form submissions, form submission email notification
+- Fields: Use bootstrap CSS classes like `alert alert-warning`
 
 ## 2023
 
