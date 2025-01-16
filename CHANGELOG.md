@@ -8,6 +8,7 @@
 
 - Multiline field help texts
 - Static assets processing now via `parcel`
+- Stop false positives for PUA.Pdf.Trojan.EmbeddedJavaScript-1
 
 ## 2023
 
