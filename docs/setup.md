@@ -3,7 +3,7 @@
 ## Requirements
 
 * Assuming Debian GNU/Linux 11+
-* for LDAP: `libldap2-dev` `libsasl2-dev`
+* for LDAP: `libldap2-dev`, `libsasl2-dev`, `python3-dev`
 * ``python 3.9+,``
 * ``pip``, preferably in a virtual environment
 * ``npm``
