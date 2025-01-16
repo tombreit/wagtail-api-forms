@@ -211,7 +211,16 @@ STATICFILES_DIRS = [
 # Check bootstrap-icons bug: https://github.com/twbs/icons/issues/563
 
 # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",  # "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 STATIC_ROOT = BASE_DIR / "_run" / "staticfiles"
 STATIC_URL = "/static/"
