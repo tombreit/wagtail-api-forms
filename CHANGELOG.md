@@ -6,6 +6,7 @@
 
 ## 2024
 
+- Multiline field help texts
 - Static assets processing now via `parcel`
 
 ## 2023
