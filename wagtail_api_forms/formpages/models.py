@@ -25,12 +25,21 @@ from modelcluster.fields import ParentalKey
 from ipware import get_client_ip
 
 from wagtail.admin.panels import (
-    FieldPanel, FieldRowPanel,
-    InlinePanel, MultiFieldPanel, HelpPanel
+    FieldPanel,
+    FieldRowPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    HelpPanel,
 )
 from wagtail.fields import RichTextField
 
-from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField, AbstractForm, AbstractFormSubmission, FORM_FIELD_CHOICES
+from wagtail.contrib.forms.models import (
+    AbstractEmailForm,
+    AbstractFormField,
+    AbstractForm,
+    AbstractFormSubmission,
+    FORM_FIELD_CHOICES,
+)
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 
 from .constants import FileArtChoices
@@ -45,7 +54,7 @@ def attachment_directory_path(instance, filename):
     PRIVATE_STORAGE_ROOT and therefore we only create the bare filename here.
     """
 
-    return '{uuid}__{basename}{suffix}'.format(
+    return "{uuid}__{basename}{suffix}".format(
         uuid=uuid.uuid4(),
         basename=slugify(Path(filename).stem),
         suffix=Path(filename).suffix,  # the dot is included in the suffix
@@ -61,7 +70,7 @@ class Attachment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     form_submission = models.ForeignKey(
-        'CustomFormSubmission',
+        "CustomFormSubmission",
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
@@ -94,7 +103,7 @@ class Attachment(models.Model):
           1. run virusscan
           2. update instance virusscan-related fields
         """
-        
+
         # created = self._state.adding
         # if created:
         #     print("Attachment instance created, calling super().save()...")
@@ -120,7 +129,6 @@ class TokenUserProxy(Token):
 
 
 class UserFormField(AbstractFormField):
-
     css_classes = models.CharField(
         blank=True,
         max_length=255,
@@ -131,28 +139,29 @@ class UserFormField(AbstractFormField):
         "Placeholder",
         max_length=254,
         blank=True,
-        help_text="This short placeholder is displayed in the input field before the user enters a value."
+        help_text="This short placeholder is displayed in the input field before the user enters a value.",
     )
-    help_text = models.TextField(
-        verbose_name=_('help text'),
+    help_text = RichTextField(
+        verbose_name=_("help text"),
         blank=True,
     )
     heading = models.CharField(
         "Heading",
         max_length=254,
         blank=True,
-        help_text="A standalone heading displayed above this field."
+        help_text="A standalone heading displayed above this field.",
     )
 
     field_type = models.CharField(
-        verbose_name='field type',
+        verbose_name="field type",
         max_length=255,
-        choices=list(FORM_FIELD_CHOICES) + [
-            ('image', _('Image file')),
-            ('document', _('Document file')),
-            ('multiplechoicetypeahead', _('Multiple Choice (typeahead)')),
+        choices=list(FORM_FIELD_CHOICES)
+        + [
+            ("image", _("Image file")),
+            ("document", _("Document file")),
+            ("multiplechoicetypeahead", _("Multiple Choice (typeahead)")),
             # ('image64', 'Uploaded Image (base64)'),
-        ]
+        ],
     )
 
     panels = AbstractFormField.panels + [
@@ -161,14 +170,14 @@ class UserFormField(AbstractFormField):
         FieldPanel("css_classes"),
     ]
 
-    page = ParentalKey('FormPage', on_delete=models.CASCADE, related_name='form_fields')
+    page = ParentalKey("FormPage", on_delete=models.CASCADE, related_name="form_fields")
 
     # This customization invalidated old field names after renameing a
     # field. Using the standard save method prevents this.c
     # def save(self, *args, **kwargs):
     #     """
     #     Set clean_name on each save to the corresponding clean_name of the label field.
-    #     Upstream only sets clean_name once, when the first instance is created. 
+    #     Upstream only sets clean_name once, when the first instance is created.
     #     """
     #     clean_name = get_field_clean_name(self.label)
     #     self.clean_name = clean_name
@@ -176,7 +185,7 @@ class UserFormField(AbstractFormField):
 
 
 class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailForm):
-    parent_page_types = ['home.ContainerPage']
+    parent_page_types = ["home.ContainerPage"]
     subpage_types = []
 
     intro = RichTextField(blank=True)
@@ -184,29 +193,34 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
     use_captcha = models.BooleanField(default=False)
 
     settings_panels = AbstractForm.settings_panels + [
-        FieldPanel('use_captcha'),
+        FieldPanel("use_captcha"),
     ]
 
     content_panels = AbstractEmailForm.content_panels + [
         FormSubmissionsPanel(),
-        FieldPanel('intro', classname="full"),
+        FieldPanel("intro", classname="full"),
         HelpPanel(
             content='Some more information in our <a href="/docs/">docs</a>.',
         ),
-        InlinePanel('form_fields', label="Form fields"),
-        FieldPanel('thank_you_text', classname="full"),
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('from_address', classname="col6"),
-                FieldPanel('to_address', classname="col6"),
-            ]),
-            FieldPanel('subject'),
-        ], "Email"),
+        InlinePanel("form_fields", label="Form fields"),
+        FieldPanel("thank_you_text", classname="full"),
+        MultiFieldPanel(
+            [
+                FieldRowPanel(
+                    [
+                        FieldPanel("from_address", classname="col6"),
+                        FieldPanel("to_address", classname="col6"),
+                    ]
+                ),
+                FieldPanel("subject"),
+            ],
+            "Email",
+        ),
     ]
 
     def get_context(self, request):
         context = super().get_context(request)
-        context['ctx_embed'] = "true" if request.GET.get('embed') else ""
+        context["ctx_embed"] = "true" if request.GET.get("embed") else ""
         return context
 
     def get_form_class(self):
@@ -224,14 +238,15 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
 
     def get_submissions_list_view_class(self):
         from .views import CustomSubmissionsListView
+
         return CustomSubmissionsListView
 
     def get_data_fields(self):
         data_fields = super().get_data_fields()
 
         data_fields += [
-            ('client_ip', _('IP')),
-            ('referrer', _('Referrer')),
+            ("client_ip", _("IP")),
+            ("referrer", _("Referrer")),
         ]
 
         return data_fields
@@ -246,14 +261,14 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         landing page. E.g. you could return a redirect to a separate page.
         """
         context = self.get_context(request)
-        context.update({
-            "form_submission": form_submission,
-        })
+        context.update(
+            {
+                "form_submission": form_submission,
+            }
+        )
 
         return TemplateResponse(
-            request,
-            self.get_landing_page_template(request),
-            context
+            request, self.get_landing_page_template(request), context
         )
 
     def render_email(self, form):
@@ -283,31 +298,29 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
 
         body_content = "\n".join(content)
 
-
         _separator = 71 * "-"
 
         content = [
-            f'Form title:    {self.title}',
-            f'Submitted via: {self.full_url}',
-            f'Submitted on:  {datetime.datetime.now():%Y-%m-%d %H:%M:%S}',
-            '',
-            'Form data:',
+            f"Form title:    {self.title}",
+            f"Submitted via: {self.full_url}",
+            f"Submitted on:  {datetime.datetime.now():%Y-%m-%d %H:%M:%S}",
+            "",
+            "Form data:",
             _separator,
-            '',
+            "",
             body_content,
-            '',
+            "",
             _separator,
         ]
 
         # Content is joined with a new line to separate each text line
-        content = '\n'.join(content)
+        content = "\n".join(content)
 
         return content
 
     def serve(self, request, *args, **kwargs):
-        if request.method == 'POST':
-
-            referrer = request.META.get('HTTP_REFERER', '')
+        if request.method == "POST":
+            referrer = request.META.get("HTTP_REFERER", "")
             client_ip, _ = get_client_ip(request)
 
             form = self.get_form(
@@ -318,21 +331,23 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
             )
 
             if form.is_valid():
-                form_submission = self.process_form_submission(form, client_ip, referrer)
-                return self.render_landing_page(request, form_submission, *args, **kwargs)
+                form_submission = self.process_form_submission(
+                    form, client_ip, referrer
+                )
+                return self.render_landing_page(
+                    request, form_submission, *args, **kwargs
+                )
         else:
             form = self.get_form(page=self, user=request.user)
 
         context = self.get_context(request)
-        context.update({
-            "form": form,
-        })
-
-        return TemplateResponse(
-            request,
-            self.get_template(request),
-            context
+        context.update(
+            {
+                "form": form,
+            }
         )
+
+        return TemplateResponse(request, self.get_template(request), context)
 
 
 class TokenForm(models.Model):
@@ -343,10 +358,10 @@ class TokenForm(models.Model):
         on_delete=models.SET_NULL,
     )
     api_user = models.ForeignKey(
-      TokenUserProxy,
-      blank=True,
-      null=True,
-      on_delete=models.SET_NULL,
+        TokenUserProxy,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     def __str__(self):
@@ -358,18 +373,21 @@ class TokenForm(models.Model):
 
 class CustomFormSubmission(AbstractFormSubmission):
     """Data for a Form submission."""
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     form_data_api = models.TextField(blank=True)
     client_ip = models.GenericIPAddressField(blank=True, null=True)
-    referrer = models.CharField(_('Referrer URL'), max_length=250, blank=True)
+    referrer = models.CharField(_("Referrer URL"), max_length=250, blank=True)
 
     def get_data(self):
         form_data = super().get_data()
-        form_data.update({
-            'client_ip': self.client_ip,
-            'referrer': self.referrer,
-            'form_data_api': self.form_data_api,
-        })
+        form_data.update(
+            {
+                "client_ip": self.client_ip,
+                "referrer": self.referrer,
+                "form_data_api": self.form_data_api,
+            }
+        )
         return form_data
 
     def __str__(self):
