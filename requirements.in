@@ -1,4 +1,4 @@
-Django==5.1.4
+Django==5.1.5
 wagtail==6.2.3
 
 wagtail-modeladmin
