@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let tomSelectconfig = {
         plugins: ['remove_button'],
         create: false,
+        maxOptions: null,
+        closeAfterSelect: true,
     };
     new TomSelect(el, tomSelectconfig);
   });
