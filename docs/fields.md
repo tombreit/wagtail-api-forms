@@ -2,16 +2,20 @@
 
 ```{include} snippets/wiphint.md
 ```
-
 Bedeutung der Attribute eines Formularfeldes:
-
 
 <details>
 <summary>
 <code>Label</code>
 </summary>
 
-Feldname, wird über dem Eingabefeld dargestellt. 
+Feldname, wird über dem Eingabefeld dargestellt.
+
+```{admonition} Feldnamen nicht nachträglich ändern
+   :class: warning
+
+   Feldnamen (`Label`) sollten nachträglich nicht mehr verändert werden, da sonst der Datenexport die Felder nicht mehr korrekt zuordnen kann.
+```
 
 </details>
 
