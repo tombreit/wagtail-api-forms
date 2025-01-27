@@ -10,18 +10,17 @@ from .constants import FileArtChoices
 
 
 class CustomFormBuilder(FormBuilder):
-
-    CAPTCHA_FIELD_NAME = 'wagtailcaptcha'
+    CAPTCHA_FIELD_NAME = "wagtailcaptcha"
 
     def create_date_field(self, field, options):
         return DateField(
-            widget=widgets.DateInput(attrs={'type': 'date'}),
+            widget=widgets.DateInput(attrs={"type": "date"}),
             **options,
         )
 
     def create_datetime_field(self, field, options):
         return DateTimeField(
-            widget=widgets.DateTimeInput(attrs={'type': 'datetime-local'}),
+            widget=widgets.DateTimeInput(attrs={"type": "datetime-local"}),
             **options,
         )
 
@@ -46,13 +45,13 @@ class CustomFormBuilder(FormBuilder):
         return field
 
     def create_multiplechoicetypeahead_field(self, field, options):
-        options['choices'] = map(
-            lambda x: (x.strip(), x.strip()),
-            field.choices.split(',')
-        )
+        options["choices"] = self.get_formatted_field_choices(field)
+
         return MultipleChoiceField(
             widget=widgets.SelectMultiple(
-                attrs={'class': 'is-tom-select',}
+                attrs={
+                    "class": "is-tom-select",
+                }
             ),
             **options,
         )
@@ -82,11 +81,13 @@ class CustomFormBuilder(FormBuilder):
             widget_classname = slugify(camel_case_to_spaces(widget_classname))
             widget_classname = f"widget-class-{widget_classname}"
 
-            created_field.widget.attrs.update({
-                "css_classes": f"{field.css_classes} {widget_classname}",
-                "placeholder": field.placeholder,
-                "heading": field.heading,
-            })
+            created_field.widget.attrs.update(
+                {
+                    "css_classes": f"{field.css_classes} {widget_classname}",
+                    "placeholder": field.placeholder,
+                    "heading": field.heading,
+                }
+            )
             return created_field
 
         return wrapped_create_field_function
@@ -95,7 +96,9 @@ class CustomFormBuilder(FormBuilder):
     def formfields(self):
         # Add wagtailcaptcha to formfields property
         fields = super().formfields
-        fields[self.CAPTCHA_FIELD_NAME] = CaptchaField(label='Captcha. Add one to each digit. 9 becomes 0.')
+        fields[self.CAPTCHA_FIELD_NAME] = CaptchaField(
+            label="Captcha. Add one to each digit. 9 becomes 0."
+        )
         return fields
 
 
