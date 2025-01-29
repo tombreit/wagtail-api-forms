@@ -24,6 +24,8 @@ whitenoise
 huey
 
 # https://xael.org/pages/python-module-pyclamd.html
+# Only needed if you want to use the Clamd backend for file scanning.
+# See env.template for the necessary settings.
 pyclamd
 
 # Documentation

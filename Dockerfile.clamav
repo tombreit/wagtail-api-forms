@@ -1,0 +1,5 @@
+# Description: Dockerfile for ClamAV
+# Only purpose: Set the configuration file for ClamAV for rootless containers
+
+FROM docker.io/clamav/clamav:stable
+COPY clamd.conf /etc/clamav/clamd.conf
