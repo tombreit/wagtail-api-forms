@@ -179,3 +179,12 @@ authentifizierten Request möglich. Die Authentifizierung erfolgt entweder über
 einen freigegebenen IP-Bereich/-Adresse oder über einen Login im Backend.
 
 </details>
+
+<details>
+<summary>Wie kann ich andere Dateitypen für ein Dokumenten-Upload-Feld erlauben?</summary>
+
+Pro Formular - nicht per Feld - können Dateitypen bestimmt werden, die für den
+Dokument-Upload akzeptiert werden. Das entsprechende Feld ist *Seite > Einstellungen >  Allowed document file types*.  
+Dieses Feld ist ausschließlich für Administratoren sichtbar.
+
+</details>

@@ -191,9 +191,15 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
     intro = RichTextField(blank=True)
     thank_you_text = RichTextField(blank=True)
     use_captcha = models.BooleanField(default=False)
+    allowed_document_file_types = models.CharField(
+        max_length=255,
+        default=", ".join(settings.FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES),
+        help_text="Comma separated list of allowed file types for document uploads. E.g. 'pdf, docx'.",
+    )
 
     settings_panels = AbstractForm.settings_panels + [
         FieldPanel("use_captcha"),
+        FieldPanel("allowed_document_file_types", permission="superuser"),
     ]
 
     content_panels = AbstractEmailForm.content_panels + [

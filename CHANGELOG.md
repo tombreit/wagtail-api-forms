@@ -2,6 +2,7 @@
 
 ## 2025
 
+- Set custom document file types per form (not per field). Requires superuser.
 - Field help text as richtext fields
 
 ## 2024

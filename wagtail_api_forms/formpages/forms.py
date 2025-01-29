@@ -9,6 +9,16 @@ from .fields import FormBuilderBaseFileField
 from .constants import FileArtChoices
 
 
+def get_allowed_file_types(allowed_document_file_types):
+    if not allowed_document_file_types:
+        allowed_document_file_types = settings.FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES
+    else:
+        allowed_document_file_types = [
+            ft.strip() for ft in allowed_document_file_types.split(",")
+        ]
+    return allowed_document_file_types
+
+
 class CustomFormBuilder(FormBuilder):
     CAPTCHA_FIELD_NAME = "wagtailcaptcha"
 
@@ -37,8 +47,10 @@ class CustomFormBuilder(FormBuilder):
     def create_document_field(self, field, options):
         field = FormBuilderBaseFileField(
             # Fixme: ClearableFileInput does not show up in rendered page
-            # widget=forms.ClearableFileInput,
-            allowed_file_types=settings.FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES,
+            # widget=widgets.ClearableFileInput,
+            allowed_file_types=get_allowed_file_types(
+                field.page.specific.allowed_document_file_types
+            ),
             file_art=FileArtChoices.DOCUMENT_FILE,
             **options,
         )
@@ -55,14 +67,6 @@ class CustomFormBuilder(FormBuilder):
             ),
             **options,
         )
-
-    # def get_field_options(self, field):
-    #     """
-    #     Extend field options to include custom css classes.
-    #     Fixme: do not know how to update option['widget']['attrs'] for all fields.
-    #     """
-    #     options = super().get_field_options(field)
-    #     return options
 
     def get_create_field_function(self, type):
         """
