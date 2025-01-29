@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.template.defaultfilters import filesizeformat
 
 from .validators import (
@@ -9,21 +10,12 @@ from .validators import (
 
 
 class FormBuilderBaseFileField(forms.FileField):
-
-    FORMBUILDER_MAX_UPLOAD_SIZE = 5000 * 1024
-    FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES = [".pdf", ".txt"]
-    FORMBUILDER_ALLOWED_IMAGE_FILE_TYPES = [".jpg", ".jpeg", ".png"]
-
-    def __init__(self, *args, help_text='', **kwargs):
+    def __init__(self, *args, help_text="", **kwargs):
         self.max_upload_size = kwargs.pop(
-            'max_upload_size', self.FORMBUILDER_MAX_UPLOAD_SIZE
+            "max_upload_size", settings.FORMBUILDER_MAX_UPLOAD_SIZE
         )
-        self.allowed_file_types = kwargs.pop(
-            'allowed_file_types', self.FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES
-        )
-        self.file_art = kwargs.pop(
-            'file_art', None
-        )
+        self.allowed_file_types = kwargs.pop("allowed_file_types", [])
+        self.file_art = kwargs.pop("file_art", None)
 
         super().__init__(*args, **kwargs)
 
@@ -37,10 +29,12 @@ class FormBuilderBaseFileField(forms.FileField):
         if not validate_file_exists(uploaded_file, self.required):
             return None
 
-        if all([
-            validate_filesize(uploaded_file, self.max_upload_size),
-            validate_filetype(uploaded_file, self.allowed_file_types),
-        ]):
+        if all(
+            [
+                validate_filesize(uploaded_file, self.max_upload_size),
+                validate_filetype(uploaded_file, self.allowed_file_types),
+            ]
+        ):
             return uploaded_file
         else:
             return None
