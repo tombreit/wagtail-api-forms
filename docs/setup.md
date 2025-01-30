@@ -90,7 +90,11 @@ Virus scanning is implemented in a ClamAV docker container and a django task que
 ```
 
 ```bash
-docker-compose up
+docker-compose up  
+
+# or rootful via podman, for now:
+podman-compose --podman-run-args='--replace' up
+
 manage.py run_huey
 ```
 
