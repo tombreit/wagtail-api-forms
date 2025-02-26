@@ -30,6 +30,7 @@ RUN apt-get update --yes --quiet \
       libldap2-dev \
       libsasl2-dev \
       libmagic-dev \
+      gettext \
       npm \
     && rm -rf /var/lib/apt/lists/*
 
