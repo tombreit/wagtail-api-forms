@@ -1,7 +1,7 @@
 import socket
 
 from django.conf import settings
-from django.core.checks import Error, Info, register
+from django.core.checks import Error, Warning, Info, register
 
 # from wagtail_api_forms.formpages.validators import av_scan
 
@@ -23,7 +23,7 @@ def check_clamav_availability(app_configs, **kwargs):
             s.connect(("127.0.0.1", 3310))  # Adjust host/port if needed
             s.close()
         except OSError as e:
-            messages.append(Warning("ClamAV is not reachable on port 3310."))
+            messages.append(Warning(f"ClamAV is not reachable on port 3310: {e}"))
         except Exception as e:
             messages.append(Error(f"Something went wrong: {e}.", id="formpages.E001"))
         else:
