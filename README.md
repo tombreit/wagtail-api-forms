@@ -39,8 +39,7 @@ Wagtail as a standalone builder for form pages or simply forms.
   }
 </style>
 <iframe id="waf-iframe" src="https://fqdn.com/wagtail/formpage.html"></iframe>
-<script src="https://fqdn/static/dist/js/jquery/jquery.min.js"></script>
-<script src="https://fqdn/static/dist/js/iframeresizer/iframeResizer.min.js"></script> 
+<script src="https://fqdn/static/iframeresizer/iframeResizer.js"></script> 
 <script>
   iFrameResize({ log: false }, '#waf-iframe')
 </script>
