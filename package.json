@@ -12,6 +12,9 @@
     "js:frontend": "parcel build $npm_package_config_srcdir/js/app.js --dist-dir $npm_package_config_distdir/",
     "build": "npm-run-all scss:* js:*"
   },
+  "comments": {
+    "sass": "SASS pinned to 1.77.6 because of bootstrap 5.3.3"
+  },
   "devDependencies": {
     "@fontsource/merriweather": "^5.1.1",
     "@fontsource/roboto": "^5.1.1",
