@@ -320,6 +320,8 @@ CSP_SCRIPT_SRC = (
     "'unsafe-eval'",
 )
 
+CSP_IMG_SRC = ("'self'", "data:")
+
 # https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
 # CSP_REPORT_URI = reverse_lazy('report_csp')
 # CSP_REPORTS_EMAIL_ADMINS = False
