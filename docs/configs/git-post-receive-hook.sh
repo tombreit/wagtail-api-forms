@@ -12,10 +12,10 @@ echo "==================================================="
 echo "[npm] Installing npm requirements..."
 npm install --quiet
 
-echo "[npm] Building static assets, first step..."
-npm run --silent prod
+echo "[npm] Building static assets..."
+npm run --silent build
 
-echo "Activate virtual environment..."
+echo "[python] Activate virtual environment..."
 source /path/to/venv/bin/activate
 
 echo "[python] Ensure pip and wheel are uptodate..."
@@ -33,7 +33,7 @@ python3 manage.py migrate --noinput
 echo "[django] Run compilemessages..."
 python3 manage.py compilemessages --ignore=assets/* --ignore=node_modules/* --ignore=staticfiles/*
 
-echo "[django] Run collectstatic (second, final run)..."
+echo "[django] Run collectstatic..."
 python3 manage.py collectstatic --noinput
 
 echo "==================================================="

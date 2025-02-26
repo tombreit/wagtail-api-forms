@@ -10,7 +10,7 @@
     "scss:frontend": "parcel build $npm_package_config_srcdir/scss/app.scss --dist-dir $npm_package_config_distdir/",
     "js:copy-iframeresizer": "mkdir -p $npm_package_config_iframeresdir && cp node_modules/iframe-resizer/js/* $npm_package_config_iframeresdir/",
     "js:frontend": "parcel build $npm_package_config_srcdir/js/app.js --dist-dir $npm_package_config_distdir/",
-    "prod": "npm-run-all scss:* js:*"
+    "build": "npm-run-all scss:* js:*"
   },
   "devDependencies": {
     "@fontsource/merriweather": "^5.1.1",

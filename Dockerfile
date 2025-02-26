@@ -71,6 +71,6 @@ CMD set -xe; \
     python manage.py collectstatic --noinput; \
     python manage.py compilemessages --ignore=assets/* --ignore=node_modules/* --ignore=staticfiles/*; \
     npm install --quiet; \
-    npm run --silent prod; \
+    npm run --silent build; \
     python manage.py collectstatic --noinput; \
     gunicorn wagtail_api_forms.wsgi:application

@@ -12,7 +12,7 @@
 ## Bundle static assets
 
 ```bash
-npm install && npm run prod
+npm install && npm run build
 ```
 
 ## Set environment via .env file
