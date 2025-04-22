@@ -1,4 +1,4 @@
-Django==5.1.6
+Django==5.1.8
 wagtail==6.4.1
 
 wagtail-modeladmin
@@ -11,7 +11,7 @@ django-simple-captcha
 django-ipware
 # django-sendfile2
 django-private-storage
-django-csp
+django-csp==3.8
 # django-csp-reports
 
 # Explict mention of djangorestframework which is already a dependency

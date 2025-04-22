@@ -12,7 +12,7 @@ asgiref==3.8.1
     # via django
 babel==2.17.0
     # via sphinx
-beautifulsoup4==4.13.3
+beautifulsoup4==4.13.4
     # via
     #   furo
     #   wagtail
@@ -20,11 +20,11 @@ certifi==2025.1.31
     # via requests
 charset-normalizer==3.4.1
     # via requests
-crispy-bootstrap5==2024.10
+crispy-bootstrap5==2025.4
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
-django==5.1.6
+django==5.1.8
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -46,7 +46,7 @@ django==5.1.6
     #   wagtail
 django-auth-ldap==5.1.0
     # via -r requirements.in
-django-crispy-forms==2.3
+django-crispy-forms==2.4
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -54,7 +54,7 @@ django-csp==3.8
     # via -r requirements.in
 django-environ==0.12.0
     # via -r requirements.in
-django-extensions==3.2.3
+django-extensions==4.1
     # via -r requirements.in
 django-filter==25.1
     # via wagtail
@@ -78,7 +78,7 @@ django-tasks==0.6.1
     # via wagtail
 django-treebeard==4.7.1
     # via wagtail
-djangorestframework==3.15.2
+djangorestframework==3.16.0
     # via
     #   -r requirements.in
     #   wagtail
@@ -94,13 +94,13 @@ filetype==1.2.0
     # via willow
 furo==2024.8.6
     # via -r requirements.in
-huey==2.5.2
+huey==2.5.3
     # via -r requirements.in
 idna==3.10
     # via requests
 imagesize==1.4.1
     # via sphinx
-jinja2==3.1.5
+jinja2==3.1.6
     # via
     #   myst-parser
     #   sphinx
@@ -122,20 +122,20 @@ myst-parser==4.0.1
     # via -r requirements.in
 openpyxl==3.1.5
     # via wagtail
-packaging==24.2
+packaging==25.0
     # via sphinx
-pillow==11.1.0
+pillow==11.2.1
     # via
     #   django-simple-captcha
     #   pillow-heif
     #   wagtail
-pillow-heif==0.21.0
+pillow-heif==0.22.0
     # via willow
 pyasn1==0.6.1
     # via
     #   pyasn1-modules
     #   python-ldap
-pyasn1-modules==0.4.1
+pyasn1-modules==0.4.2
     # via python-ldap
 pyclamd==0.4.0
     # via -r requirements.in
@@ -159,9 +159,9 @@ roman-numerals-py==3.1.0
     # via sphinx
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.6
+soupsieve==2.7
     # via beautifulsoup4
-sphinx==8.2.1
+sphinx==8.2.3
     # via
     #   -r requirements.in
     #   furo
@@ -185,14 +185,14 @@ sqlparse==0.5.3
     # via django
 telepath==0.3.1
     # via wagtail
-typing-extensions==4.12.2
+typing-extensions==4.13.2
     # via
     #   beautifulsoup4
     #   django-stubs-ext
     #   django-tasks
 uc-micro-py==1.0.3
     # via linkify-it-py
-urllib3==2.3.0
+urllib3==2.4.0
     # via requests
 wagtail==6.4.1
     # via
