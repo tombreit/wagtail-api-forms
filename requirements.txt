@@ -195,10 +195,6 @@ uc-micro-py==1.0.3
 urllib3==2.4.0
     # via requests
 wagtail==6.4.1
-    # via
-    #   -r requirements.in
-    #   wagtail-modeladmin
-wagtail-modeladmin==2.2.0
     # via -r requirements.in
 whitenoise==6.9.0
     # via -r requirements.in

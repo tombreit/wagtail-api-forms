@@ -1,6 +1,7 @@
 from django.utils.safestring import mark_safe
 from wagtail import hooks
-from wagtail_modeladmin.options import ModelAdmin, modeladmin_register
+from wagtail.admin.viewsets.model import ModelViewSet
+from wagtail.admin.ui.tables import BooleanColumn
 
 from .models import Attachment, TokenForm
 
@@ -70,38 +71,48 @@ def editor_js():
     """)
 
 
-class AttachmentAdmin(ModelAdmin):
+class AttachmentAdminViewSet(ModelViewSet):
     model = Attachment
-    menu_label = "Attachments"  # ditch this to use verbose_name_plural from model
-    menu_icon = "pilcrow"  # change as required
-    menu_order = 200  # will put in 3rd place (000 being 1st, 100 2nd)
-    add_to_settings_menu = True  # or True to add your model to the Settings sub-menu
-    # exclude_from_explorer = False # or True to exclude pages of this type from Wagtail's explorer view
-    list_display = (
+    form_fields = "__all__"
+    menu_icon = "pilcrow"
+    menu_label = "Attachments"
+    menu_order = 300
+    add_to_admin_menu = True
+    add_to_settings_menu = True
+
+    list_display = [
         "created_at",
         "modified_at",
         "file",
         "form_submission",
         "av_scanned_at",
         "av_reason",
-        "av_passed",
-    )
+        BooleanColumn("av_passed"),
+    ]
     list_filter = ("av_passed",)
-    search_fields = ("file", "av_reason")
-    ordering = ("-created_at", "-modified_at")
+    search_fields = ["file", "av_reason"]
+    ordering = ["-modified_at", "-created_at"]
 
 
-class TokenFormAdmin(ModelAdmin):
+class TokenFormAdminViewSet(ModelViewSet):
     model = TokenForm
-    menu_label = "Token Forms"  # ditch this to use verbose_name_plural from model
-    menu_icon = "pilcrow"  # change as required
-    menu_order = 300  # will put in 3rd place (000 being 1st, 100 2nd)
-    add_to_settings_menu = True  # or True to add your model to the Settings sub-menu
-    # exclude_from_explorer = False # or True to exclude pages of this type from Wagtail's explorer view
-    list_display = ("form", "api_user")
-    list_filter = ("form", "api_user")
-    search_fields = ("form", "api_user")
+    form_fields = "__all__"
+    icon = "pilcrow"
+    menu_label = "Token Forms"
+    menu_order = 300
+    add_to_admin_menu = True
+    add_to_settings_menu = True
+
+    list_display = ["form", "api_user"]
+    list_filter = ["form", "api_user"]
+    search_fields = ["form", "api_user"]
 
 
-modeladmin_register(TokenFormAdmin)
-modeladmin_register(AttachmentAdmin)
+@hooks.register("register_admin_viewset")
+def register_attachment_viewset():
+    return AttachmentAdminViewSet()
+
+
+@hooks.register("register_admin_viewset")
+def register_tokenform_viewset():
+    return TokenFormAdminViewSet()

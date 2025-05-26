@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     # 'wagtail_localize',
     # 'wagtail_localize.locales',  # This replaces 'wagtail.locales'
     # Third party apps
-    "wagtail_modeladmin",
     "whitenoise.runserver_nostatic",
     "private_storage",
     # 'cspreports',
