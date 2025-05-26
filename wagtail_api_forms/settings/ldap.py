@@ -13,6 +13,14 @@ from .base import (
     env,
 )
 
+# WAGTAIL settings
+# Disable Wagtail password management features if using LDAP
+# https://docs.wagtail.org/en/6.3/reference/settings.html#wagtail-password-reset-enabled
+WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = False
+WAGTAIL_PASSWORD_RESET_ENABLED = False
+WAGTAILUSERS_PASSWORD_ENABLED = False
+
+# LDAP settings
 AUTH_LDAP = env.bool("AUTH_LDAP")
 AUTH_LDAP_SERVER_URI = env.str("AUTH_LDAP_SERVER_URI")
 AUTH_LDAP_BIND_DN = env.str("AUTH_LDAP_BIND_DN")
