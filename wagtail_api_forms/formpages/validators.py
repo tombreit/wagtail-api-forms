@@ -15,15 +15,19 @@ def _get_mimetypes_for_extensions(file_extensions: list) -> list:
     """
     _mimetypes = []
     for ext in file_extensions:
-        if mimetypes.types_map.get(ext):
-            _mimetypes.append(mimetypes.types_map.get(ext))
+        # `types_map` is not always reliable, as it may not include all extensions
+        # if mimetypes.types_map.get(ext):
+        #     _mimetypes.append(mimetypes.types_map.get(ext))
+        mime_type, _ = mimetypes.guess_type(f"file{ext}")
+        if mime_type:
+            _mimetypes.append(mime_type)
     return _mimetypes
 
 
 def validate_file_exists(file, required):
     if not file and required:
-        raise forms.ValidationError(_('This field is required.'))
-    
+        raise forms.ValidationError(_("This field is required."))
+
     return file
 
 
@@ -32,12 +36,12 @@ def validate_filetype(file, valid_file_extensions):
     file_mime_type = magic.from_buffer(file.read(2048), mime=True)
 
     if file_mime_type not in valid_mime_types:
-        _msg = f'Unsupported file type. Valid file types: `{", ".join(valid_file_extensions)}`, got `{file_mime_type}`!'
+        _msg = f"Unsupported file type. Valid file types: `{', '.join(valid_file_extensions)}`, got `{file_mime_type}`!"
         raise ValidationError(_msg)
 
     ext = os.path.splitext(file.name)[1]
     if ext.lower() not in valid_file_extensions:
-        _msg = f'Unacceptable file extension: Valid file extensions: `{", ".join(valid_file_extensions)}`, got `{ext}`!'
+        _msg = f"Unacceptable file extension: Valid file extensions: `{', '.join(valid_file_extensions)}`, got `{ext}`!"
         raise ValidationError(_msg)
 
     return file
@@ -45,7 +49,9 @@ def validate_filetype(file, valid_file_extensions):
 
 def validate_filesize(file, max_file_size):
     if file.size > max_file_size:
-        _msg = _(f'Please keep file size under {filesizeformat(max_file_size)}. Current size is {filesizeformat(file.size)}.')
+        _msg = _(
+            f"Please keep file size under {filesizeformat(max_file_size)}. Current size is {filesizeformat(file.size)}."
+        )
         raise forms.ValidationError(_msg)
 
     return file
