@@ -16,11 +16,11 @@
     "sass": "SASS pinned to 1.77.6 because of bootstrap 5.3.3"
   },
   "devDependencies": {
-    "@fontsource/merriweather": "^5.2.6",
-    "@fontsource/roboto": "^5.2.5",
+    "@fontsource/merriweather": "^5.2.9",
+    "@fontsource/roboto": "^5.2.6",
     "@parcel/transformer-sass": "^2.14.4",
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.11.3",
     "flatpickr": "^4.6.13",
     "iframe-resizer": "^4.4.5",
