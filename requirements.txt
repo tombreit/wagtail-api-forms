@@ -18,15 +18,15 @@ beautifulsoup4==4.13.4
     # via
     #   furo
     #   wagtail
-certifi==2025.7.14
+certifi==2025.8.3
     # via requests
-charset-normalizer==3.4.2
+charset-normalizer==3.4.3
     # via requests
 crispy-bootstrap5==2025.6
     # via -r requirements.in
 defusedxml==0.7.1
     # via willow
-django==5.2.4
+django==5.2.5
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
@@ -80,7 +80,7 @@ django-tasks==0.7.0
     # via wagtail
 django-treebeard==4.7.1
     # via wagtail
-djangorestframework==3.16.0
+djangorestframework==3.16.1
     # via
     #   -r requirements.in
     #   wagtail
@@ -116,7 +116,7 @@ markdown-it-py==3.0.0
     #   myst-parser
 markupsafe==3.0.2
     # via jinja2
-mdit-py-plugins==0.4.2
+mdit-py-plugins==0.5.0
     # via myst-parser
 mdurl==0.1.2
     # via markdown-it-py
@@ -131,7 +131,7 @@ pillow==11.3.0
     #   django-simple-captcha
     #   pillow-heif
     #   wagtail
-pillow-heif==1.0.0
+pillow-heif==1.1.0
     # via willow
 pyasn1==0.6.1
     # via
@@ -154,7 +154,7 @@ python-magic==0.4.27
     # via -r requirements.in
 pyyaml==6.0.2
     # via myst-parser
-requests==2.32.4
+requests==2.32.5
     # via
     #   sphinx
     #   wagtail
@@ -197,7 +197,7 @@ uc-micro-py==1.0.3
     # via linkify-it-py
 urllib3==2.5.0
     # via requests
-wagtail==7.0.1
+wagtail==7.0.2
     # via -r requirements.in
 whitenoise==6.9.0
     # via -r requirements.in
