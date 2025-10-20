@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.conf import settings
 from django.forms import DateField, DateTimeField, MultipleChoiceField, widgets
 from django.utils.text import camel_case_to_spaces, slugify
@@ -98,12 +100,25 @@ class CustomFormBuilder(FormBuilder):
 
     @property
     def formfields(self):
+        # Reimplement Wagtail's formfields logic with a guard for empty field_type
+        # to avoid errors during preview (eg. if a mandotory field is not saved yet).
+        # Upstream: wagtail/contrib/forms/forms.py
+        formfields = OrderedDict()
+        for field in self.fields:
+            if (
+                not field.field_type
+            ):  # Skip fields with empty/invalid field_type (e.g., during preview)
+                continue
+            options = self.get_field_options(field)
+            create_field = self.get_create_field_function(field.field_type)
+            clean_name = field.clean_name or field.get_field_clean_name()
+            formfields[clean_name] = create_field(field, options)
+
         # Add wagtailcaptcha to formfields property
-        fields = super().formfields
-        fields[self.CAPTCHA_FIELD_NAME] = CaptchaField(
+        formfields[self.CAPTCHA_FIELD_NAME] = CaptchaField(
             label="Captcha. Add one to each digit. 9 becomes 0."
         )
-        return fields
+        return formfields
 
 
 def remove_captcha_field(form):
