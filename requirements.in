@@ -1,5 +1,5 @@
-Django==5.2.7
-wagtail==7.1.1
+Django==5.2.9
+wagtail==7.2.1
 
 # wagtail-localize
 django_extensions
