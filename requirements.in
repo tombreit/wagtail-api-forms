@@ -32,3 +32,4 @@ Sphinx
 myst_parser
 linkify-it-py
 furo
+roman-numerals-py==3.1
