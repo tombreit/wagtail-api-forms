@@ -43,7 +43,7 @@ from wagtail.contrib.forms.models import (
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 
 from .constants import FileArtChoices
-from .forms import CustomFormBuilder
+from .forms import CustomFormBuilder, CustomFormPageForm
 from .model_mixins import FormPageApiMixin, FormPageAdditionalFieldsMixin
 
 
@@ -172,19 +172,27 @@ class UserFormField(AbstractFormField):
 
     page = ParentalKey("FormPage", on_delete=models.CASCADE, related_name="form_fields")
 
-    # This customization invalidated old field names after renameing a
-    # field. Using the standard save method prevents this.c
-    # def save(self, *args, **kwargs):
-    #     """
-    #     Set clean_name on each save to the corresponding clean_name of the label field.
-    #     Upstream only sets clean_name once, when the first instance is created.
-    #     """
-    #     clean_name = get_field_clean_name(self.label)
-    #     self.clean_name = clean_name
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        """
+        Ensure clean_name is always populated. Upstream only sets it on first
+        creation (pk is None), so if it ever gets wiped (e.g. revision restore
+        edge case) it would stay empty forever — breaking submissions.
+        We intentionally do NOT regenerate on every save, as that would
+        invalidate historical submission data when a label is renamed.
+        """
+        if not self.clean_name:
+            self.clean_name = self.get_field_clean_name()
+        if not self.clean_name:
+            from django.core.exceptions import ValidationError
+            raise ValidationError(
+                {"label": "Field label must produce a valid field name (avoid using only special characters)."}
+            )
+        super().save(*args, **kwargs)
 
 
 class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailForm):
+    base_form_class = CustomFormPageForm
+
     parent_page_types = ["home.ContainerPage"]
     subpage_types = []
 

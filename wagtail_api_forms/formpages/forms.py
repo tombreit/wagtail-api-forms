@@ -4,7 +4,8 @@ from django.conf import settings
 from django.forms import DateField, DateTimeField, MultipleChoiceField, widgets
 from django.utils.text import camel_case_to_spaces, slugify
 
-from wagtail.contrib.forms.forms import FormBuilder
+from wagtail.contrib.forms.forms import FormBuilder, WagtailAdminFormPageForm
+from wagtail.contrib.forms.models import AbstractFormField
 from captcha.fields import CaptchaField
 
 from .fields import FormBuilderBaseFileField
@@ -119,6 +120,41 @@ class CustomFormBuilder(FormBuilder):
             label="Captcha. Add one to each digit. 9 becomes 0."
         )
         return formfields
+
+
+class CustomFormPageForm(WagtailAdminFormPageForm):
+    """
+    Extends upstream admin form validation to also reject fields whose label
+    produces an empty clean_name (upstream only checks for duplicates).
+    """
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        form_fields_related_names = [
+            related_object.related_name
+            for related_object in self.instance._meta.related_objects
+            if issubclass(related_object.related_model, AbstractFormField)
+        ]
+
+        for related_name in form_fields_related_names:
+            if related_name not in self.formsets:
+                continue
+
+            for form in self.formsets[related_name].forms:
+                if form.cleaned_data.get("DELETE", False):
+                    continue
+                clean_name = (
+                    form.instance.clean_name or form.instance.get_field_clean_name()
+                )
+                if not clean_name:
+                    form.add_error(
+                        "label",
+                        "This label does not produce a valid field name. "
+                        "Please use a label with at least one letter or digit.",
+                    )
+
+        return cleaned_data
 
 
 def remove_captcha_field(form):
