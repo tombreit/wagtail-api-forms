@@ -37,8 +37,7 @@ class FormPageApiMixin(object):
             res = next((item for item in field_definitions if item["name"] == key), False)
             if res:
                 res.update({"value": value})
-                
-            form_data_api.append(res)
+                form_data_api.append(res)
 
         return json.dumps(form_data_api, cls=DjangoJSONEncoder)
 
