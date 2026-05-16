@@ -1,6 +1,5 @@
 services:
   clamav:
-    # image: docker.io/clamav/clamav:stable
     build:
       context: .
       dockerfile: Dockerfile.clamav
@@ -8,9 +7,6 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:3310:3310"
-    tty: true
-    # environment:
-    #   - CLAMD_CONF_FILE=/mnt/clamd.conf
     volumes:
       - clamd_data:/var/lib/clamav
   # web:

@@ -332,12 +332,14 @@ CSP_IMG_SRC = ("'self'", "data:")
 # https://github.com/mbi/django-simple-captcha
 # https://starcross.dev/blog/6/customising-django-simple-captcha/
 def captcha_challenge():
-    import random
+    # `secrets` is the right module for anti-automation tokens: it draws
+    # from os.urandom and is not seedable, unlike `random.randint`.
+    import secrets
 
     challenge = ""
     response = ""
-    for i in range(4):
-        digit = random.randint(0, 9)
+    for _ in range(4):
+        digit = secrets.randbelow(10)
         challenge += str(digit)
         response += str((digit + 1) % 10)
     return challenge, response
@@ -401,6 +403,13 @@ FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST = env.list(
 FORMBUILDER_USE_ANTIVIR_SERVICE = env.bool(
     "FORMBUILDER_USE_ANTIVIR_SERVICE", default=True
 )
+# ClamAV daemon endpoint used by formpages.validators.av_scan and the
+# clamav_availability system check. Defaults match the current dev/prod
+# topology (clamav exposed on the host loopback by docker-compose).
+# Centralized here so a container-to-container deploy can swap the host
+# without touching app code.
+CLAMD_HOST = "127.0.0.1"
+CLAMD_PORT = 3310
 FORMBUILDER_MAX_UPLOAD_SIZE = (
     env.int("FORMBUILDER_MAX_UPLOAD_MB", default=3) * 1024 * 1024
 )

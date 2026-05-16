@@ -63,11 +63,13 @@ class FormPageAdditionalFieldsMixin(object):
 
         cleaned_data = form.cleaned_data
         attachment_ids = []
+        _current_site = None  # lazy-fetched once per submission
 
         for name, field in form.fields.items():
 
             if isinstance(field, forms.FileField):
-                _current_site = Site.objects.first()
+                if _current_site is None:
+                    _current_site = Site.objects.first()
 
                 if field.file_art is FileArtChoices.IMAGE_FILE or field.file_art is FileArtChoices.DOCUMENT_FILE:
                     file_data = cleaned_data[name]

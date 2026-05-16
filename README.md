@@ -53,6 +53,17 @@ Wagtail as a standalone builder for form pages or simply forms.
 
 See `docs/setup.md`
 
+### Tests
+
+The test suite uses `pytest` + `pytest-django`. Install the dev dependencies and run:
+
+```bash
+pip install -r requirements-dev.in
+pytest
+```
+
+Config lives in `pytest.ini`; tests live next to the code they cover (e.g. `wagtail_api_forms/formpages/tests/`).
+
 ### Hints
 
 * Docs are served at the URL `fqdn/docs/`.

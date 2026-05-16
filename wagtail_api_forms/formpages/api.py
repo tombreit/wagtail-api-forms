@@ -13,31 +13,33 @@ from .models import CustomFormSubmission, TokenForm
 
 class FormSubmissionSerializer(serializers.HyperlinkedModelSerializer):
     form_page_slug = serializers.SlugField(source='page.slug')
-    form_page_title = serializers.SerializerMethodField(source='get_form_page_title')
-    form_page_url = serializers.SerializerMethodField(source='get_form_page_url')
-    form_data_api = serializers.SerializerMethodField(source='get_form_data_api')
+    form_page_title = serializers.SerializerMethodField()
+    form_page_url = serializers.SerializerMethodField()
+    form_data_api = serializers.SerializerMethodField()
 
     def get_form_page_title(self, obj):
         return obj.page.title
 
     def get_form_page_url(self, obj):
-        current_site = Site.objects.first()
-        return f"{current_site.root_url}{obj.page.url}"
+        # Cache per serializer instance; the serializer is instantiated once
+        # per list view, so this turns N+1 Site lookups into one.
+        if not hasattr(self, '_site_root_url'):
+            self._site_root_url = Site.objects.first().root_url
+        return f"{self._site_root_url}{obj.page.url}"
 
     @staticmethod
-    def _detele_key_from_dict(dictionary):
+    def _delete_key_from_dict(dictionary):
         # TODO: There should be only dicts, but sometimes I got '['
         if isinstance(dictionary, dict):
-            valid_keys = [
+            valid_keys = {
                 'label',
                 'name',
                 'type',
                 'field_type',
-                'type',
                 'value',
-            ]
+            }
 
-            unwanted = set(dictionary) - set(valid_keys)
+            unwanted = set(dictionary) - valid_keys
             for unwanted_key in unwanted:
                 del dictionary[unwanted_key]
 
@@ -48,7 +50,7 @@ class FormSubmissionSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_form_data_api(self, obj):
         form_data = json.loads(obj.form_data_api)
-        form_data = map(self._detele_key_from_dict, form_data)
+        form_data = map(self._delete_key_from_dict, form_data)
         return form_data
 
     class Meta:
@@ -109,9 +111,12 @@ class FormSubmissionList(generics.ListAPIView):
             )
 
             # Filter FormSubmissions to only expose submissions for requested form pages:
+            # select_related('page') turns obj.page accesses in the serializer
+            # into a single JOIN instead of N follow-up queries.
             qs = (
                 CustomFormSubmission
                 .objects
+                .select_related('page')
                 .filter(page__pk__in=fps)
                 .order_by('-submit_time')
             )

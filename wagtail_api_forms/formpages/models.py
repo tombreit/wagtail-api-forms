@@ -8,6 +8,7 @@ Added:
 * API for form submissions
 """
 
+import logging
 import uuid
 import datetime
 from pathlib import Path
@@ -45,6 +46,8 @@ from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from .constants import FileArtChoices
 from .forms import CustomFormBuilder, CustomFormPageForm
 from .model_mixins import FormPageApiMixin, FormPageAdditionalFieldsMixin
+
+logger = logging.getLogger(__name__)
 
 
 def attachment_directory_path(instance, filename):
@@ -89,35 +92,27 @@ class Attachment(models.Model):
     )
 
     def save(self, *args, **kwargs):
+        # Schedule an AV scan only on initial create. Subsequent saves come
+        # from the scan task itself (via Attachment.objects.update, not save),
+        # but guarding here prevents accidental re-scan loops if a future
+        # code path calls save() again.
         from .tasks import schedule_virusscan
 
-        """
-        Todo: Re-think/re-implement this logic!
+        is_new = self._state.adding
+        super().save(*args, **kwargs)
+        if is_new:
+            logger.info("Attachment %s: scheduling virus scan", self.id)
+            schedule_virusscan(self.id)
 
-        If is new instance:
-          1. save instance to get the instance id
-          2. run virusscan
-          3. update instance virusscan-related fields
-        
-        If instance already exists and save() is triggered:
-          1. run virusscan
-          2. update instance virusscan-related fields
-        """
 
-        # created = self._state.adding
-        # if created:
-        #     print("Attachment instance created, calling super().save()...")
-        #     super().save()
+def default_document_file_types():
+    """Default for FormPage.allowed_document_file_types.
 
-        # print(f"Attachment instance {self.id}: trigger schedule_virusscan...")
-        # _scan = schedule_virusscan(self.id)
-        # # _scan.get(blocking=True)
-        # return
-
-        super().save()
-        print(f"Attachment instance {self.id}: trigger schedule_virusscan...")
-        scan = schedule_virusscan(self.id)
-        # scan.get()
+    Module-level callable so Django serializes the default by reference
+    in migrations (stable across .env values) instead of baking in the
+    resolved string at class-definition time.
+    """
+    return ", ".join(settings.FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES)
 
 
 class TokenUserProxy(Token):
@@ -201,7 +196,7 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
     use_captcha = models.BooleanField(default=False)
     allowed_document_file_types = models.CharField(
         max_length=255,
-        default=", ".join(settings.FORMBUILDER_ALLOWED_DOCUMENT_FILE_TYPES),
+        default=default_document_file_types,
         help_text="Comma separated list of allowed file types for document uploads. E.g. 'pdf, docx'.",
     )
 

@@ -1,6 +1,7 @@
 import os
 import magic
 import mimetypes
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django import forms
 from django.template.defaultfilters import filesizeformat
@@ -34,6 +35,9 @@ def validate_file_exists(file, required):
 def validate_filetype(file, valid_file_extensions):
     valid_mime_types = _get_mimetypes_for_extensions(valid_file_extensions)
     file_mime_type = magic.from_buffer(file.read(2048), mime=True)
+    # Reset the file pointer so subsequent readers (form save, AV scan)
+    # see the full payload instead of starting at byte 2048.
+    file.seek(0)
 
     if file_mime_type not in valid_mime_types:
         _msg = f"Unsupported file type. Valid file types: `{', '.join(valid_file_extensions)}`, got `{file_mime_type}`!"
@@ -61,10 +65,14 @@ def av_scan(file):
     import pyclamd
 
     try:
-        cd = pyclamd.ClamdNetworkSocket()
+        cd = pyclamd.ClamdNetworkSocket(
+            host=settings.CLAMD_HOST, port=settings.CLAMD_PORT
+        )
         cd.ping()
     except pyclamd.ConnectionError:
-        raise ValueError("Could not connect to clamd server by network socket!")
+        raise ValueError(
+            f"Could not connect to clamd at {settings.CLAMD_HOST}:{settings.CLAMD_PORT}"
+        )
 
     scan_result = cd.scan_stream(file)
 
@@ -76,5 +84,4 @@ def validate_ip_whitelisted(request, whitelisted_ips):
 
     if not whitelisted_ips:
         return False
-    elif client_ip in whitelisted_ips:
-        return True
+    return client_ip in whitelisted_ips

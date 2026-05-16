@@ -5,17 +5,19 @@ from .models import BrandingSettings, FooterLinks
 
 
 def get_show_admin_link(allowed_ips, request):
-    show_admin_link = False
+    """Cheap UX signal: return True if request comes from an exact-match IP.
+
+    The previous implementation used `str.startswith`, which let
+    '10.0.0.100' match an allowlist entry of '10.0.0.1'. This is just a
+    UI hint (whether to render an admin link), not a security boundary,
+    but the partial-prefix matching was a real classification bug.
+    """
     remote_ip = request.META.get('REMOTE_ADDR')
+    if not allowed_ips or not remote_ip:
+        return False
 
-    if allowed_ips and remote_ip:
-        allowed_ips_list = allowed_ips.split(",")
-        allowed_ips_list = [ip.strip() for ip in allowed_ips_list]
-
-        if any(remote_ip.startswith(ip) for ip in allowed_ips_list):
-            show_admin_link = True
-
-    return show_admin_link
+    allowed = {ip.strip() for ip in allowed_ips.split(",") if ip.strip()}
+    return remote_ip in allowed
 
 
 def branding(request):
@@ -63,6 +65,9 @@ def branding(request):
     # manually fetch the active language versions...:
     localized_footer_links = None
 
+    # .first() returns None when no FooterLinks snippet exists for this
+    # locale, so the chained .footer_links would trip AttributeError —
+    # treat that as "no footer for this locale".
     try:
         localized_footer_links = (
             FooterLinks
@@ -72,8 +77,8 @@ def branding(request):
             .footer_links
             .all()
         )
-    except:
-        pass
+    except AttributeError:
+        localized_footer_links = None
 
     show_admin_link = get_show_admin_link(branding_settings.show_admin_link_for_ips, request)
 
