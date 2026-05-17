@@ -29,6 +29,8 @@ jobs:
       - run: pip install sphinx furo myst-parser linkify-it-py
       - run: sphinx-build -b html docs _site
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
 
   deploy:
