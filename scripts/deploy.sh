@@ -18,7 +18,7 @@ python manage.py compilemessages \
     --ignore=staticfiles/*
 
 echo "[deploy] sphinx-build docs"
-sphinx-build -M html docs/ _run/docs -a
+sphinx-build -b html docs _run/docs/html --fresh-env --write-all
 
 echo "[deploy] migrate"
 python manage.py migrate --noinput
