@@ -7,7 +7,7 @@
 * ``python 3.9+,``
 * ``pip``, preferably in a virtual environment
 * ``npm``
-* Docker (for clamav)
+* Podman/Docker (for clamav)
 
 ## Bundle static assets
 

@@ -8,6 +8,7 @@ Wagtail as a standalone builder for form pages or simply forms.
 
 *Building upon the feature set of [Wagtail form builder](https://docs.wagtail.org/en/latest/reference/contrib/forms/) and customized to provide the following additional features.*
 
+* Branding with custom Logos, Favicon, colors etc.
 * Expose API endpoint for forms, authentification via token (optional, configurable per form)
 * Custom form fields:
   * Document file field
@@ -27,7 +28,6 @@ Wagtail as a standalone builder for form pages or simply forms.
   * file extension
   * file mime type
   * virus scan (via clamav in docker, done async via task queue `huey`)
-* Branding with custom Logos, Favicon, colors etc.
 
 ### iFrame
 

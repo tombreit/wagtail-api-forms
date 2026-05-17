@@ -30,6 +30,8 @@ User friendly html form builder. A customized Django Wagtail app. Wagtail as a s
 - [Getting started](getting-started)
 - [FAQ](faq)
 
+![Example public form rendered by the form builder](_static/form-public.png)
+
 ## Features
 
 ```{include} ../README.md
