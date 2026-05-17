@@ -20,8 +20,9 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000
 
-# Install system packages required by Wagtail and Django (plus npm to build
-# the frontend assets at image build time).
+# Install system packages required by Wagtail and Django (plus npm to install
+# frontend dependencies; the build itself runs at container start via
+# scripts/deploy.sh).
 RUN apt-get update --yes --quiet \
     && apt-get install --yes --quiet --no-install-recommends \
       build-essential \
@@ -55,16 +56,15 @@ COPY --chown=wagtail:wagtail . .
 # Use user "wagtail" to run the build commands below and the server itself.
 USER wagtail
 
-# Build frontend assets and collect static files at build time so container
-# startup is fast and predictable (no npm registry access required to boot).
-RUN npm install --quiet \
-    && npm run --silent build \
-    && python manage.py collectstatic --noinput --clear \
-    && python manage.py compilemessages --ignore=assets/* --ignore=node_modules/* --ignore=staticfiles/*
+# Install npm dependencies at build time so the image layer caches them and
+# container start doesn't need npm registry access. The asset build itself,
+# collectstatic, compilemessages, docs build, and migrate all run at container
+# start via scripts/deploy.sh — single source of truth, shared with the
+# bare-metal post-receive deploy.
+RUN npm install --quiet
 
-# Runtime command. Migrate runs on every start by design (single-replica
-# deployment); for multi-replica setups move `migrate` to a release-phase
-# job to avoid races.
-CMD set -xe; \
-    python manage.py migrate --noinput; \
-    gunicorn wagtail_api_forms.wsgi:application
+# Runtime command. scripts/deploy.sh runs the app-level deploy steps (build,
+# collectstatic, compilemessages, docs, migrate) before gunicorn starts.
+# Single-replica deployment by design; for multi-replica setups, move the
+# migrate step out of deploy.sh into a release-phase job to avoid races.
+CMD ["sh", "-c", "./scripts/deploy.sh && gunicorn wagtail_api_forms.wsgi:application"]

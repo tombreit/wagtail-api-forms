@@ -136,6 +136,6 @@ Do **not** allow the webserver to serve ``_data/attachments/`` files - these fil
 
 #### Production deployment steps (eg. git post receive hook) 
 
-```{literalinclude} configs/git-post-receive-hook.sh
+```{literalinclude} ../scripts/git-hook-post-receive.sh
 :language: bash
 ```
