@@ -23,6 +23,18 @@ ENV PYTHONUNBUFFERED=1 \
 # Install system packages required by Wagtail and Django (plus npm to install
 # frontend dependencies; the build itself runs at container start via
 # scripts/deploy.sh).
+#
+# The two MIME databases are load-bearing for upload validation and attachment
+# downloads, so they are named explicitly rather than left to chance:
+#   media-types       -> /etc/mime.types, which mimetypes.guess_type() reads.
+#                        Without it Python has no .docx entry, so uploads can't
+#                        be allow-listed and private_storage serves attachments
+#                        as application/octet-stream. It used to arrive only as
+#                        a transitive dependency of npm/gettext.
+#   shared-mime-info  -> /usr/share/mime/{subclasses,aliases}, the freedesktop
+#                        type hierarchy formpages/validators.py uses to decide
+#                        whether a sniffed type (text/csv) is an acceptable
+#                        stand-in for an extension's canonical type (text/plain).
 RUN apt-get update --yes --quiet \
     && apt-get install --yes --quiet --no-install-recommends \
       build-essential \
@@ -32,6 +44,8 @@ RUN apt-get update --yes --quiet \
       libldap2-dev \
       libsasl2-dev \
       libmagic-dev \
+      media-types \
+      shared-mime-info \
       gettext \
       npm \
     && rm -rf /var/lib/apt/lists/*
