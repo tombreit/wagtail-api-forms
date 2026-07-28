@@ -197,7 +197,10 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
     allowed_document_file_types = models.CharField(
         max_length=255,
         default=default_document_file_types,
-        help_text="Comma separated list of allowed file types for document uploads. E.g. 'pdf, docx'.",
+        help_text=(
+            "Comma separated list of allowed file extensions for document uploads. "
+            "Each one needs its leading dot. E.g. '.pdf, .docx'."
+        ),
     )
 
     settings_panels = AbstractForm.settings_panels + [
