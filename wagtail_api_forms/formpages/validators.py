@@ -9,6 +9,24 @@ from django.utils.translation import gettext_lazy as _
 from ipware import get_client_ip
 
 
+# How much of an upload libmagic gets to look at.
+#
+# libmagic identifies OOXML (.docx/.xlsx/.pptx) by locating the `word/` / `xl/` /
+# `ppt/` entry name among the ZIP's local file headers, and that offset varies per
+# document. With a 2 KB read it regularly falls off the end, fails to resolve the
+# subtype and reports `application/octet-stream` — so a perfectly good .docx got
+# rejected while another one sailed through.
+#
+# Measured over 3016 real OOXML files: 2048 identified 3005, 4096 identified 3013,
+# 8192 identified 3014 — and 16k/32k identified no more than 8192 did. The only two
+# stragglers at 8 KB are an Office `~$` lock stub and a file that reads as
+# octet-stream even from the full payload, so this is the accuracy plateau.
+#
+# Deliberately a fixed cap rather than the whole upload: the buffer stays constant
+# regardless of how large a file someone posts.
+MIME_SNIFF_BYTES = 8192
+
+
 def _get_mimetypes_for_extensions(file_extensions: list) -> list:
     """
     Todo: also check for common, but not standardized mime types:
@@ -34,9 +52,9 @@ def validate_file_exists(file, required):
 
 def validate_filetype(file, valid_file_extensions):
     valid_mime_types = _get_mimetypes_for_extensions(valid_file_extensions)
-    file_mime_type = magic.from_buffer(file.read(2048), mime=True)
+    file_mime_type = magic.from_buffer(file.read(MIME_SNIFF_BYTES), mime=True)
     # Reset the file pointer so subsequent readers (form save, AV scan)
-    # see the full payload instead of starting at byte 2048.
+    # see the full payload instead of starting at the end of the sniff window.
     file.seek(0)
 
     if file_mime_type not in valid_mime_types:
