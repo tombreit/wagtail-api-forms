@@ -8,8 +8,8 @@
   },
   "scripts": {
     "scss:frontend": "parcel build $npm_package_config_srcdir/scss/app.scss --dist-dir $npm_package_config_distdir/",
-    "js:copy-iframeresizer": "mkdir -p $npm_package_config_iframeresdir && cp node_modules/iframe-resizer/js/* $npm_package_config_iframeresdir/",
     "js:frontend": "parcel build $npm_package_config_srcdir/js/app.js --dist-dir $npm_package_config_distdir/",
+    "js:iframeresizer": "rm -rf $npm_package_config_iframeresdir && parcel build $npm_package_config_srcdir/js/iframeResizer.js $npm_package_config_srcdir/js/iframe-resizer.child.js --dist-dir $npm_package_config_iframeresdir/ && for f in $npm_package_config_iframeresdir/*.js; do cat $npm_package_config_srcdir/js/iframe-resizer.banner.txt $f > $f.tmp && mv $f.tmp $f; done",
     "build": "npm-run-all scss:* js:*"
   },
   "comments": {
@@ -18,12 +18,13 @@
   "devDependencies": {
     "@fontsource/merriweather": "^5.2.9",
     "@fontsource/roboto": "^5.2.6",
+    "@iframe-resizer/child": "^5.5.9",
+    "@iframe-resizer/parent": "^5.5.9",
     "@parcel/transformer-sass": "^2.14.4",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.11.3",
     "flatpickr": "^4.6.13",
-    "iframe-resizer": "^4.4.5",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.14.4",
     "sass": "1.77.6",

@@ -31,21 +31,31 @@ Wagtail as a standalone builder for form pages or simply forms.
 
 ### iFrame
 
+Embed a form on a third party page. Note the `?embed=true` parameter, which strips
+the navbar and footer, and enables the iFrame autoresizing:
+
 ```html
 <style>
-  iframe#waf-iframe {
+  iframe[data-waf-resize] {
     width: 1px;
     min-width: 100%;
+    border: 0;
   }
 </style>
-<iframe id="waf-iframe" src="https://fqdn.com/wagtail/formpage.html"></iframe>
-<script src="https://fqdn/static/iframeresizer/iframeResizer.js"></script> 
-<script>
-  iFrameResize({ log: false }, '#waf-iframe')
-</script>
+<iframe data-waf-resize src="https://fqdn.com/wagtail/formpage.html?embed=true"></iframe>
+<script async src="https://fqdn/static/iframeresizer/iframeResizer.js"></script>
 ```
 
-*Snippet from https://github.com/davidjbradshaw/iframe-resizer#typical-setup. Thanks to [davidjbradshaw](https://github.com/davidjbradshaw/iframe-resizer)*
+Every iframe carrying the `data-waf-resize` attribute is picked up automatically, so no
+inline script is needed. To size an iframe yourself instead, call `iframeResize(options,
+selector)` once the script has loaded; the options are documented at
+<https://iframe-resizer.com/api/parent/>. The v4 spelling `iFrameResize()` still works,
+so existing embeds keep running unchanged.
+
+*Autoresizing is provided by [iframe-resizer](https://iframe-resizer.com) by
+[davidjbradshaw](https://github.com/davidjbradshaw/iframe-resizer), used under the terms
+of its GPLv3 open source license. The license key is set on the form page, so embedding
+sites do not have to configure one.*
 
 ## Usage
 

@@ -1,0 +1,8 @@
+/*!
+ * Bundles iframe-resizer 5 (https://iframe-resizer.com)
+ * Copyright (c) 2013 - David J. Bradshaw, licensed GPL-3.0
+ *
+ * Used here under the terms of the GPLv3 open source license.
+ * Bundled by wagtail-api-forms (AGPL-3.0), unminified sources at
+ * https://github.com/tombreit/wagtail-api-forms and in node_modules/@iframe-resizer/
+ */

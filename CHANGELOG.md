@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026
+
+- Upgraded `iframe-resizer` from 4.x to 5.x (`@iframe-resizer/parent` and
+  `@iframe-resizer/child`). Upstream relicensed from MIT to GPL-3.0; the GPLv3 open
+  source license key is set on the form page, so embedding sites need no configuration.
+  Existing embed snippets keep working, and new ones no longer need an inline script:
+  add `data-waf-resize` to the iframe. See the README, section "iFrame".
+
 ## 2025
 
 - Set custom document file types per form (not per field). Requires superuser.

@@ -19,6 +19,8 @@ Form pages contain a page title, the form or the fields of a form, some mail set
 
 A published form can be reached under its published URL in the standard design of the form builder ("standalone form page"), but can also be queried without the standard design via the URL parameter `url?embed=true`. This second variant can be used, for example, as an iFrame on an existing page.
 
+The iFrame is resized to its content automatically. The snippet to paste into the embedding page is in the project README, section "iFrame".
+
 ## What next?
 
 [→ FAQ (currently only available in German)](faq)
