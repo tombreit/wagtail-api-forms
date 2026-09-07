@@ -82,6 +82,21 @@ make --directory docs/ html
 * ``.env`` - your configured environment
 * ``_data/[media|attachments|db]`` - your sqlite database and uploaded files
 
+Restore the database from ``_data/db/db.snapshot.sqlite3``, not from the live
+``_data/db/db.sqlite3``.
+
+The live database runs in WAL mode. Copying ``db.sqlite3`` while the app is running
+does **not** give a usable backup, even with the ``db.sqlite3-wal`` sidecar copied
+alongside it: the copy is not atomic, so a checkpoint running between the two reads
+can leave the pair missing committed transactions. This was already true before WAL,
+for a single-file copy. The huey consumer therefore writes a consistent snapshot to
+``db.snapshot.sqlite3`` every hour, using ``VACUUM INTO``.
+
+```{note}
+   The snapshot is only refreshed while the huey consumer is running. If huey is
+   down the file goes stale silently, so monitor its modification time.
+```
+
 ### Virus scanning
 
 Virus scanning is implemented in a ClamAV docker container and a django task queue (huey).

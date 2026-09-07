@@ -131,8 +131,47 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": DB_DIR / "db.sqlite3",
+        # Tuned for the production topology: Apache mod_wsgi runs processes=2
+        # threads=2 (docs/configs/apache.conf) and the huey consumer adds 2 more
+        # threads, so up to 6 threads in 3 processes write this file. Requires
+        # Django >= 5.1 for init_command / transaction_mode.
+        "OPTIONS": {
+            # WAL lets readers run while a writer holds the lock, instead of
+            # writes and reads blocking each other. The mode is stored in the
+            # file header, so this only actually flips it on the first connect.
+            #
+            # synchronous=NORMAL is the safe pairing for WAL: a process crash
+            # loses nothing; only an OS crash or power loss can lose the most
+            # recently committed transactions.
+            #
+            # cache_size is negative, which means KiB rather than pages: 20 MB
+            # per connection, so ~120 MB worst case across all 6 connections.
+            "init_command": (
+                "PRAGMA journal_mode=WAL;"
+                "PRAGMA synchronous=NORMAL;"
+                "PRAGMA temp_store=MEMORY;"
+                "PRAGMA mmap_size=134217728;"  # 128 MB
+                "PRAGMA journal_size_limit=27103364;"  # ~26 MB, caps WAL growth
+                "PRAGMA cache_size=-20000;"  # 20 MB
+            ),
+            # Take the write lock at BEGIN rather than upgrading to it mid
+            # transaction. A lock upgrade cannot wait for `timeout` -- it fails
+            # immediately with "database is locked" -- so IMMEDIATE turns those
+            # errors into a wait. Django's docs warn against combining this with
+            # ATOMIC_REQUESTS; this project does not set it.
+            "transaction_mode": "IMMEDIATE",
+            # Busy timeout in seconds (Python's default is 5). Deploys run
+            # `migrate` while the old Apache workers and huey are still serving,
+            # so leave more room than the default.
+            "timeout": 15,
+        },
     }
 }
+
+# Consistent, rsync-able copy of the database, refreshed hourly by the huey
+# consumer (see wagtail_api_forms/home/tasks.py). Under WAL, copying the live
+# db.sqlite3 is not a safe backup; restore from this file instead.
+FORMBUILDER_DB_SNAPSHOT_PATH = DB_DIR / "db.snapshot.sqlite3"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
