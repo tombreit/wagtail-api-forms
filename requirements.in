@@ -1,7 +1,7 @@
-Django==6.0.5
-wagtail==7.4
+Django==6.0.8
+wagtail==7.4.3
 
-django-treebeard==5.2.2
+#django-treebeard==5.2.2
 
 # wagtail-localize
 django_extensions
