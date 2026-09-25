@@ -35,6 +35,7 @@ django==6.0.8
     #   django-csp
     #   django-extensions
     #   django-filter
+    #   django-ipware
     #   django-modelcluster
     #   django-permissionedforms
     #   django-ranged-response
@@ -61,7 +62,7 @@ django-extensions==4.1
     # via -r requirements.in
 django-filter==26.1
     # via wagtail
-django-ipware==7.0.1
+django-ipware==8.0.0
     # via -r requirements.in
 django-modelcluster==6.5
     # via wagtail
@@ -73,7 +74,7 @@ django-ranged-response==0.2.0
     # via django-simple-captcha
 django-simple-captcha==0.7.0
     # via -r requirements.in
-django-stubs-ext==6.1.0
+django-stubs-ext==6.1.1
     # via django-tasks
 django-taggit==6.1.0
     # via wagtail
@@ -101,7 +102,7 @@ furo==2025.12.19
     # via -r requirements.in
 huey==3.4.0
     # via -r requirements.in
-idna==3.19
+idna==3.20
     # via requests
 imagesize==2.0.1
     # via sphinx
@@ -140,7 +141,7 @@ pillow==12.3.0
     #   django-simple-captcha
     #   pillow-heif
     #   wagtail
-pillow-heif==1.7.0
+pillow-heif==1.8.0
     # via willow
 pluggy==1.6.0
     # via pytest
@@ -164,9 +165,9 @@ pytest==9.1.1
     #   pytest-django
 pytest-django==4.14.0
     # via -r requirements-dev.in
-python-ipware==3.0.0
+python-ipware==4.1.0
     # via django-ipware
-python-ldap==3.4.7
+python-ldap==3.4.8
     # via django-auth-ldap
 python-magic==0.4.27
     # via -r requirements.in
@@ -180,7 +181,7 @@ roman-numerals==4.1.0
     # via sphinx
 snowballstemmer==3.1.1
     # via sphinx
-soupsieve==2.9.2
+soupsieve==2.10
     # via beautifulsoup4
 sphinx==9.1.0
     # via
@@ -211,7 +212,7 @@ typing-extensions==4.16.0
     #   beautifulsoup4
     #   django-stubs-ext
     #   django-tasks
-urllib3==2.7.0
+urllib3==2.8.0
     # via requests
 wagtail==7.4.3
     # via -r requirements.in
