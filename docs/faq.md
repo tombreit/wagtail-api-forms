@@ -147,6 +147,10 @@ zusammengestellt wurde, weiß das Formulartool nicht, was dieses Feld inhaltlich
 Eine beliebige Seite unterhalb von "/admin/" aufrufen und die Login-Seite fragt
 die Credentials ab.
 
+Bei aktiviertem LDAP-Login (`AUTH_LDAP=true`) kann man sich mit der
+E-Mail-Adresse (bevorzugt) oder mit dem Windows-/AD-Benutzernamen
+(`sAMAccountName`) anmelden. In beiden Fällen wird derselbe Benutzer verwendet.
+
 </details>
 
 <details>

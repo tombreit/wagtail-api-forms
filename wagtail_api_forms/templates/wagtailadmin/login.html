@@ -1,3 +1,33 @@
 {% extends "wagtailadmin/login.html" %}
+{% load static %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        /* Embed the custom logo in a filled circle */
+        .login .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 9rem;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            /* Same color as the logo's background (logo.svg), so the logo blends into the circle */
+            background-color: #24295e;
+        }
+
+        .login .login-logo img {
+            /* Keep the corners of the rectangular logo inside the circle */
+            width: 72%;
+        }
+    </style>
+{% endblock %}
 
 {% block branding_login %}Sign in to the Form Builder{% endblock %}
+
+{% block branding_logo %}
+    {# Set custom wagtail backend branding logo, same as in wagtailadmin/base.html #}
+    <div class="login-logo">
+        <img src="{% static 'wagtailadmin/logo.svg' %}" alt="Form Builder" />
+    </div>
+{% endblock %}

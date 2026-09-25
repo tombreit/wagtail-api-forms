@@ -134,3 +134,17 @@ msgstr "Deutsch"
 #: wagtail_api_forms/templates/_base.html:51
 msgid "There is no form for this URL."
 msgstr "Kein Formular für diese URL gefunden."
+
+#: wagtail_api_forms/users/forms.py:14
+msgid "Email or username"
+msgstr "E-Mail oder Benutzername"
+
+#: wagtail_api_forms/users/forms.py:15
+msgid "Enter your email or username"
+msgstr "E-Mail-Adresse oder Benutzername eingeben"
+
+#: wagtail_api_forms/users/forms.py:21
+msgid "Your email/username and password didn't match. Please try again."
+msgstr ""
+"E-Mail/Benutzername und Passwort stimmen nicht überein. Bitte erneut "
+"versuchen."
