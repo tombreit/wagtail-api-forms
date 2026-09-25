@@ -1,0 +1,9 @@
+{% extends "wagtailadmin/404.html" %}
+{% load static %}
+
+{% block branding_logo %}
+    {# Set custom wagtail backend branding logo, same as in wagtailadmin/base.html #}
+    <div class="page404__logo w-hidden sm:w-block">
+        <img src="{% static 'wagtailadmin/logo.svg' %}" alt="Form Builder" class="w-w-full" />
+    </div>
+{% endblock %}
