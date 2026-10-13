@@ -1,4 +1,4 @@
-Django==6.0.8
+Django==6.0.9
 wagtail==7.4.3
 
 #django-treebeard==5.2.2
