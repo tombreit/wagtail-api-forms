@@ -37,6 +37,12 @@
         </div>
     {% endfor %}
 
+    {% if page.outro %}
+    <div class="outro">
+        {{ page.outro|richtext }}
+    </div>
+    {% endif %}
+
     <hr>
 
     <button class="btn btn-custom-primary" type="submit">

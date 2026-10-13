@@ -179,8 +179,11 @@ class UserFormField(AbstractFormField):
             self.clean_name = self.get_field_clean_name()
         if not self.clean_name:
             from django.core.exceptions import ValidationError
+
             raise ValidationError(
-                {"label": "Field label must produce a valid field name (avoid using only special characters)."}
+                {
+                    "label": "Field label must produce a valid field name (avoid using only special characters)."
+                }
             )
         super().save(*args, **kwargs)
 
@@ -191,7 +194,14 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
     parent_page_types = ["home.ContainerPage"]
     subpage_types = []
 
-    intro = RichTextField(blank=True)
+    intro = RichTextField(
+        blank=True, verbose_name="Intro text", help_text="Displayed above the form."
+    )
+    outro = RichTextField(
+        blank=True,
+        verbose_name="Outro text",
+        help_text="Displayed below the form, but before the “Submit” button.",
+    )
     thank_you_text = RichTextField(blank=True)
     use_captcha = models.BooleanField(default=False)
     allowed_document_file_types = models.CharField(
@@ -215,6 +225,7 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
             content='Some more information in our <a href="/docs/">docs</a>.',
         ),
         InlinePanel("form_fields", label="Form fields"),
+        FieldPanel("outro", classname="full"),
         FieldPanel("thank_you_text", classname="full"),
         MultiFieldPanel(
             [
