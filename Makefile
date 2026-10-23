@@ -9,5 +9,5 @@ help:
 
 requirements:
 	python3 -m pip install --upgrade pip-tools pip wheel setuptools
-	python3 -m piptools compile --upgrade requirements.in
-	python3 -m piptools compile --upgrade requirements-dev.in
+	python3 -m piptools compile --generate-hashes --allow-unsafe --upgrade requirements.in
+	python3 -m piptools compile --generate-hashes --allow-unsafe --upgrade requirements-dev.in
