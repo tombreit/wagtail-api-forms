@@ -17,7 +17,6 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
     path('api/formsubmission/', include(formpages_urls.urlpatterns_api)),
     path('captcha/', include(formpages_urls.urlpatterns_captcha)),
-    # path('cspreports/', include('cspreports.urls')),
 ]
 
 # Translatable URLs

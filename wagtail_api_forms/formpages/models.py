@@ -18,7 +18,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.template.response import TemplateResponse
+from django.utils.decorators import method_decorator
 from django.utils.formats import date_format
+from django.views.decorators.csp import csp_override
 
 from private_storage.fields import PrivateFileField
 from rest_framework.authtoken.models import Token
@@ -341,6 +343,7 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
 
         return content
 
+    @method_decorator(csp_override(settings.FORMBUILDER_FORMPAGE_CSP))
     def serve(self, request, *args, **kwargs):
         if request.method == "POST":
             referrer = request.META.get("HTTP_REFERER", "")

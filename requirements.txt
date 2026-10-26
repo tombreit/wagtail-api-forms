@@ -228,7 +228,6 @@ django==6.1.2 \
     #   crispy-bootstrap5
     #   django-auth-ldap
     #   django-crispy-forms
-    #   django-csp
     #   django-extensions
     #   django-filter
     #   django-ipware
@@ -255,10 +254,6 @@ django-crispy-forms==2.7 \
     # via
     #   -r requirements.in
     #   crispy-bootstrap5
-django-csp==4.0 \
-    --hash=sha256:b27010bb702eb20a3dad329178df2b61a2b82d338b70fbdc13c3a3bd28712833 \
-    --hash=sha256:d5a0a05463a6b75a4f1fc1828c58c89af8db9364d09fc6e12f122b4d7f3d00dc
-    # via -r requirements.in
 django-environ==0.14.0 \
     --hash=sha256:8dbe8a57f0a540ab8abd6f54f230de5e99e3a2c9d797cb9caecb037bca3d47d8 \
     --hash=sha256:b6c48d93b9d2ff8a3ea14099e90c35aa4f101c1b4d5f262dfee0d27b06742ed7
@@ -552,9 +547,7 @@ openpyxl==3.1.5 \
 packaging==26.3 \
     --hash=sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79 \
     --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
-    # via
-    #   django-csp
-    #   sphinx
+    # via sphinx
 pillow==13.0.0 \
     --hash=sha256:02464da86f561f410e13b061ec37c3068a9cb557a095494157742d07b3c24a27 \
     --hash=sha256:04a63720f79e22fd54d897c233a68314c50ca0603360f54ce2bd5db8f0f43782 \

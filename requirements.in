@@ -12,8 +12,6 @@ django-simple-captcha
 django-ipware
 # django-sendfile2
 django-private-storage
-django-csp
-# django-csp-reports
 
 # Explict mention of djangorestframework which is already a dependency
 # of wagtail but also used for our own, simple API view.

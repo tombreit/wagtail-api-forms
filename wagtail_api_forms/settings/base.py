@@ -8,6 +8,7 @@ See end of file for development specific settings, triggered by
 from pathlib import Path
 import environ
 
+from django.utils.csp import CSP
 from django.utils.translation import gettext_lazy as _
 
 
@@ -63,7 +64,6 @@ INSTALLED_APPS = [
     # Third party apps
     "whitenoise.runserver_nostatic",
     "private_storage",
-    # 'cspreports',
     "rest_framework",
     "rest_framework.authtoken",
     "modelcluster",
@@ -88,7 +88,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "csp.middleware.CSPMiddleware",
+    "django.middleware.csp.ContentSecurityPolicyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     # Using our customized WhiteNoiseMiddleware to serve additional
     # static files (here: /docs/)
@@ -334,38 +334,26 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 CORS_URLS_REGEX = r"^/api/formsubmission/.*$"
 
 
-# https://django-csp.readthedocs.io/en/latest/index.html
-# https://www.laac.dev/blog/content-security-policy-using-django/
-# https://wolfgang.reutz.at/2018/10/12/django-and-content-security-policy/
-CSP_REPORT_ONLY = False
+# Content Security Policy
+# https://docs.djangoproject.com/en/6.1/ref/csp/
+SECURE_CSP = {
+    "default-src": [CSP.SELF],
+    # unsafe-inline needed for inline CSS, e.g. via <style>...</style> or style="":
+    "style-src": [CSP.SELF, CSP.UNSAFE_INLINE],
+    "script-src": [CSP.SELF, CSP.UNSAFE_INLINE, CSP.UNSAFE_EVAL],
+    # blob: for the image previews in Wagtail's multiple image upload
+    "img-src": [CSP.SELF, "data:", "blob:"],
+    # Wagtail admin's upgrade check runs in the browser
+    "connect-src": [CSP.SELF, "https://releases.wagtail.org"],
+    "frame-ancestors": [CSP.SELF],
+}
 
-CSP_FRAME_ANCESTORS = ("'self'",)
-CSP_FRAME_ANCESTORS += tuple(env.list("FORMBUILDER_CSP_FRAME_ANCESTORS"))
-
-CSP_EXCLUDE_URL_PREFIXES = (
-    "/admin/",
-    "/django-admin/",
-    "/docs/",
-)
-# unsafe-inline needed for inline CSS, e.g. via <style>...</style> or style="":
-CSP_STYLE_SRC = (
-    "'self'",
-    "'unsafe-inline'",
-)
-CSP_SCRIPT_SRC = (
-    "'self'",
-    "'unsafe-inline'",
-    "'unsafe-eval'",
-)
-
-CSP_IMG_SRC = ("'self'", "data:")
-
-# https://github.com/adamalton/django-csp-reports#how-do-i-use-this-thing
-# CSP_REPORT_URI = reverse_lazy('report_csp')
-# CSP_REPORTS_EMAIL_ADMINS = False
-# CSP_REPORTS_LOG = True
-# CSP_REPORTS_SAVE = True
-# CSP_REPORTS_LOG_LEVEL = 'debug'
+# Form pages may be embedded via iframe on these third party sites (README, "iFrame").
+# Applied in FormPage.serve(); csp_override replaces the policy, it doesn't merge.
+FORMBUILDER_FORMPAGE_CSP = {
+    **SECURE_CSP,
+    "frame-ancestors": [CSP.SELF, *env.list("FORMBUILDER_CSP_FRAME_ANCESTORS")],
+}
 
 
 # https://github.com/mbi/django-simple-captcha
@@ -485,7 +473,7 @@ if DEBUG:
     print(f"{FORMBUILDER_ALLOWED_IMAGE_FILE_TYPES=}")
     print(f"{FORMBUILDER_USE_ANTIVIR_SERVICE=}")
     print(f"{FORMBUILDER_WHITELIST_IPS_ATTACHMENT_REQUEST=}")
-    print(f"{CSP_FRAME_ANCESTORS=}")
+    print(f"{FORMBUILDER_FORMPAGE_CSP['frame-ancestors']=}")
     print(f"{ALLOWED_HOSTS=}")
 
     SECURE_SSL_REDIRECT = False

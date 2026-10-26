@@ -52,6 +52,10 @@ selector)` once the script has loaded; the options are documented at
 <https://iframe-resizer.com/api/parent/>. The v4 spelling `iFrameResize()` still works,
 so existing embeds keep running unchanged.
 
+Only form pages can be embedded, and only by the sites listed in
+`FORMBUILDER_CSP_FRAME_ANCESTORS` (see `env.template`); all other pages, the admin
+included, only allow framing by this site itself.
+
 *Autoresizing is provided by [iframe-resizer](https://iframe-resizer.com) by
 [davidjbradshaw](https://github.com/davidjbradshaw/iframe-resizer), used under the terms
 of its GPLv3 open source license. The license key is set on the form page, so embedding
