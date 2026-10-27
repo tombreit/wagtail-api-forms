@@ -12,7 +12,7 @@
         </div>
     {% endif %}
 
-    <a href="{% pageurl page %}" class="btn btn-secondary my-4">
+    <a href="{% pageurl page %}{% if ctx_embed %}?embed={{ ctx_embed }}{% endif %}" class="btn btn-secondary my-4">
         <i class="bi bi-arrow-return-left"></i> Back to form
     </a>
 

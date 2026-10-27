@@ -37,20 +37,53 @@ the navbar and footer, and enables the iFrame autoresizing:
 ```html
 <style>
   iframe[data-waf-resize] {
-    width: 1px;
-    min-width: 100%;
+    width: 100%;
+    height: 100vh; /* until the first resize, and a scrollable fallback without JS */
     border: 0;
   }
 </style>
-<iframe data-waf-resize src="https://fqdn.com/wagtail/formpage.html?embed=true"></iframe>
+<iframe
+  data-waf-resize
+  title="Contact form"
+  src="https://fqdn.com/wagtail/formpage.html?embed=true"
+></iframe>
 <script async src="https://fqdn/static/iframeresizer/iframeResizer.js"></script>
 ```
 
 Every iframe carrying the `data-waf-resize` attribute is picked up automatically, so no
-inline script is needed. To size an iframe yourself instead, call `iframeResize(options,
-selector)` once the script has loaded; the options are documented at
-<https://iframe-resizer.com/api/parent/>. The v4 spelling `iFrameResize()` still works,
-so existing embeds keep running unchanged.
+inline script is needed. Give each iframe a `title` describing the form for screen
+readers; if it is missing, the form page's title is used.
+
+The form page itself takes care of the rest, so embedding sites need no configuration:
+
+* the iframe-resizer license (see below)
+* the height calculation: iframe-resizer detects the most suitable method on its own,
+  and a `heightCalculationMethod` passed by the embedding page is ignored
+* after a submit, the embedding page scrolls to the top of the form, so the validation
+  errors or the thank-you text are visible
+
+To size an iframe yourself instead, call `iframeResize(options, selector)` once the
+script has loaded, e.g. for an iframe inserted after the page has loaded (only iframes
+present on page load are picked up automatically), or `iframeResize({ log: 'expanded' },
+'#my-form')` to debug the sizing in the browser console. The options are documented at
+<https://iframe-resizer.com/api/parent/>; leave `waitForLoad` off, as it can stop the
+asynchronously loaded script from initialising. The v4 spelling `iFrameResize()` still
+works, so existing embeds keep running. Options from older snippets that iframe-resizer
+5 no longer needs:
+
+| v4 option                                   | iframe-resizer 5                              |
+| ------------------------------------------- | --------------------------------------------- |
+| `heightCalculationMethod`                   | remove, the method is detected automatically  |
+| `minHeight`, `maxHeight`                    | CSS `min-height`, `max-height` on the iframe  |
+| `sizeHeight`, `sizeWidth`, `autoResize`     | `direction` (default `'vertical'`)            |
+
+Troubleshooting, see the browser console of the embedding page:
+
+* *has not responded within 5 seconds*: the `src` lacks `?embed=true`, so the form page
+  does not load the resizer.
+* The browser refuses to display the iframe: the embedding site is missing from
+  `FORMBUILDER_CSP_FRAME_ANCESTORS`.
+* A *GPLv3 License Version* notice, once per browser session, is expected.
 
 Only form pages can be embedded, and only by the sites listed in
 `FORMBUILDER_CSP_FRAME_ANCESTORS` (see `env.template`); all other pages, the admin

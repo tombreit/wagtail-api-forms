@@ -13,8 +13,6 @@ import pytest
 from django.conf import settings
 from django.utils.csp import CSP
 
-from wagtail.models import Site
-
 
 def frame_ancestors(resp):
     policy = resp.headers["Content-Security-Policy"]
@@ -34,7 +32,7 @@ def test_non_form_responses_are_only_frameable_by_self(client, path):
 
 
 @pytest.mark.django_db
-def test_form_page_is_frameable_by_third_party_sites(client, form_page, monkeypatch):
+def test_form_page_is_frameable_by_third_party_sites(client, form_url, monkeypatch):
     # FormPage.serve's csp_override holds a reference to this dict, so pinning
     # a host here keeps the test independent of FORMBUILDER_CSP_FRAME_ANCESTORS.
     monkeypatch.setitem(
@@ -42,13 +40,9 @@ def test_form_page_is_frameable_by_third_party_sites(client, form_page, monkeypa
         "frame-ancestors",
         [CSP.SELF, "https://embedder.example.org"],
     )
-    site = Site.objects.get(is_default_site=True)
-    site.root_page = form_page.get_parent().get_parent()
-    site.save()
 
-    # Without ?embed=true: the policy applies to every FormPage response, and
-    # embed mode additionally needs the npm-built iframe-resizer asset.
-    resp = client.get(form_page.url)
+    # Without ?embed=true: the policy applies to every FormPage response.
+    resp = client.get(form_url)
 
     assert resp.status_code == 200
     assert frame_ancestors(resp) == (

@@ -11,6 +11,7 @@ import pytest
 
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils import translation
 
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
@@ -69,14 +70,19 @@ def _collected_staticfiles(tmp_path_factory):
     from django.core.management import call_command
     from django.test import override_settings
 
-    bundle = Path(settings.STATICFILES_DIRS[0]) / "frontend" / "app.css"
-    if not bundle.is_file():
-        pytest.exit(
-            "Test setup failed: the frontend bundle is missing.\n"
-            f"  Expected file: {bundle}\n"
-            "  Run `npm install && npm run build` before pytest.",
-            returncode=1,
-        )
+    # Embed mode (?embed=true) additionally pulls in the iframe-resizer bundle.
+    assets = Path(settings.STATICFILES_DIRS[0])
+    for bundle in (
+        assets / "frontend" / "app.css",
+        assets / "iframeresizer" / "iframe-resizer.child.js",
+    ):
+        if not bundle.is_file():
+            pytest.exit(
+                "Test setup failed: the frontend bundle is missing.\n"
+                f"  Expected file: {bundle}\n"
+                "  Run `npm install && npm run build` before pytest.",
+                returncode=1,
+            )
 
     static_root = tmp_path_factory.mktemp("staticroot")
     with override_settings(
@@ -136,6 +142,19 @@ def form_page(container_page):
     fp = FormPage(title="Contact", slug="contact-test")
     container_page.add_child(instance=fp)
     return fp
+
+
+@pytest.fixture
+def form_url(form_page):
+    """The form page's URL, with the page served by the default site."""
+    site = Site.objects.get(is_default_site=True)
+    site.root_page = form_page.get_parent().get_parent()
+    site.save()
+    # LANGUAGE_CODE ("en-us") is not one of LANGUAGES, pages live under /en/.
+    # Without the override the URL depends on whether an earlier request in
+    # the test session has already switched the active language to "en".
+    with translation.override("en"):
+        return form_page.url
 
 
 @pytest.fixture
