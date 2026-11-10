@@ -33,5 +33,11 @@
   "sass": {
     "quietDeps": true,
     "silenceDeprecations": ["import"]
+  },
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "@swc/core": false,
+    "lmdb": false,
+    "msgpackr-extract": false
   }
 }
