@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "captcha",
     "huey.contrib.djhuey",
+    "sqlite_snapshot.contrib.django",
     # Django apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -140,6 +141,9 @@ DATABASES = {
             # writes and reads blocking each other. The mode is stored in the
             # file header, so this only actually flips it on the first connect.
             #
+            # `check --deploy` warns (sqlite_snapshot.W001) if the server's
+            # SQLite has the WAL-reset corruption bug (fixed in 3.51.3).
+            #
             # synchronous=NORMAL is the safe pairing for WAL: a process crash
             # loses nothing; only an OS crash or power loss can lose the most
             # recently committed transactions.
@@ -169,9 +173,10 @@ DATABASES = {
 }
 
 # Consistent, rsync-able copy of the database, refreshed hourly by the huey
-# consumer (see wagtail_api_forms/home/tasks.py). Under WAL, copying the live
-# db.sqlite3 is not a safe backup; restore from this file instead.
-FORMBUILDER_DB_SNAPSHOT_PATH = DB_DIR / "db.snapshot.sqlite3"
+# consumer via the sqlite-snapshot package (see wagtail_api_forms/home/tasks.py).
+# Under WAL, copying the live db.sqlite3 is not a safe backup; restore from
+# this file instead.
+SQLITE_SNAPSHOT_PATH = DB_DIR / "db.snapshot.sqlite3"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 

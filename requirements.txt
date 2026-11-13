@@ -243,6 +243,7 @@ django==6.1.3 \
     #   djangorestframework
     #   laces
     #   modelsearch
+    #   sqlite-snapshot
     #   wagtail
 django-auth-ldap==5.4.0 \
     --hash=sha256:66740dbfba0f41ea6c030bc53974787cbc2f27ed1f3796ebf9fe0cbc9917605e \
@@ -1016,6 +1017,9 @@ sphinxcontrib-serializinghtml==2.0.0 \
     --hash=sha256:6e2cb0eef194e10c27ec0023bfeb25badbbb5868244cf5bc5bdc04e4464bf331 \
     --hash=sha256:e9d912827f872c029017a53f0ef2180b327c3f7fd23c87229f7a8e8b70031d4d
     # via sphinx
+sqlite-snapshot[django] @ https://github.com/tombreit/sqlite-snapshot/releases/download/v0.1.0/sqlite_snapshot-0.1.0-py3-none-any.whl \
+    --hash=sha256:195ea0ef0ea4cc491c12f5c7f219f20548ccce846847c25caf767c885100021e
+    # via -r requirements.in
 sqlparse==0.6.1 \
     --hash=sha256:3be5a72d04c873d690d7c6dedd33d6fae2ef82759881ceec02fc2efd0cba564f \
     --hash=sha256:ca722573f848ff2d30e40ea30f53a104b7dea7635ea9285891263eb2c58fb6e7

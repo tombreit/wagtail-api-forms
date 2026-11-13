@@ -90,7 +90,14 @@ does **not** give a usable backup, even with the ``db.sqlite3-wal`` sidecar copi
 alongside it: the copy is not atomic, so a checkpoint running between the two reads
 can leave the pair missing committed transactions. This was already true before WAL,
 for a single-file copy. The huey consumer therefore writes a consistent snapshot to
-``db.snapshot.sqlite3`` every hour, using ``VACUUM INTO``.
+``db.snapshot.sqlite3`` every hour, using ``VACUUM INTO``
+([sqlite-snapshot](https://github.com/tombreit/sqlite-snapshot)). The snapshot is
+integrity-checked, replaces the previous one atomically and has the same file
+permissions as ``db.sqlite3``. To write one on demand, e.g. before a risky deploy:
+
+```bash
+./manage.py sqlite_snapshot
+```
 
 ```{note}
    The snapshot is only refreshed while the huey consumer is running. If huey is

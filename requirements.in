@@ -20,6 +20,10 @@ python-magic
 whitenoise
 huey
 
+# Consistent snapshot of the WAL database for backups (home/tasks.py).
+# A release wheel, not git+https: requirements.txt is hashed.
+sqlite-snapshot[django] @ https://github.com/tombreit/sqlite-snapshot/releases/download/v0.1.0/sqlite_snapshot-0.1.0-py3-none-any.whl
+
 # https://xael.org/pages/python-module-pyclamd.html
 # Only needed if you want to use the Clamd backend for file scanning.
 # See env.template for the necessary settings.
