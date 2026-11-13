@@ -14,6 +14,8 @@ export class FormSteps {
   #steps;
   #buttons;
   #stepErrors;
+  // Only where the form is submitted: on the last step
+  #privacyNotice;
   #spinner;
   #status;
   // Empty in the admin preview: steps are not validated there
@@ -31,6 +33,7 @@ export class FormSteps {
       submit: form.querySelector('[data-step-submit]'),
     };
     this.#stepErrors = form.querySelector('[data-step-errors]');
+    this.#privacyNotice = form.querySelector('[data-step-privacy-notice]');
     this.#spinner = form.querySelector('[data-step-spinner]');
     this.#status = form.querySelector('[data-step-status]');
     this.#validationUrl = form.dataset.stepValidationUrl;
@@ -65,6 +68,9 @@ export class FormSteps {
     next.hidden = this.#isLast;
     reset.hidden = !this.#isLast;
     submit.hidden = !this.#isLast;
+    if (this.#privacyNotice) {
+      this.#privacyNotice.hidden = !this.#isLast;
+    }
     this.#stepErrors.hidden = true;
 
     if (focus) {

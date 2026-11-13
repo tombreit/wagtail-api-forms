@@ -297,6 +297,50 @@ footer {
 }
 
 
+/* Privacy notice (formpages/includes/privacy_notice.html)
+--------------------------------------------- */
+// What sending the form stores, right below the submit button it describes:
+// a tint of the accent color, so it reads as part of the brand's controls
+.formbuilder-privacy-notice {
+    display: flex;
+    gap: .75rem;
+    max-width: 40rem;
+    // Close to the buttons above: it belongs to them
+    margin-top: .75rem;
+    padding: .75rem 1rem;
+    border-radius: $border-radius;
+    background-color: color-mix(in srgb, #{$formbuilder-accent} 7%, white);
+    font-size: .875rem;
+    line-height: 1.5;
+
+    .bi {
+        flex: none;
+        color: $formbuilder-accent;
+        font-size: 1.125rem;
+        // On the first line of text
+        line-height: 1.1666;
+    }
+
+    a {
+        color: $formbuilder-accent;
+        text-underline-offset: .15em;
+
+        &:hover {
+            color: $formbuilder-accent-dark;
+        }
+    }
+}
+
+.formbuilder-privacy-notice-text > :last-child {
+    margin-bottom: 0;
+}
+
+// Multi-step forms: the submit button is at the end of the row
+.formbuilder-privacy-notice-end {
+    margin-inline-start: auto;
+}
+
+
 /* Thank-you page (formpages/form_page_landing.html)
 --------------------------------------------- */
 .formbuilder-thanks > :last-child {

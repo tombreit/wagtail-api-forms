@@ -7,6 +7,7 @@ from wagtail.models import Site
 
 from .constants import FileArtChoices
 from .forms import CustomFormBuilder, remove_captcha_field
+from .utils import anonymize_ip
 
 
 class FormPageApiMixin(object):
@@ -93,7 +94,7 @@ class FormPageAdditionalFieldsMixin(object):
             form_data=cleaned_data,
             page=self,
             form_data_api=self.get_form_data_for_api(cleaned_data),
-            client_ip=client_ip,
+            client_ip=anonymize_ip(client_ip),
             referrer=referrer,
         )
 

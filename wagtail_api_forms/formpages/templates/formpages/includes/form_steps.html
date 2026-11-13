@@ -61,11 +61,14 @@
             {% translate "Next" %}
             <i class="bi bi-chevron-right" aria-hidden="true"></i>
         </button>
-        <button class="btn btn-custom-primary" type="submit" data-step-submit>
+        <button class="btn btn-custom-primary" type="submit" data-step-submit{% if localized_privacy_notice %} aria-describedby="formbuilder-privacy-notice"{% endif %}>
             {% translate "Submit" %}
         </button>
     </div>
 </div>
+
+{# Below the submit button, on the last step only (form-steps.js) #}
+{% include "formpages/includes/privacy_notice.html" with steps=True %}
 
 {# Announces a slow validation of a step to screen readers #}
 <div class="visually-hidden" role="status" data-step-status

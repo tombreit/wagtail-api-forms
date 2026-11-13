@@ -1,0 +1,18 @@
+{% load wagtailcore_tags %}
+{% comment %}
+    The short privacy notice from the branding settings, right below the submit
+    button, which it describes (aria-describedby). Embedded forms have no
+    footer, so this may be their only link to the privacy policy.
+    Context: localized_privacy_notice (context processor); steps: True in a
+    multi-step form, where form-steps.js shows it on the last step only, with
+    the submit button.
+{% endcomment %}
+{% if localized_privacy_notice %}
+    <div class="formbuilder-privacy-notice{% if steps %} formbuilder-privacy-notice-end{% endif %}"
+         id="formbuilder-privacy-notice"{% if steps %} data-step-privacy-notice{% endif %}>
+        <i class="bi bi-shield-lock" aria-hidden="true"></i>
+        <div class="formbuilder-privacy-notice-text">
+            {{ localized_privacy_notice|richtext }}
+        </div>
+    </div>
+{% endif %}

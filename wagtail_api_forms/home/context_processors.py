@@ -33,6 +33,11 @@ def branding(request):
 
     # Brand logo defaults to ACME:
     localized_brand_name = getattr(branding_settings, localized_brand_name_attr)
+    localized_privacy_notice = (
+        branding_settings.privacy_notice_de
+        if current_locale.language_code == "de"
+        else branding_settings.privacy_notice_en
+    )
     brand_logo_fallback_url = static('img/logo_acme.svg')
     brand_logo_en_url = branding_settings.brand_logo_en
     brand_logo_de_url = branding_settings.brand_logo_de
@@ -87,6 +92,7 @@ def branding(request):
         "brand_logo_en_url": brand_logo_en_url.url if brand_logo_en_url else brand_logo_fallback_url,
         "brand_logo_de_url": brand_logo_de_url.url if brand_logo_de_url else brand_logo_fallback_url,
         "localized_footer_links": localized_footer_links,
+        "localized_privacy_notice": localized_privacy_notice,
         "brand_figurative_mark": brand_figurative_mark if brand_figurative_mark else '',
         "favicon_url": favicon_url if favicon_url else '',
         "css_variables": css_variables,

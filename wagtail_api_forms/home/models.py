@@ -14,7 +14,8 @@ from wagtail.coreutils import string_to_ascii
 from wagtail.images.models import Image, AbstractImage, AbstractRendition
 from wagtail.documents.models import Document, AbstractDocument
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
-from wagtail.admin.panels import FieldPanel, InlinePanel, PageChooserPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
+from wagtail.fields import RichTextField
 from wagtail.snippets.models import register_snippet
 
 from modelcluster.fields import ParentalKey
@@ -48,6 +49,12 @@ def branding_logo_path(instance, filename):
         basename=slugify(Path(filename).stem),
         suffix=Path(filename).suffix,  # the dot is included in the suffix
     )
+
+
+PRIVACY_NOTICE_HELP_TEXT = (
+    "Shown at every form above the submit button, also when embedded. Name what "
+    "is stored and link the privacy policy. Leave empty for no notice."
+)
 
 
 @register_setting
@@ -129,6 +136,21 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
         ),
     )
 
+    # The first, short layer of the privacy information (Art. 13 GDPR) right
+    # where the data is collected; embedded forms have no footer link
+    privacy_notice_en = RichTextField(
+        blank=True,
+        features=["bold", "italic", "link"],
+        verbose_name="Privacy notice (EN)",
+        help_text=PRIVACY_NOTICE_HELP_TEXT,
+    )
+    privacy_notice_de = RichTextField(
+        blank=True,
+        features=["bold", "italic", "link"],
+        verbose_name="Privacy notice (DE)",
+        help_text=PRIVACY_NOTICE_HELP_TEXT,
+    )
+
     panels = [
         FieldPanel("brand_abbr"),
         FieldPanel("brand_name_en"),
@@ -139,6 +161,10 @@ class BrandingSettings(TranslatableMixin, BaseGenericSetting, ClusterableModel):
         FieldPanel("favicon"),
         FieldPanel("branding_css_variables"),
         FieldPanel("show_admin_link_for_ips"),
+        MultiFieldPanel(
+            [FieldPanel("privacy_notice_en"), FieldPanel("privacy_notice_de")],
+            heading="Privacy notice at forms",
+        ),
     ]
 
 

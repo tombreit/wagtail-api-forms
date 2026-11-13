@@ -35,6 +35,16 @@ source path/to/your/venv/bin/activate
 * (In case of multilingualism) Setup root pages for every language version: http://fqdn/admin/pages/
 * Set brand name, logo etc via: http://fqdn/admin/settings/home/brandingsettings/1/
 * Set footer links (Privacy policy etc.) via: http://fqdn/admin/snippets/home/footerlinks/
+* Set the privacy notice via: http://fqdn/admin/settings/home/brandingsettings/1/ ("Privacy notice at forms", EN and DE).
+  It is shown above the submit button of every form, also in embedded forms, which have no footer.
+  Leave it empty for no notice. Suggested texts (link the privacy policy; let your data protection officer check them):
+  * *Your answers, uploaded files, the time of submission and your shortened IP address are stored to process this form. More in our privacy policy.*
+  * *Ihre Angaben, hochgeladene Dateien, der Zeitpunkt der Übermittlung und Ihre gekürzte IP-Adresse werden gespeichert, um dieses Formular zu bearbeiten. Mehr dazu in unserer Datenschutzerklärung.*
+
+```{note}
+   Submissions store the visitor's IP address shortened to its network part:
+   an IPv4 address without its last octet, an IPv6 address without its last 80 bits.
+```
 
 ## Misc
 

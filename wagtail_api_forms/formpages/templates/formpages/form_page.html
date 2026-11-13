@@ -55,12 +55,14 @@
 
     <hr>
 
-    <button class="btn btn-custom-primary" type="submit">
+    <button class="btn btn-custom-primary" type="submit"{% if localized_privacy_notice %} aria-describedby="formbuilder-privacy-notice"{% endif %}>
         {% translate "Submit" %}
     </button>
     <button class="btn btn-link link-secondary" type="reset">
         {% translate "Reset" %}
     </button>
+
+    {% include "formpages/includes/privacy_notice.html" %}
     {% endif %}
 </form>
 {% endif %}
