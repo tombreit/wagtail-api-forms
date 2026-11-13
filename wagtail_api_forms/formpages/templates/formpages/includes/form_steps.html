@@ -29,14 +29,15 @@
         {% for field in step.fields %}
             {% include "formpages/includes/field.html" with heading_level=3 %}
         {% endfor %}
-
-        {% if forloop.last and page.outro %}
-            <div class="outro">
-                {{ page.outro|richtext }}
-            </div>
-        {% endif %}
     </fieldset>
 {% endfor %}
+
+{# Below every step, like the intro above (in form_page.html) #}
+{% if page.outro %}
+    <div class="outro">
+        {{ page.outro|richtext }}
+    </div>
+{% endif %}
 
 <hr>
 

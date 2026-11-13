@@ -43,7 +43,8 @@ So erleben Besucher:innen das Formular:
 * Sie sehen jeweils einen Schritt, mit einer Fortschrittsanzeige ("Schritt 2 von 3") und den Schaltflächen "Zurück" und "Weiter".
 * "Weiter" prüft die Angaben des aktuellen Schritts (Pflichtfelder, E-Mail-Format, Dateityp usw.). Fehler werden direkt im Schritt angezeigt.
 * "Zurück" prüft nichts; alle Angaben bleiben erhalten, auch ausgewählte Dateien.
-* Erst im letzten Schritt wird das Formular abgesendet, mit den Angaben aller Schritte, als eine einzige Einsendung. Das Captcha (falls aktiviert) und der `Outro text` stehen im letzten Schritt.
+* Erst im letzten Schritt wird das Formular abgesendet, mit den Angaben aller Schritte, als eine einzige Einsendung. Das Captcha (falls aktiviert) steht im letzten Schritt.
+* `Intro text` und `Outro text` stehen in jedem Schritt, über und unter den Feldern.
 
 Für die Auswertung ändert sich nichts: Einsendungen, Export, E-Mail und API enthalten die Antworten aller Schritte, ohne Seitenumbrüche.
 

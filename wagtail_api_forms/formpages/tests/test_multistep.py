@@ -129,6 +129,22 @@ def test_form_renders_all_steps(client, multistep_page, form_url, validation_url
 
 
 @pytest.mark.django_db
+def test_intro_and_outro_are_shown_on_all_steps(client, multistep_page, form_url):
+    multistep_page.intro = "<p>Welcome.</p>"
+    multistep_page.outro = "<p>Thanks for your patience.</p>"
+    multistep_page.save()
+
+    html = client.get(form_url).content.decode()
+
+    # Outside the steps, which form-steps.js hides
+    assert html.count('class="intro"') == 1
+    assert html.index('class="intro"') < html.index('data-form-step="1"')
+    assert html.count('class="outro"') == 1
+    assert html.rindex("</fieldset>") < html.index('class="outro"')
+    assert html.index('class="outro"') < html.index("data-step-next")
+
+
+@pytest.mark.django_db
 def test_field_headings_in_steps_are_below_step_headings(client, multistep_page, form_url):
     UserFormField.objects.filter(clean_name="comment").update(heading="Your comment")
 
