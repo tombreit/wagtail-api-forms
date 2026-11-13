@@ -19,6 +19,8 @@ Form pages contain a page title, the form or the fields of a form, some mail set
 
 A published form can be reached under its published URL in the standard design of the form builder ("standalone form page"), but can also be queried without the standard design via the URL parameter `url?embed=true`. This second variant can be used, for example, as an iFrame on an existing page.
 
+After submitting a form, visitors are redirected to its thank-you page (`url/thank-you/`), which shows the form's thank-you text and, if enabled per form, the poll results of its choice questions; see [Umfragen und Danke-Seite](polls) (German). A form can be structured with headings and split into several steps by page breaks; see [Ein Formular strukturieren](structure) (German).
+
 The iFrame is resized to its content automatically. The snippet to paste into the embedding page is in the project README, section "iFrame".
 
 ## What next?

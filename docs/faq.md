@@ -89,6 +89,27 @@ Siehe [Felder](fields.md).
 </details>
 
 <details>
+<summary>Kann ich ein langes Formular gliedern oder in mehrere Schritte aufteilen?</summary>
+
+Ja: mit Zwischenüberschriften (Attribut `Heading` eines Feldes) und mit Seitenumbrüchen (Feldtyp `Page break (starts a new step)`). Besucher:innen füllen ein mehrstufiges Formular Schritt für Schritt aus; jeder Schritt wird vor dem nächsten geprüft. Siehe [Ein Formular strukturieren](structure.md).
+
+</details>
+
+<details>
+<summary>Was sehen Besucher:innen nach dem Absenden?</summary>
+
+Eine Danke-Seite mit dem `Thank you text` des Formulars (Bereich "After submitting") und, bei Umfragen, den bisherigen Ergebnissen. Siehe [Umfragen und Danke-Seite](polls.md).
+
+</details>
+
+<details>
+<summary>Kann ich eine Umfrage machen und die Ergebnisse anzeigen?</summary>
+
+Ja. Im Bereich "After submitting" die Option `Show poll results after submitting` anhaken. Nach dem Absenden zeigt die Danke-Seite dann, wie oft jede Antwort der Auswahlfragen gewählt wurde. Ein Beispiel und Tipps unter [Umfragen und Danke-Seite](polls.md).
+
+</details>
+
+<details>
 <summary>Kann ich ein Captcha für mein Formular haben?</summary>
 
 Ja. Auf der Backendseite eines Formulars in den Reiter "Settings" wechseln und

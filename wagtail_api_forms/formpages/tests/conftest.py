@@ -93,6 +93,24 @@ def _collected_staticfiles(tmp_path_factory):
         yield
 
 
+@pytest.fixture(scope="session", autouse=True)
+def _compiled_translations():
+    """Compile the translations, as scripts/deploy.sh does: the .mo files are
+    not in the repository, and some tests check German texts."""
+    from pathlib import Path
+
+    from django.core.management import call_command
+    from django.utils.translation.reloader import translation_file_changed
+
+    call_command(
+        "compilemessages",
+        ignore_patterns=[".venv/*", "node_modules/*", "assets/*", "_run/*", "staticfiles/*"],
+        verbosity=0,
+    )
+    # Catalogs loaded before compiling would stay cached
+    translation_file_changed(sender=None, file_path=Path("django.mo"))
+
+
 # ----- Users / tokens --------------------------------------------------------
 
 
@@ -223,6 +241,16 @@ def clean_attachment(db, tmp_path, settings):
     Attachment.objects.filter(pk=a.pk).update(av_passed=True)
     a.refresh_from_db()
     return a
+
+
+@pytest.fixture
+def private_storage(tmp_path, monkeypatch):
+    """Store uploads in tmp_path. The storage resolved its location on import,
+    so overriding PRIVATE_STORAGE_ROOT alone would not redirect it."""
+    storage = Attachment._meta.get_field("file").storage
+    monkeypatch.setitem(storage.__dict__, "base_location", str(tmp_path))
+    monkeypatch.setitem(storage.__dict__, "location", str(tmp_path))
+    return tmp_path
 
 
 # ----- Clients ---------------------------------------------------------------

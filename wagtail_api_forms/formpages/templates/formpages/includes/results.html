@@ -1,0 +1,54 @@
+{% load i18n %}
+{% comment %}
+    Poll results of the choice questions of a form, see results.py.
+    Context: results (QuestionResult), form_submission (the visitor's own)
+{% endcomment %}
+<section class="formbuilder-results" aria-labelledby="formbuilder-results-heading">
+    <h2 class="h3" id="formbuilder-results-heading">{% translate "Results so far" %}</h2>
+    {% if form_submission %}
+        <p class="formbuilder-results-legend">
+            {% translate "Your answers are marked" %}
+            <i class="bi bi-check-circle-fill formbuilder-result-mark" aria-hidden="true"></i>
+        </p>
+    {% endif %}
+
+    {% for result in results %}
+        <div class="formbuilder-result">
+            <h3 class="formbuilder-result-question">{{ result.question }}</h3>
+            <p class="formbuilder-result-count">
+                {% blocktranslate count counter=result.answer_count trimmed %}
+                    {{ counter }} answer
+                {% plural %}
+                    {{ counter }} answers
+                {% endblocktranslate %}{% if result.multiple %}, {% translate "more than one choice possible" %}{% endif %}
+            </p>
+            <ul class="formbuilder-result-choices">
+                {% for choice in result.choices %}
+                    <li class="formbuilder-result-choice{% if choice.chosen %} is-chosen{% endif %}">
+                        <span class="formbuilder-result-label">
+                            {{ choice.label }}
+                            {% if choice.chosen %}
+                                <i class="bi bi-check-circle-fill formbuilder-result-mark" aria-hidden="true"></i>
+                                <span class="visually-hidden">({% translate "your answer" %})</span>
+                            {% endif %}
+                        </span>
+                        <span class="formbuilder-result-value">
+                            {{ choice.percent }}%
+                            <span class="formbuilder-result-number" aria-hidden="true">({{ choice.count }})</span>
+                            <span class="visually-hidden">
+                                {% blocktranslate count counter=choice.count trimmed %}
+                                    {{ counter }} answer
+                                {% plural %}
+                                    {{ counter }} answers
+                                {% endblocktranslate %}
+                            </span>
+                        </span>
+                        <div class="progress formbuilder-result-bar" role="presentation">
+                            <div class="progress-bar" style="width: {{ choice.percent }}%"></div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</section>

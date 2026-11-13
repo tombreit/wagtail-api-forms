@@ -11,6 +11,8 @@ hide-toc: true
 getting-started
 faq
 fields
+structure
+polls
 ```
 
 ```{toctree}

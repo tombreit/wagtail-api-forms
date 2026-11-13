@@ -1,0 +1,160 @@
+<form class="formbuilder-form" action="/en/container/contact-test/" method="POST" enctype="multipart/form-data" novalidate data-reset-confirm="Clear all your answers?" >
+<input type="hidden" name="csrfmiddlewaretoken" value="CSRF">
+<p class="formbuilder-mandatory-hint"> Fields marked with * are mandatory. </p>
+<h2 class="h4 my-4"> Personal data </h2>
+<div class="mb-4 field-secondary widget-class-text-input">
+<div id="div_id_name" class="mb-3">
+<label for="id_name" class="form-label requiredField"> Name<span class="asteriskField">*</span>
+</label>
+<input type="text" name="name" maxlength="255" css_classes="field-secondary widget-class-text-input" placeholder="Name, Vorname" heading="Personal data" class="textinput form-control" required id="id_name">
+</div>
+</div>
+<div class="mb-4 widget-class-textarea">
+<div id="div_id_message" class="mb-3">
+<label for="id_message" class="form-label requiredField"> Message<span class="asteriskField">*</span>
+</label>
+<textarea name="message" cols="40" rows="10" css_classes=" widget-class-textarea" placeholder="" heading="" class="textarea form-control" required id="id_message"> Hello</textarea>
+</div>
+</div>
+<div class="mb-4 widget-class-email-input">
+<div id="div_id_email" class="mb-3">
+<label for="id_email" class="form-label requiredField"> Email<span class="asteriskField">*</span>
+</label>
+<input type="email" name="email" maxlength="320" css_classes=" widget-class-email-input" placeholder="" heading="" class="emailinput form-control" required aria-describedby="id_email_helptext" id="id_email">
+<div id="id_email_helptext" class="form-text">
+<p>We reply here.</p>
+</div>
+</div>
+</div>
+<div class="mb-4 widget-class-number-input">
+<div id="div_id_age" class="mb-3">
+<label for="id_age" class="form-label"> Age </label>
+<input type="number" name="age" step="any" css_classes=" widget-class-number-input" placeholder="" heading="" class="numberinput form-control" id="id_age">
+</div>
+</div>
+<div class="mb-4 widget-class-url-input">
+<div id="div_id_website" class="mb-3">
+<label for="id_website" class="form-label"> Website </label>
+<input type="url" name="website" css_classes=" widget-class-url-input" placeholder="" heading="" class="urlinput form-control" id="id_website">
+</div>
+</div>
+<div class="mb-4 widget-class-checkbox-input">
+<div class="mb-3">
+<div id="div_id_consent" class="form-check">
+<input type="checkbox" name="consent" css_classes=" widget-class-checkbox-input" placeholder="" heading="" class="checkboxinput form-check-input" required id="id_consent">
+<label for="id_consent" class="form-check-label requiredField"> Consent<span class="asteriskField">*</span>
+</label>
+</div>
+</div>
+</div>
+<div class="mb-4 to-form-check-inline widget-class-checkbox-select-multiple">
+<div id="div_id_topics" class="mb-3">
+<fieldset>
+<legend class="form-label requiredField fs-6"> Topics<span class="asteriskField">*</span>
+</legend>
+<div >
+<div class="form-check">
+<input type="checkbox" class="form-check-input" name="topics" value="Law" css_classes="to-form-check-inline widget-class-checkbox-select-multiple" placeholder="" heading="" id="id_topics_0">
+<label for="id_topics_0" class="form-check-label"> Law </label>
+</div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" name="topics" value="Policy" css_classes="to-form-check-inline widget-class-checkbox-select-multiple" placeholder="" heading="" id="id_topics_1">
+<label for="id_topics_1" class="form-check-label"> Policy </label>
+</div>
+<div class="form-check">
+<input type="checkbox" class="form-check-input" name="topics" value="Research" css_classes="to-form-check-inline widget-class-checkbox-select-multiple" placeholder="" heading="" id="id_topics_2">
+<label for="id_topics_2" class="form-check-label"> Research </label>
+</div>
+</div>
+</fieldset>
+</div>
+</div>
+<div class="mb-4 widget-class-select">
+<div id="div_id_country" class="mb-3">
+<label for="id_country" class="form-label requiredField"> Country<span class="asteriskField">*</span>
+</label>
+<select name="country" css_classes=" widget-class-select" placeholder="" heading="" class="select form-select" id="id_country">
+<option value="Germany">Germany</option>
+<option value="France">France</option>
+</select>
+</div>
+</div>
+<div class="mb-4 widget-class-select-multiple">
+<div id="div_id_languages" class="mb-3">
+<label for="id_languages" class="form-label requiredField"> Languages<span class="asteriskField">*</span>
+</label>
+<select name="languages" css_classes=" widget-class-select-multiple" placeholder="" heading="" class="selectmultiple form-select" required id="id_languages" multiple>
+<option value="German">German</option>
+<option value="English">English</option>
+</select>
+</div>
+</div>
+<div class="mb-4 widget-class-radio-select">
+<div id="div_id_status" class="mb-3">
+<fieldset>
+<legend class="form-label requiredField fs-6"> Status<span class="asteriskField">*</span>
+</legend>
+<div >
+<div class="form-check">
+<input type="radio" class="form-check-input" name="status" value="Student" css_classes=" widget-class-radio-select" placeholder="" heading="" id="id_status_0" required>
+<label for="id_status_0" class="form-check-label"> Student </label>
+</div>
+<div class="form-check">
+<input type="radio" class="form-check-input" name="status" value="Staff" css_classes=" widget-class-radio-select" placeholder="" heading="" id="id_status_1" required>
+<label for="id_status_1" class="form-check-label"> Staff </label>
+</div>
+</div>
+</fieldset>
+</div>
+</div>
+<div class="mb-4 widget-class-date-input">
+<div id="div_id_birthday" class="mb-3">
+<label for="id_birthday" class="form-label requiredField"> Birthday<span class="asteriskField">*</span>
+</label>
+<input type="date" name="birthday" value="" css_classes=" widget-class-date-input" placeholder="" heading="" class="dateinput form-control" required id="id_birthday">
+</div>
+</div>
+<div class="mb-4 widget-class-date-time-input">
+<div id="div_id_appointment" class="mb-3">
+<label for="id_appointment" class="form-label"> Appointment </label>
+<input type="datetime-local" name="appointment" value="" css_classes=" widget-class-date-time-input" placeholder="" heading="" class="datetimeinput form-control" id="id_appointment">
+</div>
+</div>
+<div class="mb-4 widget-class-hidden-input">
+<input type="hidden" name="source" value="web" css_classes=" widget-class-hidden-input" placeholder="" heading="" id="id_source">
+</div>
+<div class="mb-4 widget-class-clearable-file-input">
+<div id="div_id_cv" class="mb-3">
+<label for="id_cv" class="form-label"> CV </label>
+<div>
+<input type="file" name="cv" class="form-control" css_classes=" widget-class-clearable-file-input" placeholder="" heading="" id="id_cv" aria-describedby="id_cv_helptext">
+<div id="id_cv_helptext" class="form-text"> Max file size: 7.0 MB. Valid file types: .pdf, .txt </div>
+</div>
+</div>
+</div>
+<div class="mb-4 widget-class-clearable-file-input">
+<div id="div_id_photo" class="mb-3">
+<label for="id_photo" class="form-label"> Photo </label>
+<div>
+<input type="file" name="photo" class="form-control" css_classes=" widget-class-clearable-file-input" placeholder="" heading="" id="id_photo" aria-describedby="id_photo_helptext">
+<div id="id_photo_helptext" class="form-text"> Max file size: 7.0 MB. Valid file types: .jpg, .jpeg, .png </div>
+</div>
+</div>
+</div>
+<div class="mb-4 widget-class-select-multiple">
+<div id="div_id_tags" class="mb-3">
+<label for="id_tags" class="form-label"> Tags </label>
+<select name="tags" class="is-tom-select selectmultiple form-select" css_classes=" widget-class-select-multiple" placeholder="" heading="" id="id_tags" multiple>
+<option value="One">One</option>
+<option value="Two">Two</option>
+<option value="Three">Three</option>
+</select>
+</div>
+</div>
+<div class="outro">
+<p>Thanks for your patience.</p>
+</div>
+<hr>
+<button class="btn btn-custom-primary" type="submit"> Submit </button>
+<button class="btn btn-link link-secondary" type="reset"> Reset </button>
+</form>

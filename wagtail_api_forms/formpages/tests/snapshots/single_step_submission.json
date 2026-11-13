@@ -1,0 +1,240 @@
+{
+  "form_data": {
+    "name": "Doe, Jane",
+    "message": "Hi there",
+    "email": "jane@example.org",
+    "age": "42",
+    "website": "https://example.org",
+    "consent": true,
+    "topics": [
+      "Law",
+      "Research"
+    ],
+    "country": "France",
+    "languages": [
+      "German",
+      "English"
+    ],
+    "status": "Staff",
+    "birthday": "2001-02-03",
+    "appointment": "2026-11-12T10:30:00+01:00",
+    "source": "web",
+    "cv": null,
+    "photo": null,
+    "tags": [
+      "Two"
+    ]
+  },
+  "form_data_api": [
+    {
+      "label": "Name",
+      "name": "name",
+      "field_type": "singleline",
+      "value": "Doe, Jane"
+    },
+    {
+      "label": "Message",
+      "name": "message",
+      "field_type": "multiline",
+      "value": "Hi there"
+    },
+    {
+      "label": "Email",
+      "name": "email",
+      "field_type": "email",
+      "value": "jane@example.org"
+    },
+    {
+      "label": "Age",
+      "name": "age",
+      "field_type": "number",
+      "value": "42"
+    },
+    {
+      "label": "Website",
+      "name": "website",
+      "field_type": "url",
+      "value": "https://example.org"
+    },
+    {
+      "label": "Consent",
+      "name": "consent",
+      "field_type": "checkbox",
+      "value": true
+    },
+    {
+      "label": "Topics",
+      "name": "topics",
+      "field_type": "checkboxes",
+      "value": [
+        "Law",
+        "Research"
+      ]
+    },
+    {
+      "label": "Country",
+      "name": "country",
+      "field_type": "dropdown",
+      "value": "France"
+    },
+    {
+      "label": "Languages",
+      "name": "languages",
+      "field_type": "multiselect",
+      "value": [
+        "German",
+        "English"
+      ]
+    },
+    {
+      "label": "Status",
+      "name": "status",
+      "field_type": "radio",
+      "value": "Staff"
+    },
+    {
+      "label": "Birthday",
+      "name": "birthday",
+      "field_type": "date",
+      "value": "2001-02-03"
+    },
+    {
+      "label": "Appointment",
+      "name": "appointment",
+      "field_type": "datetime",
+      "value": "2026-11-12T10:30:00+01:00"
+    },
+    {
+      "label": "Source",
+      "name": "source",
+      "field_type": "hidden",
+      "value": "web"
+    },
+    {
+      "label": "CV",
+      "name": "cv",
+      "field_type": "document",
+      "value": null
+    },
+    {
+      "label": "Photo",
+      "name": "photo",
+      "field_type": "image",
+      "value": null
+    },
+    {
+      "label": "Tags",
+      "name": "tags",
+      "field_type": "multiplechoicetypeahead",
+      "value": [
+        "Two"
+      ]
+    }
+  ],
+  "data_fields": [
+    [
+      "submit_time",
+      "Submission date"
+    ],
+    [
+      "name",
+      "Name"
+    ],
+    [
+      "message",
+      "Message"
+    ],
+    [
+      "email",
+      "Email"
+    ],
+    [
+      "age",
+      "Age"
+    ],
+    [
+      "website",
+      "Website"
+    ],
+    [
+      "consent",
+      "Consent"
+    ],
+    [
+      "topics",
+      "Topics"
+    ],
+    [
+      "country",
+      "Country"
+    ],
+    [
+      "languages",
+      "Languages"
+    ],
+    [
+      "status",
+      "Status"
+    ],
+    [
+      "birthday",
+      "Birthday"
+    ],
+    [
+      "appointment",
+      "Appointment"
+    ],
+    [
+      "source",
+      "Source"
+    ],
+    [
+      "cv",
+      "CV"
+    ],
+    [
+      "photo",
+      "Photo"
+    ],
+    [
+      "tags",
+      "Tags"
+    ],
+    [
+      "client_ip",
+      "IP"
+    ],
+    [
+      "referrer",
+      "Referrer"
+    ]
+  ],
+  "email_subject": "New submission",
+  "email_body": [
+    "Form title:    Contact",
+    "Submitted via: http://localhost/en/container/contact-test/",
+    "Submitted on: <now>",
+    "",
+    "Form data:",
+    "-----------------------------------------------------------------------",
+    "",
+    "Name: Doe, Jane",
+    "Message: Hi there",
+    "Email: jane@example.org",
+    "Age: 42",
+    "Website: https://example.org",
+    "Consent: True",
+    "Topics: Law, Research",
+    "Country: France",
+    "Languages: German, English",
+    "Status: Staff",
+    "Birthday: Saturday 03.02.2001",
+    "Appointment: Thursday 12.11.2026 10:30",
+    "Source: web",
+    "CV: None",
+    "Photo: None",
+    "Tags: Two",
+    "",
+    "-----------------------------------------------------------------------"
+  ]
+}

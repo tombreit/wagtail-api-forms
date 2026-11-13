@@ -1,0 +1,71 @@
+{% load i18n wagtailcore_tags %}
+{% comment %}
+    The steps of a multi-step form. All steps are part of the form and submitted
+    together; assets/src/js/form-steps.js shows one step at a time and validates
+    it on the server before moving on. Without JS this is one long form.
+    Context: form_steps (steps.BoundStep), page
+{% endcomment %}
+{% for step in form_steps %}
+    <fieldset class="formbuilder-step" data-form-step="{{ step.number }}"
+              aria-labelledby="formbuilder-step-{{ step.number }}-count{% if step.heading %} formbuilder-step-{{ step.number }}-heading{% endif %}">
+        <div class="formbuilder-step-progress">
+            <p class="formbuilder-step-count" id="formbuilder-step-{{ step.number }}-count">
+                {% blocktranslate with number=step.number total=form_steps|length trimmed %}
+                    Step {{ number }} of {{ total }}
+                {% endblocktranslate %}
+            </p>
+            {# One segment per step, the steps up to this one are reached #}
+            <ol class="formbuilder-step-segments" aria-hidden="true">
+                {% for each_step in form_steps %}
+                    <li{% if each_step.number <= step.number %} class="is-reached"{% endif %}></li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        {% if step.heading %}
+            <h2 class="formbuilder-step-heading" id="formbuilder-step-{{ step.number }}-heading">{{ step.heading }}</h2>
+        {% endif %}
+
+        {% for field in step.fields %}
+            {% include "formpages/includes/field.html" with heading_level=3 %}
+        {% endfor %}
+
+        {% if forloop.last and page.outro %}
+            <div class="outro">
+                {{ page.outro|richtext }}
+            </div>
+        {% endif %}
+    </fieldset>
+{% endfor %}
+
+<hr>
+
+{# Shown when the server finds errors in a step #}
+<div class="alert alert-danger" role="alert" data-step-errors hidden>
+    {% translate "Please correct the marked fields to continue." %}
+</div>
+
+{# form-steps.js shows Back and Next, and Reset and Submit only on the last step #}
+<div class="formbuilder-step-nav">
+    <button class="btn btn-outline-secondary" type="button" data-step-back hidden>
+        <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        {% translate "Back" %}
+    </button>
+    <div class="formbuilder-step-nav-end">
+        <button class="btn btn-link link-secondary" type="reset" data-step-reset>
+            {% translate "Reset" %}
+        </button>
+        <button class="btn btn-custom-primary" type="button" data-step-next hidden>
+            <span class="spinner-border spinner-border-sm me-1" aria-hidden="true" data-step-spinner hidden></span>
+            {% translate "Next" %}
+            <i class="bi bi-chevron-right" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-custom-primary" type="submit" data-step-submit>
+            {% translate "Submit" %}
+        </button>
+    </div>
+</div>
+
+{# Announces a slow validation of a step to screen readers #}
+<div class="visually-hidden" role="status" data-step-status
+     data-busy-text="{% translate 'Checking your answers …' %}"></div>

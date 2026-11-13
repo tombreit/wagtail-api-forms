@@ -36,8 +36,9 @@
         {% endblock %}
     </head>
 
-    {# data-waf-submitted: iframe-resizer.config.js scrolls the embedding page to the form's top #}
-    <body class="{% if ctx_embed %}p-2{% endif %} lang_{{ LANGUAGE_CODE|lower }} {% block body_class %}{% endblock %}"{% if ctx_embed and request.method == "POST" %} data-waf-submitted{% endif %}>
+    {# data-waf-submitted: iframe-resizer.config.js scrolls the embedding page to the form's top, #}
+    {# after an invalid submission or on the thank-you page (ctx_submitted) #}
+    <body class="{% if ctx_embed %}p-2{% endif %} lang_{{ LANGUAGE_CODE|lower }} {% block body_class %}{% endblock %}"{% if ctx_embed %}{% if request.method == "POST" or ctx_submitted %} data-waf-submitted{% endif %}{% endif %}>
 
         {% if not ctx_embed %}
             {% wagtailuserbar %}

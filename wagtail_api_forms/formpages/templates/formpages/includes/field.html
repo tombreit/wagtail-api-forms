@@ -1,0 +1,14 @@
+{% load crispy_forms_tags %}
+{% comment %}
+    One form field, with its optional heading.
+    Context: field, heading_level (2 by default; 3 inside the steps of a multi-step form)
+{% endcomment %}
+{% if field.field.widget.attrs.heading %}
+    <h{{ heading_level|default:2 }} class="h4 my-4">
+        {{ field.field.widget.attrs.heading }}
+    </h{{ heading_level|default:2 }}>
+{% endif %}
+
+<div class="mb-4 {{ field.field.widget.attrs.css_classes }}">
+    {{ field|as_crispy_field }}
+</div>

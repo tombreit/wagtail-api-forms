@@ -54,21 +54,9 @@ msgstr "Absenden"
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: wagtail_api_forms/formpages/templates/formpages/form_page.html:49
-msgid "Mandatory field"
-msgstr "Pflichtfeld"
-
 #: wagtail_api_forms/formpages/validators.py:27
 msgid "This field is required."
 msgstr "Dieses Feld ist erforderlich."
-
-#: wagtail_api_forms/formpages/validators.py:50
-msgid ""
-"Please keep file size under {filesizeformat(max_file_size)}. Current size is "
-"{filesizeformat(file.size)}."
-msgstr ""
-"Bitte die Dateigröße kleiner als  {filesizeformat(max_file_size)}. Die "
-"aktuelle Dateigröße ist {filesizeformat(file.size)}."
 
 #: wagtail_api_forms/home/models.py:63 wagtail_api_forms/home/models.py:70
 msgid "A Company that Makes Everything"
@@ -148,3 +136,136 @@ msgid "Your email/username and password didn't match. Please try again."
 msgstr ""
 "E-Mail/Benutzername und Passwort stimmen nicht überein. Bitte erneut "
 "versuchen."
+
+#: wagtail_api_forms/formpages/models.py
+msgid "Page break (starts a new step)"
+msgstr "Seitenumbruch (beginnt einen neuen Schritt)"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/form_steps.html
+#, python-format
+msgid "Step %(number)s of %(total)s"
+msgstr "Schritt %(number)s von %(total)s"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/form_steps.html
+msgid "Please correct the marked fields to continue."
+msgstr "Bitte korrigieren Sie die markierten Felder, um fortzufahren."
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/form_steps.html
+msgid "Back"
+msgstr "Zurück"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/form_steps.html
+msgid "Next"
+msgstr "Weiter"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/results.html
+msgid "Results so far"
+msgstr "Bisherige Ergebnisse"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/results.html
+msgid "Your answers are marked"
+msgstr "Ihre Antworten sind markiert"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/results.html
+#, python-format
+msgid "%(counter)s answer"
+msgid_plural "%(counter)s answers"
+msgstr[0] "%(counter)s Antwort"
+msgstr[1] "%(counter)s Antworten"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/results.html
+msgid "more than one choice possible"
+msgstr "Mehrfachauswahl möglich"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/results.html
+msgid "your answer"
+msgstr "Ihre Antwort"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page.html
+msgid "Error"
+msgstr "Fehler"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page.html
+msgid "Clear all your answers?"
+msgstr "Alle Ihre Angaben löschen?"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page.html
+msgid "Fields marked with * are mandatory."
+msgstr "Mit * markierte Felder sind Pflichtfelder."
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/error_summary.html
+#, python-format
+msgid "There is a problem with %(counter)s field"
+msgid_plural "There is a problem with %(counter)s fields"
+msgstr[0] "Bitte korrigieren Sie %(counter)s Feld"
+msgstr[1] "Bitte korrigieren Sie %(counter)s Felder"
+
+#: wagtail_api_forms/formpages/templates/formpages/includes/form_steps.html
+msgid "Checking your answers …"
+msgstr "Ihre Angaben werden geprüft …"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page_landing.html
+msgid "Thank you"
+msgstr "Vielen Dank"
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page_landing.html
+msgid "Thank you. Your answers have been sent."
+msgstr "Vielen Dank. Ihre Angaben wurden übermittelt."
+
+#: wagtail_api_forms/formpages/templates/formpages/form_page_landing.html
+msgid "Fill in the form again"
+msgstr "Formular erneut ausfüllen"
+
+#: wagtail_api_forms/formpages/models.py
+#, python-format
+msgid "Step %(number)s"
+msgstr "Schritt %(number)s"
+
+#: wagtail_api_forms/formpages/fields.py
+#, python-format
+msgid "Max file size: %(size)s."
+msgstr "Maximale Dateigröße: %(size)s."
+
+#: wagtail_api_forms/formpages/fields.py
+#, python-format
+msgid "Valid file types: %(types)s"
+msgstr "Erlaubte Dateitypen: %(types)s"
+
+#: wagtail_api_forms/formpages/validators.py
+msgid "The uploaded file is empty (0 bytes). Please check the file and try again."
+msgstr ""
+"Die hochgeladene Datei ist leer (0 Bytes). Bitte prüfen Sie die Datei und "
+"versuchen Sie es erneut."
+
+#: wagtail_api_forms/formpages/validators.py
+#, python-format
+msgid ""
+"This form is misconfigured: none of the configured file types (`%(types)s`) "
+"are recognised. Please contact the site administrator."
+msgstr ""
+"Dieses Formular ist fehlerhaft eingerichtet: keiner der eingestellten "
+"Dateitypen (`%(types)s`) ist bekannt. Bitte wenden Sie sich an die "
+"Administration der Website."
+
+#: wagtail_api_forms/formpages/validators.py
+#, python-format
+msgid "Unsupported file type. Valid file types: `%(types)s`, got `%(type)s`!"
+msgstr ""
+"Nicht unterstützter Dateityp. Erlaubte Dateitypen: `%(types)s`, erkannt: "
+"`%(type)s`."
+
+#: wagtail_api_forms/formpages/validators.py
+#, python-format
+msgid ""
+"Unacceptable file extension: Valid file extensions: `%(extensions)s`, got "
+"`%(extension)s`!"
+msgstr ""
+"Nicht erlaubte Dateiendung. Erlaubte Dateiendungen: `%(extensions)s`, "
+"erhalten: `%(extension)s`."
+
+#: wagtail_api_forms/formpages/validators.py
+#, python-format
+msgid "Please keep file size under %(max_size)s. Current size is %(size)s."
+msgstr ""
+"Bitte laden Sie eine Datei kleiner als %(max_size)s hoch. Die Datei hat "
+"%(size)s."

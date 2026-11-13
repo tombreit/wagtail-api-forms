@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.template.defaultfilters import filesizeformat
+from django.utils.translation import gettext as _
 
 from .validators import (
     validate_file_exists,
@@ -19,8 +20,13 @@ class FormBuilderBaseFileField(forms.FileField):
 
         super().__init__(*args, **kwargs)
 
-        _upload_size_hint = f"Max file size: {filesizeformat(self.max_upload_size)}."
-        _filetype_hint = f"Valid file types: {', '.join(self.allowed_file_types)}"
+        # In the language of the form page: form fields are built per request
+        _upload_size_hint = _("Max file size: %(size)s.") % {
+            "size": filesizeformat(self.max_upload_size)
+        }
+        _filetype_hint = _("Valid file types: %(types)s") % {
+            "types": ", ".join(self.allowed_file_types)
+        }
         self.help_text = f"{help_text} {_upload_size_hint} {_filetype_hint}"
 
     def clean(self, *args, **kwargs):

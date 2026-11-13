@@ -72,6 +72,9 @@ html_theme_options = {
 }
 
 
+# Anchors for headings up to h3, e.g. structure.md#mehrstufige-formulare
+myst_heading_anchors = 3
+
 myst_enable_extensions = [
     "amsmath",
     "attrs_inline",

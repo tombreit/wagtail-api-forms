@@ -8,7 +8,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django import forms
 from django.template.defaultfilters import filesizeformat
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from ipware import get_client_ip
 
 
@@ -154,7 +154,9 @@ def validate_filetype(file, valid_file_extensions):
     # Testing the size instead of the MIME string sidesteps that version split.
     if not file.size:
         raise ValidationError(
-            "The uploaded file is empty (0 bytes). Please check the file and try again."
+            gettext(
+                "The uploaded file is empty (0 bytes). Please check the file and try again."
+            )
         )
 
     canonical_types = _canonical_mime_types(valid_file_extensions)
@@ -162,9 +164,11 @@ def validate_filetype(file, valid_file_extensions):
         # Nothing could ever pass — that's a configuration problem, not the
         # visitor's file. Say so instead of blaming whatever they uploaded.
         raise ValidationError(
-            "This form is misconfigured: none of the configured file types "
-            f"(`{', '.join(valid_file_extensions)}`) are recognised. "
-            "Please contact the site administrator."
+            gettext(
+                "This form is misconfigured: none of the configured file types "
+                "(`%(types)s`) are recognised. Please contact the site administrator."
+            )
+            % {"types": ", ".join(valid_file_extensions)}
         )
 
     file_mime_type = magic.from_buffer(file.read(MIME_SNIFF_BYTES), mime=True)
@@ -176,23 +180,34 @@ def validate_filetype(file, valid_file_extensions):
         _mime_matches_extension(file_mime_type, canonical)
         for canonical in canonical_types.values()
     ):
-        _msg = f"Unsupported file type. Valid file types: `{', '.join(valid_file_extensions)}`, got `{file_mime_type}`!"
-        raise ValidationError(_msg)
+        raise ValidationError(
+            gettext("Unsupported file type. Valid file types: `%(types)s`, got `%(type)s`!")
+            % {"types": ", ".join(valid_file_extensions), "type": file_mime_type}
+        )
 
     ext = os.path.splitext(file.name)[1]
     if ext.lower() not in valid_file_extensions:
-        _msg = f"Unacceptable file extension: Valid file extensions: `{', '.join(valid_file_extensions)}`, got `{ext}`!"
-        raise ValidationError(_msg)
+        raise ValidationError(
+            gettext(
+                "Unacceptable file extension: Valid file extensions: `%(extensions)s`, "
+                "got `%(extension)s`!"
+            )
+            % {"extensions": ", ".join(valid_file_extensions), "extension": ext}
+        )
 
     return file
 
 
 def validate_filesize(file, max_file_size):
     if file.size > max_file_size:
-        _msg = _(
-            f"Please keep file size under {filesizeformat(max_file_size)}. Current size is {filesizeformat(file.size)}."
+        # Placeholders, not an f-string: the message is looked up in the catalog
+        raise forms.ValidationError(
+            gettext("Please keep file size under %(max_size)s. Current size is %(size)s.")
+            % {
+                "max_size": filesizeformat(max_file_size),
+                "size": filesizeformat(file.size),
+            }
         )
-        raise forms.ValidationError(_msg)
 
     return file
 

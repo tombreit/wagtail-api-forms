@@ -1,19 +1,30 @@
 {% extends '_base.html' %}
-{% load wagtailcore_tags %}
+{% load i18n wagtailcore_tags %}
+
+
+{% block title %}{% translate "Thank you" %} – {{ block.super }}{% endblock %}
 
 
 {% block content %}
 
     <h1>{{ page.title }}</h1>
 
-    {% if page.thank_you_text %}
-        <div class="alert alert-info">
-            {{ self.thank_you_text|richtext }}
-        </div>
+    <div class="alert alert-info formbuilder-thanks">
+        {% if page.thank_you_text %}
+            {{ page.thank_you_text|richtext }}
+        {% else %}
+            <p>{% translate "Thank you. Your answers have been sent." %}</p>
+        {% endif %}
+    </div>
+
+    {% if results %}
+        {% include "formpages/includes/results.html" %}
     {% endif %}
 
-    <a href="{% pageurl page %}{% if ctx_embed %}?embed={{ ctx_embed }}{% endif %}" class="btn btn-secondary my-4">
-        <i class="bi bi-arrow-return-left"></i> Back to form
-    </a>
+    <p class="my-4">
+        <a href="{% pageurl page %}{% if ctx_embed %}?embed={{ ctx_embed }}{% endif %}" class="link-secondary">
+            {% translate "Fill in the form again" %}
+        </a>
+    </p>
 
 {% endblock content %}

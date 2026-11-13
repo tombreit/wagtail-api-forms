@@ -3,6 +3,9 @@
 {% load i18n wagtailcore_tags crispy_forms_tags %}
 
 
+{% block title %}{% if form.errors %}{% translate "Error" %}: {% endif %}{{ block.super }}{% endblock %}
+
+
 {% block content %}
 <div class="mb-4">
     <h1>
@@ -22,19 +25,26 @@
     method="POST" 
     enctype="multipart/form-data" 
     novalidate
+    data-reset-confirm="{% translate 'Clear all your answers?' %}"{% if form_steps %}
+    data-form-steps
+    data-initial-step="{{ initial_step }}"
+    data-step-validation-url="{{ step_validation_url }}"{% endif %}
 >
     {% csrf_token %}
 
-    {% for field in form %}
-        {% if field.field.widget.attrs.heading %}
-            <h2 class="h4 my-4">
-                {{ field.field.widget.attrs.heading }}
-            </h2>
-        {% endif %}
+    {% if form.errors %}
+        {% include "formpages/includes/error_summary.html" %}
+    {% endif %}
 
-        <div class="mb-4 {{ field.field.widget.attrs.css_classes }}">
-            {{ field|as_crispy_field }}
-        </div>
+    <p class="formbuilder-mandatory-hint">
+        {% translate "Fields marked with * are mandatory." %}
+    </p>
+
+    {% if form_steps %}
+    {% include "formpages/includes/form_steps.html" %}
+    {% else %}
+    {% for field in form %}
+        {% include "formpages/includes/field.html" %}
     {% endfor %}
 
     {% if page.outro %}
@@ -48,13 +58,10 @@
     <button class="btn btn-custom-primary" type="submit">
         {% translate "Submit" %}
     </button>
-    <button class="btn btn-secondary" type="reset">
+    <button class="btn btn-link link-secondary" type="reset">
         {% translate "Reset" %}
     </button>
-
-    <p class="text-muted my-3">
-        * {% translate "Mandatory field" %}
-    </p>
+    {% endif %}
 </form>
 {% endif %}
 

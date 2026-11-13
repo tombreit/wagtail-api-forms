@@ -30,9 +30,9 @@ def test_standalone_form_page_skips_iframe_resizer(client, form_url):
 
 @pytest.mark.django_db
 def test_embedded_landing_page_stays_embedded(client, form_url):
-    resp = client.post(f"{form_url}?embed=true", {})
+    resp = client.post(f"{form_url}?embed=true", {}, follow=True)
 
-    assert resp.status_code == 200
+    assert resp.redirect_chain == [(f"{form_url}thank-you/?embed=true", 302)]
     assert resp.templates[0].name == "formpages/form_page_landing.html"
     content = resp.content.decode()
     assert "data-waf-submitted" in content

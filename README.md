@@ -15,6 +15,10 @@ Wagtail as a standalone builder for form pages or simply forms.
   * Image file field
   * Typeahead-Multiselect field ("select2")
   * Datetime and time fields with time picker for Firefox
+  * Page break: splits a form into steps, each step is validated before moving on
+* The editor shows only the attributes of a form field that apply to its field type
+* After submitting, visitors are redirected to a thank-you page; optionally with poll results
+  (how often each choice of the choice questions was chosen)
 * Embed page content - without header, footer etc. - via `url?embed=true`. Useful for embedding only the form on third party sites.
   * iFrame autoresizing
   * Handles Content Security Policy (CSP). See `.env`.

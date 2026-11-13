@@ -1,0 +1,28 @@
+{% load i18n %}
+{% comment %}
+    After an invalid submission: what to correct, with links to the fields.
+    Focused on page load, so keyboard and screen reader users start here.
+    Links point to crispy-forms' field wrappers (div_<id>), which also exist for
+    radio buttons and checkboxes. Multi-step forms open the step of a field,
+    see form-steps.js.
+    Context: form
+{% endcomment %}
+<div class="alert alert-danger formbuilder-error-summary" role="alert" tabindex="-1" autofocus data-error-summary>
+    <h2 class="h5">
+        {% blocktranslate count counter=form.errors|length trimmed %}
+            There is a problem with {{ counter }} field
+        {% plural %}
+            There is a problem with {{ counter }} fields
+        {% endblocktranslate %}
+    </h2>
+    <ul class="mb-0">
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        {% for field in form %}
+            {% if field.errors %}
+                <li><a href="#div_{{ field.auto_id }}" class="alert-link">{{ field.label }}</a>: {{ field.errors.0 }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

@@ -6,6 +6,10 @@ Added:
 * document upload field
   See: https://dev.to/lb/image-uploads-in-wagtail-forms-39pl
 * API for form submissions
+* multi-step forms: page breaks split a form into steps, see steps.py
+* the admin only shows the attributes of a form field that apply to its type
+* after submitting, visitors are redirected to a thank-you page, which can show
+  the poll results of the choice questions, see results.py
 """
 
 import logging
@@ -14,7 +18,10 @@ import datetime
 from pathlib import Path
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.http import Http404, HttpResponseNotAllowed, JsonResponse
+from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.template.response import TemplateResponse
@@ -35,19 +42,30 @@ from wagtail.admin.panels import (
     HelpPanel,
 )
 from wagtail.fields import RichTextField
+from wagtail.url_routing import RouteResult
 
 from wagtail.contrib.forms.models import (
     AbstractEmailForm,
     AbstractFormField,
     AbstractForm,
     AbstractFormSubmission,
-    FORM_FIELD_CHOICES,
 )
 from wagtail.contrib.forms.panels import FormSubmissionsPanel
 
-from .constants import FileArtChoices
+from .constants import (
+    CHOICE_FIELD_TYPES,
+    FIELD_TYPE_CHOICES,
+    FILE_FIELD_TYPES,
+    INPUT_FIELD_TYPES,
+    PAGE_BREAK,
+    PLACEHOLDER_FIELD_TYPES,
+    FileArtChoices,
+)
 from .forms import CustomFormBuilder, CustomFormPageForm
 from .model_mixins import FormPageApiMixin, FormPageAdditionalFieldsMixin
+from .panels import FieldTypePanel
+from .results import get_results
+from .steps import bind_steps, split_into_steps
 
 logger = logging.getLogger(__name__)
 
@@ -125,6 +143,12 @@ class TokenUserProxy(Token):
         return f"{self.user}: {self.key}"
 
 
+# Sub-URLs of a form page: the step validation of multi-step forms, and the
+# page visitors are redirected to after submitting
+STEP_VALIDATION_PATH = "validate-step"
+THANK_YOU_PATH = "thank-you"
+
+
 class UserFormField(AbstractFormField):
     css_classes = models.CharField(
         blank=True,
@@ -146,28 +170,60 @@ class UserFormField(AbstractFormField):
         "Heading",
         max_length=254,
         blank=True,
-        help_text="A standalone heading displayed above this field.",
+        help_text="A standalone heading displayed above this field. "
+        "For page breaks: the heading of the new step.",
+    )
+    # Page breaks have no label, see clean()
+    label = models.CharField(
+        verbose_name=_("label"),
+        max_length=255,
+        blank=True,
+        help_text=_("The label of the form field"),
     )
 
     field_type = models.CharField(
         verbose_name="field type",
         max_length=255,
-        choices=list(FORM_FIELD_CHOICES)
-        + [
-            ("image", _("Image file")),
-            ("document", _("Document file")),
-            ("multiplechoicetypeahead", _("Multiple Choice (typeahead)")),
-            # ('image64', 'Uploaded Image (base64)'),
-        ],
+        choices=FIELD_TYPE_CHOICES,
     )
 
-    panels = AbstractFormField.panels + [
-        FieldPanel("placeholder"),
+    # Each attribute is only shown for the field types it applies to (see
+    # FieldTypePanel), always in the same order: the field type, the required
+    # attributes, the common ones, then those specific to some field types
+    panels = [
+        FieldPanel("field_type", required_on_save=True),
+        # Required
+        FieldTypePanel("label", INPUT_FIELD_TYPES),
+        # Common
+        FieldTypePanel(
+            "help_text", [t for t in INPUT_FIELD_TYPES if t != "hidden"]
+        ),
+        FieldTypePanel("required", INPUT_FIELD_TYPES),
         FieldPanel("heading"),
-        FieldPanel("css_classes"),
+        FieldTypePanel("css_classes", INPUT_FIELD_TYPES),
+        # Specific
+        FieldTypePanel("choices", CHOICE_FIELD_TYPES),
+        # A default value of an upload field would be taken as the upload
+        FieldTypePanel(
+            "default_value",
+            [t for t in INPUT_FIELD_TYPES if t not in FILE_FIELD_TYPES],
+        ),
+        FieldTypePanel("placeholder", PLACEHOLDER_FIELD_TYPES),
     ]
 
     page = ParentalKey("FormPage", on_delete=models.CASCADE, related_name="form_fields")
+
+    def clean(self):
+        super().clean()
+        if self.field_type != PAGE_BREAK and not self.label:
+            raise ValidationError({"label": _("This field is required.")})
+
+    def get_field_clean_name(self):
+        if self.field_type == PAGE_BREAK:
+            # Page breaks have no label and hold no answers: their name only
+            # has to be unique
+            return f"page_break_{uuid.uuid4().hex[:8]}"
+        return super().get_field_clean_name()
 
     def save(self, *args, **kwargs):
         """
@@ -180,8 +236,6 @@ class UserFormField(AbstractFormField):
         if not self.clean_name:
             self.clean_name = self.get_field_clean_name()
         if not self.clean_name:
-            from django.core.exceptions import ValidationError
-
             raise ValidationError(
                 {
                     "label": "Field label must produce a valid field name (avoid using only special characters)."
@@ -204,7 +258,16 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         verbose_name="Outro text",
         help_text="Displayed below the form, but before the “Submit” button.",
     )
-    thank_you_text = RichTextField(blank=True)
+    thank_you_text = RichTextField(
+        blank=True, help_text="Displayed after the form has been submitted."
+    )
+    show_results = models.BooleanField(
+        default=False,
+        verbose_name="Show poll results after submitting",
+        help_text="After submitting, show how often each choice of the radio "
+        "button, drop down, checkboxes and multiple select questions was "
+        "chosen. Answers to other questions are never shown.",
+    )
     use_captcha = models.BooleanField(default=False)
     allowed_document_file_types = models.CharField(
         max_length=255,
@@ -226,9 +289,28 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         HelpPanel(
             content='Some more information in our <a href="/docs/">docs</a>.',
         ),
-        InlinePanel("form_fields", label="Form fields"),
+        InlinePanel(
+            "form_fields",
+            label="Form fields",
+            attrs={
+                # w-rules shows/hides the attributes of the form fields (see
+                # FieldTypePanel), waf-form-fields titles and collapses them
+                # (see static/formpages/admin/form-fields.js)
+                "data-controller": "w-rules waf-form-fields",
+                "data-action": "change->w-rules#resolve "
+                "input->waf-form-fields#update change->waf-form-fields#update",
+                "data-waf-form-fields-page-break-value": PAGE_BREAK,
+                "data-waf-form-fields-step-label-value": _("Step %(number)s"),
+            },
+        ),
         FieldPanel("outro", classname="full"),
-        FieldPanel("thank_you_text", classname="full"),
+        MultiFieldPanel(
+            [
+                FieldPanel("thank_you_text", classname="full"),
+                FieldPanel("show_results"),
+            ],
+            "After submitting",
+        ),
         MultiFieldPanel(
             [
                 FieldRowPanel(
@@ -247,6 +329,64 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         context = super().get_context(request)
         context["ctx_embed"] = "true" if request.GET.get("embed") else ""
         return context
+
+    def get_form_fields(self):
+        """
+        The questions of the form, without page breaks. Used for the form, the
+        columns of the submissions list and export, the API data and the email.
+        """
+        return [
+            form_field
+            for form_field in self.form_fields.all()
+            if form_field.field_type != PAGE_BREAK
+        ]
+
+    def get_steps(self):
+        """The steps of the form: one, unless it has page breaks."""
+        return split_into_steps(self.form_fields.all())
+
+    def get_step_context(self, request, form):
+        """The template context of a multi-step form; empty for other forms."""
+        steps = self.get_steps()
+        if len(steps) < 2:
+            return {}
+
+        form_steps = bind_steps(steps, form)
+        if getattr(request, "is_preview", False):
+            # Unpublished pages have no URL: the preview shows the steps
+            # without validating them
+            step_validation_url = ""
+        else:
+            step_validation_url = f"{self.get_url(request)}{STEP_VALIDATION_PATH}/"
+        return {
+            "form_steps": form_steps,
+            # After an invalid submission: the first step with errors
+            "initial_step": next(
+                (step.number for step in form_steps if step.has_errors), 1
+            ),
+            "step_validation_url": step_validation_url,
+        }
+
+    def get_preview_context(self, request, mode_name):
+        context = super().get_preview_context(request, mode_name)
+        context.update(self.get_step_context(request, context["form"]))
+        return context
+
+    def route(self, request, path_components):
+        if self.live and path_components == [STEP_VALIDATION_PATH]:
+            return RouteResult(self, kwargs={"validate_step": True})
+        if self.live and path_components == [THANK_YOU_PATH]:
+            return RouteResult(self, kwargs={"thank_you": True})
+        return super().route(request, path_components)
+
+    def get_url_with_embed(self, request, path=""):
+        """The URL of the page or of a sub-URL, staying in embed mode."""
+        url = f"{self.get_url(request)}{path}"
+        return f"{url}?embed=true" if request.GET.get("embed") else url
+
+    def get_session_key(self):
+        """Holds the submission of the visitor, for the thank-you page."""
+        return f"formpage-{self.pk}-submission"
 
     def get_form_class(self):
         """
@@ -281,17 +421,35 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
 
     def render_landing_page(self, request, form_submission=None, *args, **kwargs):
         """
-        Renders the landing page.
-        You can override this method to return a different HttpResponse as
-        landing page. E.g. you could return a redirect to a separate page.
+        Called after a submission has been stored: redirect to the thank-you
+        page, so reloading it doesn't submit the form again.
         """
-        context = self.get_context(request)
-        context.update(
-            {
-                "form_submission": form_submission,
-            }
-        )
+        if form_submission is None:
+            # The admin preview of the landing page
+            return self.render_thank_you(request)
 
+        request.session[self.get_session_key()] = str(form_submission.pk)
+        return redirect(self.get_url_with_embed(request, f"{THANK_YOU_PATH}/"))
+
+    def serve_thank_you(self, request):
+        """Only the visitor who has submitted the form sees the thank-you page."""
+        submission_id = request.session.get(self.get_session_key())
+        form_submission = (
+            self.get_submissions().filter(pk=submission_id).first()
+            if submission_id
+            else None
+        )
+        if form_submission is None:
+            return redirect(self.get_url_with_embed(request))
+        return self.render_thank_you(request, form_submission)
+
+    def render_thank_you(self, request, form_submission=None):
+        context = self.get_context(request)
+        context["form_submission"] = form_submission
+        # Embed mode: the embedding page scrolls to the thank-you text
+        context["ctx_submitted"] = True
+        if self.show_results:
+            context["results"] = get_results(self, form_submission)
         return TemplateResponse(
             request, self.get_landing_page_template(request), context
         )
@@ -344,7 +502,12 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         return content
 
     @method_decorator(csp_override(settings.FORMBUILDER_FORMPAGE_CSP))
-    def serve(self, request, *args, **kwargs):
+    def serve(self, request, *args, validate_step=False, thank_you=False, **kwargs):
+        if validate_step:
+            return self.serve_step_validation(request)
+        if thank_you:
+            return self.serve_thank_you(request)
+
         if request.method == "POST":
             referrer = request.META.get("HTTP_REFERER", "")
             client_ip, _ = get_client_ip(request)
@@ -372,8 +535,42 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
                 "form": form,
             }
         )
+        context.update(self.get_step_context(request, form))
 
         return TemplateResponse(request, self.get_template(request), context)
+
+    def serve_step_validation(self, request):
+        """
+        Validate one step of a multi-step form, so the browser can show its
+        errors before moving on to the next step. Nothing is stored: the form
+        is submitted at the end with the answers of all steps, as usual.
+        """
+        if request.method != "POST":
+            return HttpResponseNotAllowed(["POST"])
+
+        steps = self.get_steps()
+        if len(steps) < 2:
+            raise Http404
+
+        try:
+            step_number = int(request.POST.get("form_step", ""))
+        except ValueError:
+            step_number = 1
+        step = steps[min(max(step_number, 1), len(steps)) - 1]
+
+        form_class = self.form_builder(step.fields).get_form_class()
+        # The captcha is only checked when the form is submitted: checking it
+        # uses up the answer
+        form_class.base_fields.pop(CustomFormBuilder.CAPTCHA_FIELD_NAME, None)
+        form = form_class(
+            request.POST,
+            request.FILES,
+            page=self,
+            user=request.user,
+            **self.get_form_parameters(),
+        )
+        is_valid = form.is_valid()
+        return JsonResponse({"valid": is_valid, "errors": form.errors.get_json_data()})
 
 
 class TokenForm(models.Model):

@@ -9,7 +9,7 @@ from wagtail.contrib.forms.models import AbstractFormField
 from captcha.fields import CaptchaField
 
 from .fields import FormBuilderBaseFileField
-from .constants import FileArtChoices
+from .constants import PAGE_BREAK, UNCHECKED_DEFAULT_VALUES, FileArtChoices
 
 
 def get_allowed_file_types(allowed_document_file_types):
@@ -24,6 +24,15 @@ def get_allowed_file_types(allowed_document_file_types):
 
 class CustomFormBuilder(FormBuilder):
     CAPTCHA_FIELD_NAME = "wagtailcaptcha"
+
+    def create_checkbox_field(self, field, options):
+        """
+        Wagtail passes the default value as is, and any non-empty string
+        checks a checkbox, also "False" or "no". Such values leave it unchecked.
+        """
+        default_value = field.default_value.strip().lower()
+        options["initial"] = default_value not in UNCHECKED_DEFAULT_VALUES
+        return super().create_checkbox_field(field, options)
 
     def create_date_field(self, field, options):
         return DateField(
@@ -144,10 +153,18 @@ class CustomFormPageForm(WagtailAdminFormPageForm):
             for form in self.formsets[related_name].forms:
                 if form.cleaned_data.get("DELETE", False):
                     continue
+                if self._switches_page_break(form):
+                    form.add_error(
+                        "field_type",
+                        "A page break can't be turned into a question, or a "
+                        "question into a page break. Please delete this form "
+                        "field and add a new one instead.",
+                    )
                 clean_name = (
                     form.instance.clean_name or form.instance.get_field_clean_name()
                 )
-                if not clean_name:
+                # An empty label has its own error already
+                if not clean_name and not form.has_error("label"):
                     form.add_error(
                         "label",
                         "This label does not produce a valid field name. "
@@ -155,6 +172,21 @@ class CustomFormPageForm(WagtailAdminFormPageForm):
                     )
 
         return cleaned_data
+
+    @staticmethod
+    def _switches_page_break(form):
+        """
+        Whether a saved form field is changed from or to a page break. A page
+        break's name would become the question's name in the submissions and
+        the API, and a question's answers would vanish from the submissions.
+        """
+        if not form.instance.pk or "field_type" not in form.changed_data:
+            return False
+        field_types = (
+            form.initial.get("field_type"),
+            form.cleaned_data.get("field_type"),
+        )
+        return PAGE_BREAK in field_types
 
 
 def remove_captcha_field(form):
