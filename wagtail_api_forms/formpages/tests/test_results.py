@@ -3,11 +3,21 @@ After submitting, visitors are redirected to <form page>/thank-you/, which
 optionally shows the poll results of the form's choice questions.
 """
 
+from datetime import timedelta
+
 import pytest
 
+from django.conf import settings
+from django.contrib.sessions.models import Session
 from django.test import Client
 
-from wagtail_api_forms.formpages.models import CustomFormSubmission, UserFormField
+from wagtail.models import PageViewRestriction
+
+from wagtail_api_forms.formpages.models import (
+    THANK_YOU_MAX_AGE,
+    CustomFormSubmission,
+    UserFormField,
+)
 from wagtail_api_forms.formpages.results import get_results
 from wagtail_api_forms.formpages.tests.utils import page_title
 
@@ -116,6 +126,83 @@ def test_thank_you_page_only_for_visitor_who_submitted(client, form_url, thank_y
 
     assert response.status_code == 302
     assert response["Location"] == form_url
+
+
+@pytest.mark.django_db
+def test_thank_you_page_only_for_a_while(client, form_url, thank_you_url):
+    client.post(form_url, {"colour": "Red"})
+    submission = CustomFormSubmission.objects.get()
+    CustomFormSubmission.objects.filter(pk=submission.pk).update(
+        submit_time=submission.submit_time - THANK_YOU_MAX_AGE - timedelta(minutes=1)
+    )
+
+    response = client.get(thank_you_url)
+
+    assert response.status_code == 302
+    assert response["Location"] == form_url
+    assert submission.page.specific.get_session_key() not in client.session
+
+
+@pytest.mark.django_db
+def test_thank_you_page_is_not_cached(client, form_url, thank_you_url):
+    client.post(form_url, {"colour": "Red"})
+
+    response = client.get(thank_you_url)
+
+    assert response.status_code == 200
+    cache_control = response["Cache-Control"]
+    assert "no-store" in cache_control
+    assert "private" in cache_control
+
+
+@pytest.mark.django_db
+def test_submitting_changes_the_session_key(client, form_url, thank_you_url):
+    """A session key planted by another site can't open the thank-you page."""
+    planted = client.session
+    planted["planted"] = True
+    planted.save()
+
+    client.post(form_url, {"colour": "Red"})
+
+    assert client.cookies[settings.SESSION_COOKIE_NAME].value != planted.session_key
+    assert not Session.objects.filter(session_key=planted.session_key).exists()
+    assert client.get(thank_you_url).status_code == 200
+
+
+@pytest.mark.django_db
+def test_submitting_keeps_the_session_key_of_logged_in_users(
+    client, superuser, form_url, thank_you_url
+):
+    client.force_login(superuser)
+    session_key = client.session.session_key
+
+    client.post(form_url, {"colour": "Red"})
+
+    assert client.session.session_key == session_key
+    assert client.get(thank_you_url).status_code == 200
+
+
+@pytest.mark.django_db
+def test_password_protected_form(client, poll_page, form_url, thank_you_url):
+    """The thank-you page and the step validation are protected as well."""
+    UserFormField.objects.create(page=poll_page, sort_order=99, field_type="pagebreak")
+    UserFormField.objects.create(page=poll_page, sort_order=100, label="Last")
+    submission = submit(poll_page, colour="Red")
+    session = client.session
+    session[poll_page.get_session_key()] = str(submission.pk)
+    session.save()
+    PageViewRestriction.objects.create(
+        page=poll_page, restriction_type=PageViewRestriction.PASSWORD, password="secret"
+    )
+
+    for response in (
+        client.get(thank_you_url),
+        client.post(f"{form_url}validate-step/", {"form_step": "1"}),
+    ):
+        assert response.status_code == 200
+        assert response.templates[0].name == "wagtailcore/password_required.html"
+        assert response["Content-Type"].startswith("text/html")
+        assert "Thanks for voting." not in response.content.decode()
 
 
 @pytest.mark.django_db

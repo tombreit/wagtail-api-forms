@@ -5,6 +5,7 @@ from contextlib import closing
 from pathlib import Path
 
 from django.conf import settings
+from django.core.management import call_command
 from huey import crontab
 from huey.contrib.djhuey import periodic_task
 
@@ -56,3 +57,13 @@ def snapshot_database():
 @periodic_task(crontab(minute="0"))
 def snapshot_database_task():
     snapshot_database()
+
+
+@periodic_task(crontab(minute="30", hour="3"))
+def clear_expired_sessions_task():
+    """
+    Django doesn't delete expired sessions on its own. Each form submission
+    creates one (see FormPage.render_landing_page), holding the submission's
+    id for the thank-you page.
+    """
+    call_command("clearsessions")

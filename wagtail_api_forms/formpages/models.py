@@ -25,6 +25,8 @@ from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.template.response import TemplateResponse
+from django.utils import timezone
+from django.utils.cache import add_never_cache_headers
 from django.utils.decorators import method_decorator
 from django.utils.formats import date_format
 from django.views.decorators.csp import csp_override
@@ -147,6 +149,10 @@ class TokenUserProxy(Token):
 # page visitors are redirected to after submitting
 STEP_VALIDATION_PATH = "validate-step"
 THANK_YOU_PATH = "thank-you"
+# How long after submitting the thank-you page can be opened, e.g. reloaded.
+# Not for the whole session: on a shared computer, the next person could open
+# it, and see the poll answers of the previous one.
+THANK_YOU_MAX_AGE = datetime.timedelta(minutes=30)
 
 
 class UserFormField(AbstractFormField):
@@ -428,18 +434,31 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
             # The admin preview of the landing page
             return self.render_thank_you(request)
 
+        if not request.user.is_authenticated:
+            # A session key planted by another site of the same domain would
+            # let that site open the thank-you page. Logged-in users have got
+            # a new key when logging in; keep theirs for their other tabs.
+            request.session.cycle_key()
         request.session[self.get_session_key()] = str(form_submission.pk)
         return redirect(self.get_url_with_embed(request, f"{THANK_YOU_PATH}/"))
 
     def serve_thank_you(self, request):
-        """Only the visitor who has submitted the form sees the thank-you page."""
-        submission_id = request.session.get(self.get_session_key())
+        """
+        Only the visitor who has submitted the form sees the thank-you page,
+        and only for a while.
+        """
+        session_key = self.get_session_key()
+        submission_id = request.session.get(session_key)
         form_submission = (
             self.get_submissions().filter(pk=submission_id).first()
             if submission_id
             else None
         )
-        if form_submission is None:
+        if (
+            form_submission is None
+            or timezone.now() - form_submission.submit_time > THANK_YOU_MAX_AGE
+        ):
+            request.session.pop(session_key, None)
             return redirect(self.get_url_with_embed(request))
         return self.render_thank_you(request, form_submission)
 
@@ -450,9 +469,12 @@ class FormPage(FormPageApiMixin, FormPageAdditionalFieldsMixin, AbstractEmailFor
         context["ctx_submitted"] = True
         if self.show_results:
             context["results"] = get_results(self, form_submission)
-        return TemplateResponse(
+        response = TemplateResponse(
             request, self.get_landing_page_template(request), context
         )
+        # Personal: it depends on the session, and marks the visitor's answers
+        add_never_cache_headers(response)
+        return response
 
     def render_email(self, form):
         # To get custom date formats we need to subclass render_email method

@@ -9,7 +9,7 @@ Nach dem Absenden eines Formulars kommen Besucher:innen auf seine Danke-Seite (`
 
 * Sie zeigt den `Thank you text` des Formulars (Bereich "After submitting"). Ist keiner eingetragen, steht dort "Vielen Dank. Ihre Angaben wurden übermittelt."
 * Ein erneutes Laden der Seite sendet das Formular nicht noch einmal ab.
-* Nur wer das Formular gerade abgesendet hat, sieht die Danke-Seite; alle anderen kommen zum Formular.
+* Nur wer das Formular gerade abgesendet hat, sieht die Danke-Seite, und nur 30 Minuten lang; alle anderen kommen zum Formular. So sieht an einem gemeinsam genutzten Rechner die nächste Person nicht die Antworten der vorherigen.
 * Ein Link führt zurück zum (leeren) Formular, um es erneut auszufüllen.
 * Eingebettete Formulare (`?embed=true`) bleiben eingebettet.
 
